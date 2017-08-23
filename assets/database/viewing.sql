@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2017 at 03:39 PM
+-- Generation Time: Aug 23, 2017 at 04:33 PM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -51,10 +51,9 @@ CREATE TABLE `accounts_tbl` (
 
 INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`, `email`, `contact`, `gender`, `username`, `password`, `security_code`, `status`, `role`, `created`) VALUES
 (14, '../../assets/images/admin.png', '', 'Administrator', '', 'admin@yahoo.com', '9547774444', 'Male', 'administrator', '$2y$10$ybh9eYE20b6ZGrcZQnTeke5TsuuzZT42nxW6WHIBiI/dmOq8RQGKu', 447478, 0, 0, '2017-08-22 05:58:36'),
-(15, '../../assets/images/admin.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9555444888', 'Female', 'jeddahlyncabuga', '$2y$10$n4Gy65TpnohZIApYh.AGEu1g.K1dhuPo2.lLcGFrMM1xNxUdQzSE.', 749861, 0, 3, '2017-08-22 21:28:52'),
-(18, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9562211554', 'Female', 'adoralozano', '$2y$10$8VbiyjnoI5z6suXgrz4p4uOq85qmN0WuVzQUnQL55jGCn.HODfY5y', 699014, 0, 2, '2017-08-22 20:19:08'),
-(32, '../../assets/images/admin.png', 'demo', 'demo', 'demo', 'demo@aa.co', '1231313131', 'Male', 'demo', '$2y$10$oFfes9xhyHS8C42CMDUY1.Zwv1GIDAmocbIXNdMeMR2vPIWVkI2ui', 864331, 1, 3, '2017-08-22 22:19:00'),
-(33, '../../assets/images/admin.png', 'zxczxczxc', 'zxczxczxc', 'zxczxczxc', 'zxczxczxc@aa.co', '1313131111', 'Male', 'zxczxczxc', '$2y$10$Rr/ReimPWJ.tLcp0d1N/Ze61kG9jrZabJ7oB1t1dkAvgfBeRPH3Ra', 701179, 1, 3, '2017-08-22 22:22:39');
+(15, '../../assets/images/admin.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9555444888', 'Female', 'jeddahlyncabuga', '$2y$10$n4Gy65TpnohZIApYh.AGEu1g.K1dhuPo2.lLcGFrMM1xNxUdQzSE.', 749861, 0, 2, '2017-08-22 22:51:26'),
+(18, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9562211554', 'Female', 'adoralozano', '$2y$10$8VbiyjnoI5z6suXgrz4p4uOq85qmN0WuVzQUnQL55jGCn.HODfY5y', 699014, 0, 1, '2017-08-22 22:51:27'),
+(38, '../../assets/images/student_male.png', 'Cruz', 'Juan', 'Dela', 'juandelacruz@gmail.com', '9115522447', 'Male', 'JuanCruzDela', '$2y$10$/0p5WQmItCvv.gYWZsRPcOBq/MipxCTwV/iLXVIuOtO/IMcwRnFuK', 860073, 1, 3, '2017-08-23 10:28:35');
 
 -- --------------------------------------------------------
 
@@ -116,27 +115,56 @@ INSERT INTO `courses_tbl` (`id`, `courses`, `options`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `professor_courses_tbl`
+--
+
+CREATE TABLE `professor_courses_tbl` (
+  `id` int(11) NOT NULL,
+  `professor_id` int(11) NOT NULL,
+  `courses` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `professor_courses_tbl`
+--
+
+INSERT INTO `professor_courses_tbl` (`id`, `professor_id`, `courses`) VALUES
+(30, 15, 'Computer Secretarial'),
+(31, 15, 'B.S.  in Information Technology'),
+(32, 15, 'B.S.  in Business Administration');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `professor_sections_tbl`
+--
+
+CREATE TABLE `professor_sections_tbl` (
+  `id` int(11) NOT NULL,
+  `professor_id` int(11) NOT NULL,
+  `professor_section` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `professor_sections_tbl`
+--
+
+INSERT INTO `professor_sections_tbl` (`id`, `professor_id`, `professor_section`) VALUES
+(20, 15, 'A32'),
+(21, 15, 'A42');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `requests_tbl`
 --
 
 CREATE TABLE `requests_tbl` (
   `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL,
   `role` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sections_tbl`
---
-
-CREATE TABLE `sections_tbl` (
-  `id` int(11) NOT NULL,
-  `professor_id` int(11) NOT NULL,
-  `section` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -147,8 +175,10 @@ CREATE TABLE `sections_tbl` (
 
 CREATE TABLE `students_tbl` (
   `id` int(11) NOT NULL,
+  `professor_id` int(11) NOT NULL,
   `section` varchar(255) NOT NULL,
   `course` varchar(255) NOT NULL,
+  `branch` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -156,9 +186,8 @@ CREATE TABLE `students_tbl` (
 -- Dumping data for table `students_tbl`
 --
 
-INSERT INTO `students_tbl` (`id`, `section`, `course`, `username`) VALUES
-(1, 'M11', 'Bachelor of Science in Information Technology', 'demo'),
-(2, 'M11', 'Bachelor of Science in Information Technology', 'zxczxczxc');
+INSERT INTO `students_tbl` (`id`, `professor_id`, `section`, `course`, `branch`, `username`) VALUES
+(7, 15, 'A42', 'B.S.  in Business Administration', 'Lagro', 'JuanCruzDela');
 
 --
 -- Indexes for dumped tables
@@ -183,15 +212,21 @@ ALTER TABLE `courses_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `requests_tbl`
+-- Indexes for table `professor_courses_tbl`
 --
-ALTER TABLE `requests_tbl`
+ALTER TABLE `professor_courses_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sections_tbl`
+-- Indexes for table `professor_sections_tbl`
 --
-ALTER TABLE `sections_tbl`
+ALTER TABLE `professor_sections_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `requests_tbl`
+--
+ALTER TABLE `requests_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -208,32 +243,37 @@ ALTER TABLE `students_tbl`
 -- AUTO_INCREMENT for table `accounts_tbl`
 --
 ALTER TABLE `accounts_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `branches_tbl`
 --
 ALTER TABLE `branches_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `courses_tbl`
 --
 ALTER TABLE `courses_tbl`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
+-- AUTO_INCREMENT for table `professor_courses_tbl`
+--
+ALTER TABLE `professor_courses_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+--
+-- AUTO_INCREMENT for table `professor_sections_tbl`
+--
+ALTER TABLE `professor_sections_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
 -- AUTO_INCREMENT for table `requests_tbl`
 --
 ALTER TABLE `requests_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `sections_tbl`
---
-ALTER TABLE `sections_tbl`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
