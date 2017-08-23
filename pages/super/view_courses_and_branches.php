@@ -1,22 +1,15 @@
-<?php include '../../class/config.php';
-$data->redirecttologin();
-$photos    = $_SESSION['photo'];
-$names     = $_SESSION['name'];
-$roles     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
-foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <?php 
-    $id       = $row['id'];
-    $photo    = $row['photo'];
-    $name     = $row['firstname']. ' ' .$row['middlename']. ' '.$row['lastname'];
-    $email    = $row['email'];
-    $contact  = $row['contact'];
-    $username = $row['username'];
-    $role     = $row['role'] == 1 ? 'Admin' : null;
-    $status   = $row['status'] == 0 ? '<label class="label label-success flat"> Activated </label>' : '<label class="label label-danger flat">Deactivated </label>';
-    
-?>     
-<?php endforeach; ?>
-<?php if(empty($id)){ header('location: add_professors.php'); } ?>
+include '../../class/config.php';
+$data->redirecttologin();
+$id       = $_SESSION['id'];
+$photo    = $_SESSION['photo'];
+$name     = $_SESSION['name'];
+$role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
+$administrators = $data->countadministrators();
+$professors     = $data->countprofessors();
+$students       = $data->countstudents();
+$all       = $data->countall();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,10 +28,9 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
-
+  <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body ng-app="app" class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -64,15 +56,15 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
               <!-- The user image in the navbar-->
               <img src="../../assets/images/admin.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?php echo $names?></span>
+              <span class="hidden-xs"><?php echo $name?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?php echo $photos?>" class="img-circle" alt="User Image">
+                <img src="../../assets/images/admin.png" class="img-circle" alt="User Image">
 
-                <p><?php echo $names?>
-                  <small><?php echo $roles?></small>
+                <p><?php echo $name?>
+                  <small><?php echo $role?></small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -100,12 +92,12 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
       <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
         <div class="pull-left image">
-            <img src="<?php echo $photos?>" class="img-circle" alt="User Image">
+            <img src="<?php echo $photo?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-            <p><?php echo $names?></p>
+            <p><?php echo $name?></p>
             <!-- Status -->
-            <a href="#"><?php echo $roles?></a>
+            <a href="#"><?php echo $role?></a>
         </div>
     </div>
 
@@ -114,31 +106,32 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview active">
+        <li class="treeview">
         <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li class="active"><a href="add_administrators.php">Administrators</a></li>
+          <li><a href="add_administrators.php">Administrators</a></li>
           <li><a href="add_professors.php">Professors</a></li>
           </ul>
         </li>
 
-        <li class="treeview">
+        <li class="treeview active">
         <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li class="active"><a href="view_courses_and_branches.php">View courses and branches</a></li>
           <li><a href="add_professors.php">Maintenance</a></li>
           </ul>
         </li>
-
         
+
+
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -150,112 +143,54 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Administrator
+     Courses and Branches
     </h1>
     <ol class="breadcrumb">
-    <li>Dashboard</li>
-    <li>Manage Users</li>
-    <li>Add Administrator</li>
-    <li class="active">Information</li>
+        <li><a href="dashboard.php">Dashboard</a></li>
+        <li>Settings</li>
+        <li class="active">Courses and branches</li>
     </ol>
   </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-4 col-sm-12">
-            <div class="box box-widget widget-user">
-                <div class="widget-user-header bg-aqua-active">
-                <h3 class="widget-user-username"><?php echo $name?></h3>
-                <h5 class="widget-user-desc"><?php echo $role?></h5>
+      <!-- End  -->
+      <div class="row">
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button data-toggle="modal" data-target="#modal_branches" class="btn btn-primary flat"> Add Branches </button>
+                        <?php include 'branches_container.php';?>
+                    </div>
                 </div>
-            <div class="widget-user-image">
-              <img class="img-circle" src="<?php echo $photo?>" alt="User Avatar">
             </div>
-            <div class="box-footer">
-              <div class="row">
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
-                    <h5 class="description-header">Status</h5>
-                    <span class="description-text"><a onclick="modify_status('<?php echo $id?>')"  id="show_status"><?php echo $status?></a></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4">
-                  <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
+
+            <!-- Trigger the modal with a button -->
+
+          <div class="box box-solid">
+            <div class="box-body">
+            <div id="show_branches"></div>
             </div>
           </div>
-          <!-- /.widget-user -->
-            
-          </div>
+        </div>
 
-          <div class="col-md-8 col-sm-12">
-          <div class="nav-tabs-custom">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#information" data-toggle="tab"> Information</a></li>
-          </ul>
-          <div class="tab-content">
-
-            <div class="tab-pane active" id="information">
-              <form class="form-horizontal">
-                <div class="form-group">
-                 
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button data-toggle="modal" data-target="#modal_courses" class="btn btn-primary flat"> Add Courses </button>
+                        <?php include 'courses_container.php';?>
+                    </div>
                 </div>
-                
-              
-                <div class="form-group">
-                  <label for="inputName" class="col-sm-2 control-label">Name</label>
-                  <div class="col-sm-10">
-                    <p class="form-control"><?php echo $name?></p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="email" class="col-sm-2 control-label">Email</label>
-                  <div class="col-sm-10">
-                    <p class="form-control"><?php echo $email?></p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="contact" class="col-sm-2 control-label">Contact</label>
-                  <div class="col-sm-10">
-                    <p class="form-control"><?php echo $contact?></p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="username" class="col-sm-2 control-label">Username</label>
-                  <div class="col-sm-10">
-                    <p class="form-control"><?php echo $username?></p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                  <a href="add_administrators.php" class="btn btn-primary flat">Back</a>
-                  </div>
-                </div>
-              </form>
+            </div>
+          <div class="box box-solid">
+            <div class="box-body">
+              <div id="show_courses"></div>
             </div>
           </div>
+        </div>
+
 
     </section>
     <!-- /.content -->
@@ -275,15 +210,13 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <script src="../../assets/functions/functions.js"></script>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
-<script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-
+<!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript">
-//School information
+<script>
+showbranches();
+showcourses();
 var app = angular.module('app', ['ngMessages']);
-   
-showprofessor()
 
 </script>
 </body>

@@ -28,7 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body style="background:url(../assets/images/background.png);background-repeat:no-repeat;background-size:100% 100%;background-attachment: fixed" class="hold-transition login-page">
 <div class="login-box">
 <div class="login-logo">
   <a><img class="img-responsive" src="../assets/images/logo.png"></a>

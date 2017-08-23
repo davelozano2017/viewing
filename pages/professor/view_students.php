@@ -5,10 +5,6 @@ $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
 $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
-$administrators = $data->countadministrators();
-$professors     = $data->countprofessors();
-$students       = $data->countstudents();
-$all       = $data->countall();
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +24,8 @@ $all       = $data->countall();
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -105,33 +102,19 @@ $all       = $data->countall();
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview">
-        <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
+        <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+        <li class="treeview active">
+        <a href="#"><i class="fa fa-user fa-fw"></i><span> Students</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="add_administrators.php">Administrators</a></li>
-          <li><a href="add_professors.php">Professors</a></li>
+            <li class="active"><a href="view_students.php">View Students</a></li>
+            <li><a href="view_students.php">View Course & Section</a></li>
           </ul>
         </li>
-
-        <li class="treeview">
-        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-          <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
-          <li><a href="add_professors.php">Maintenance</a></li>
-          </ul>
-        </li>
-        
-
-
+        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -143,113 +126,40 @@ $all       = $data->countall();
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Dashboard
+     Students
     </h1>
     <ol class="breadcrumb">
-      <li class="active">Dashboard</li>
+    <li>Dashboard</li>
+    <li>Students</li>
+    <li class="active">View Students</li>
     </ol>
   </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3><?php echo $administrators?></h3>
-
-              <p>Administrators</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <button data-toggle="modal" data-target="#addstudents" class="btn btn-primary flat"> Add Student </button>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3><?php echo $professors?></h3>
+    </div>
 
-              <p>Professors</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><?php echo $students?></h3>
 
-              <p>Students</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><?php echo $all ?></h3>
+        <!-- Modal -->
+        <?php include 'modal-container.php';?>
+        <!-- end modal -->
 
-              <p>Total Users</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
-      <!-- End  -->
-      <div class="row">
-        <div class="col-md-4">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Requesting <small>Administrators</small></h3>
-            </div>
-            <div class="box-body">
-            <div id="show_request_administrators"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Requesting <small>Professors</small></h3>
-            </div>
-            <div class="box-body">
-              <div id="show_request_professors"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Requesting <small>Students</small></h3>
-            </div>
-            <div class="box-body">
-              <div id="show_request_students"></div>
-            </div>
-          </div>
+    <div class="col-md-12 col-sm-12">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <!-- Start -->
+          <div id="show_students"></div>
+          <!-- End -->
         </div>
       </div>
+    </div>
+
+  </div>
 
     </section>
     <!-- /.content -->
@@ -267,47 +177,18 @@ $all       = $data->countall();
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
-<!-- DataTables -->
+<script src="../../assets/angular/angular.min.js"></script>
+<script src="../../assets/angular/1.4.2.angular.min.js"></script>
+<script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
+
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script>
-    function request_administrators($id) {
-        var id = $id;
-        alert(id);
-    }
-    
-    function request_professors($id) {
-        var id = $id;
-        alert(id);
-    }
+<script type="text/javascript">
+//School information
+var app = angular.module('app', ['ngMessages']);
 
-    function request_students($id) {
-        var id = $id;
-        alert(id);
-    }
-</script>
-<script>
-$(document).ready(function(){
-    $('#administrators').DataTable({
-    "paging": true, "lengthChange": true, "searching": false,
-    "ordering": false, "info": false, "autoWidth": true
-    });
+showstudents();
 
-    $('#professors').DataTable({
-    "paging": true, "lengthChange": true, "searching": false,
-    "ordering": false, "info": false, "autoWidth": true
-    });
-
-    $('#students').DataTable({
-    "paging": true, "lengthChange": true, "searching": false,
-    "ordering": false, "info": false, "autoWidth": true
-    });
-})
-</script>
-<script>
-  show_request_administrators();
-  show_request_professors();
-  show_request_students();
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@ include 'controller.php';
 class db extends Controller {
 
 
-    // Insert 
+    // Insert Administrator & Professor
     public function insertusers($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$password,$type) {
         $hash = password_hash($password,PASSWORD_DEFAULT);
         $security_code = rand(111111,999999);
@@ -21,6 +21,75 @@ class db extends Controller {
             '$contact','$gender','$username','$hash','$security_code',1,'$type')");
             $query ? $this->success() : false;
         }
+    }
+
+    // Insert Student
+    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$type,$course,$section) {
+        $password = password_hash(12345123,PASSWORD_DEFAULT);
+        $security_code = rand(111111,999999);
+        $photo = '../../assets/images/admin.png';
+        $check = $this->db->query("SELECT * FROM accounts_tbl WHERE email = '$email'");
+        $checkrow = $check->num_rows;
+        if($checkrow > 0) {
+            $this->duplicated();
+        } else {
+            $query = $this->db->query("INSERT INTO accounts_tbl 
+            (photo,lastname,firstname,middlename,email,contact,
+            gender,username,password,security_code,status,role) 
+            VALUES 
+            ('$photo','$lastname','$firstname','$middlename','$email',
+            '$contact','$gender','$username','$password','$security_code',1,'$type')");
+            $query ? $this->insertstudentinfo($section,$course,$username) : false;
+        }
+    }
+
+    public function addbranches($branch) {
+        $check = $this->db->query("SELECT * FROM branches_tbl WHERE branches = '$branch'");
+        $checkrow = $check->num_rows;
+        if($checkrow > 0) {
+            $this->duplicated();
+        } else {
+            $query = $this->db->query("INSERT INTO branches_tbl (branches) VALUES ('$branch')");
+            return $query ? $this->success() : null;
+        }
+    }
+
+    public function updatebranches($id,$branch) {
+        $query = $this->db->query("UPDATE branches_tbl SET branches = '$branch' WHERE id = $id");
+        $query ? $this->updated() : null;
+    }
+
+    public function deletebranches($id) {
+        $query = $this->db->query("DELETE FROM branches_tbl WHERE id = $id");
+        $query ? $this->deleted() : null;
+    }
+
+    public function addcourses($course,$option) {
+        $check = $this->db->query("SELECT * FROM courses_tbl WHERE courses = '$course'");
+        $checkrow = $check->num_rows;
+        if($checkrow > 0) {
+            $this->duplicated();
+        } else {
+            $query = $this->db->query("INSERT INTO courses_tbl (courses,options) VALUES ('$course','$option')");
+            return $query ? $this->success() : null;
+        }
+    }
+
+    public function updatecourses($id,$course,$option) {
+        $query = $this->db->query("UPDATE courses_tbl SET 
+        courses = '$course', options = '$option' WHERE id = $id");
+        $query ? $this->updated() : null;
+    }
+
+    public function deletecourses($id) {
+        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = $id");
+        $query ? $this->deleted() : null;
+    }
+
+    public function insertstudentinfo($section,$course,$username) {
+        $query = $this->db->query("INSERT INTO students_tbl 
+        (section,course,username) VALUES ('$section','$course','$username')");
+        return $query ? $this->success() : false;
     }
 
     //Show Admin Record
@@ -96,6 +165,23 @@ class db extends Controller {
 
     public function show_request_students() {
         $query = $this->db->query("SELECT * FROM requests_tbl WHERE role = 3");
+        return $query;
+    }
+    
+    public function show_branches() {
+        $query = $this->db->query("SELECT * FROM branches_tbl");
+        return $query;
+    }
+
+    public function show_courses() {
+        $query = $this->db->query("SELECT * FROM courses_tbl");
+        return $query;
+    }
+
+    public function show_students() {
+        $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
+        ON accounts_tbl.username = students_tbl.username
+        WHERE accounts_tbl.role = 3");
         return $query;
     }
 
@@ -193,6 +279,10 @@ class db extends Controller {
 
     public function success() {
       echo json_encode(array('success'=> true, 'message' => 'success'));
+    }
+
+    public function deleted() {
+        echo json_encode(array('success'=> true, 'message' => 'Successfully Deleted'));
     }
 
     public function activate() {

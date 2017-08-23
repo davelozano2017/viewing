@@ -1,9 +1,10 @@
 <?php include '../../class/config.php';
 $data->redirecttologin();
+$id        = $_SESSION['id'];
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
-$roles     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
-foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
+$roles     = $_SESSION['role'] == 2 ? 'Professor' : null;
+foreach($data->getadmininfobyid($id) as $row) : ?>
 <?php 
     $id       = $row['id'];
     $photo    = $row['photo'];
@@ -11,12 +12,11 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     $email    = $row['email'];
     $contact  = $row['contact'];
     $username = $row['username'];
-    $role     = $row['role'] == 1 ? 'Admin' : null;
-    $status   = $row['status'] == 0 ? '<label class="label label-success flat"> Activated </label>' : '<label class="label label-danger flat">Deactivated </label>';
+    $role     = $row['role'] == 2 ? 'Professor' : null;
+    $status   = $row['status'] == 0 ? '<label class="label label-success flat">Activated</label>' : null;
     
 ?>     
 <?php endforeach; ?>
-<?php if(empty($id)){ header('location: add_professors.php'); } ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,31 +114,17 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview active">
-        <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-          <ul class="treeview-menu">
-          <li class="active"><a href="add_administrators.php">Administrators</a></li>
-          <li><a href="add_professors.php">Professors</a></li>
-          </ul>
-        </li>
-
         <li class="treeview">
-        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
+        <a href="#"><i class="fa fa-user fa-fw"></i><span> Students</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
-          <li><a href="add_professors.php">Maintenance</a></li>
+          <li><a href="view_students.php">View Students</a></li>
           </ul>
         </li>
-
-        
+        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -150,13 +136,11 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Administrator
+     Profile
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
-    <li>Manage Users</li>
-    <li>Add Administrator</li>
-    <li class="active">Information</li>
+    <li class="active">Profile</li>
     </ol>
   </section>
 
@@ -176,24 +160,24 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
+                    <h5 class="description-header">Status</h5>
+                    <span class="description-text"><?php echo $status?></a></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header">Status</h5>
-                    <span class="description-text"><a onclick="modify_status('<?php echo $id?>')"  id="show_status"><?php echo $status?></a></span>
+                    <h5 class="description-header">Students</h5>
+                    <span class="description-text">0</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
+                    <h5 class="description-header">Subjects</h5>
+                    <span class="description-text">0</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -215,11 +199,6 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 
             <div class="tab-pane active" id="information">
               <form class="form-horizontal">
-                <div class="form-group">
-                 
-                </div>
-                
-              
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-10">
@@ -250,7 +229,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                  <a href="add_administrators.php" class="btn btn-primary flat">Back</a>
+                  <a href="add_professors.php" class="btn btn-primary flat">Back</a>
                   </div>
                 </div>
               </form>
@@ -282,8 +261,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <script type="text/javascript">
 //School information
 var app = angular.module('app', ['ngMessages']);
-   
-showprofessor()
+
 
 </script>
 </body>

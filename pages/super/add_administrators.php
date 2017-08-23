@@ -113,6 +113,19 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
           <li><a href="add_professors.php">Professors</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+          <ul class="treeview-menu">
+          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="add_professors.php">Maintenance</a></li>
+          </ul>
+        </li>
+        
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -139,7 +152,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
     <div class="col-md-4 col-sm-12">
       <div class="box box-primary">
         <div class="box-body box-profile">
-        <form method="POST" name="add" ng-app="app" name="login" novalidate>
+        <form method="POST" name="add" ng-app="app" novalidate>
         <input type="hidden" id="type" value="1">
 
           <div class="box-body">

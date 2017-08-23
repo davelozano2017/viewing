@@ -125,6 +125,19 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
           <li class="active"><a href="add_professors.php">Professors</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+          <ul class="treeview-menu">
+          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="add_professors.php">Maintenance</a></li>
+          </ul>
+        </li>
+        
       </ul>
       <!-- /.sidebar-menu -->
     </section>
