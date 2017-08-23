@@ -43,7 +43,7 @@
         <form method="POST">
           <div class="form-group">
             <label>Branch</label>
-              <input type="hidden" id="id" class="form-control" required>
+              <input type="hidden" id="branch_id" class="form-control" required>
               <input type="text" id="update_branch" class="form-control" required>
             </span>
           </div>

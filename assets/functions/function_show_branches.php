@@ -18,7 +18,7 @@
 </table>
 <script>
 $('#branches').DataTable({
-  "paging": true, "lengthChange": true, "searching": true,
+  "paging": true, "lengthChange": true, "searching": false,
   "ordering": false, "info": false, "autoWidth": true
 });
 
@@ -26,7 +26,7 @@ function modify_branches($id,$branches) {
   var id = $id;
   var branches = $branches;
   $('#modal_branches_update').modal('show');
-  $('#modal_branches_update').find('#id').val(id);
+  $('#modal_branches_update').find('#branch_id').val(id);
   $('#modal_branches_update').find('#update_branch').val(branches);
 }
 </script>

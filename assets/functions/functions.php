@@ -2,12 +2,22 @@
 include '../../class/config.php';
 switch($_POST['action']) {
 
+#############################################################################
     case 'login':
         $username = $data->post($_POST['username']);
         $password = $data->post($_POST['password']);
         $query    = $data->login($username,$password);
     break;
-
+#############################################################################
+  
+#############################################################################
+    case 'Modify Status':
+        $id     = $data->post($_POST['id']);    
+        $query  = $data->modifystatusbyid($id);
+    break;
+#############################################################################
+    
+#############################################################################
     case 'Insert Users':
         $lastname   = $data->post($_POST['lastname']);
         $firstname  = $data->post($_POST['firstname']);
@@ -20,7 +30,9 @@ switch($_POST['action']) {
         $type       = $data->post($_POST['type']);
         $query      = $data->insertusers($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$password,$type);
     break;
+#############################################################################
 
+#############################################################################
     case 'Insert Students':
         $lastname   = $data->post($_POST['lastname']);
         $firstname  = $data->post($_POST['firstname']);
@@ -34,7 +46,9 @@ switch($_POST['action']) {
         $course     = $data->post($_POST['course']);
         $query      = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$type,$course,$section);
     break;
+#############################################################################
     
+#############################################################################
     case 'Add Branches':
         $branch     = $data->post($_POST['branch']);
         $query      = $data->addbranches($branch);
@@ -50,7 +64,9 @@ switch($_POST['action']) {
     $id         = $data->post($_POST['id']);
     $query      = $data->deletebranches($id);
     break;
+#############################################################################
 
+#############################################################################
     case 'Add Courses':
         $course     = $data->post($_POST['course']);
         $option     = $data->post($_POST['option']);
@@ -68,7 +84,9 @@ switch($_POST['action']) {
         $id         = $data->post($_POST['id']);
         $query      = $data->deletecourses($id);
     break;
+#############################################################################
 
+#############################################################################
     case 'Show Admin Table':
         include 'function_showadmin.php';
     break;
@@ -76,7 +94,9 @@ switch($_POST['action']) {
     case 'Show Professor Table':
         include 'function_showprofessor.php';
     break;
+#############################################################################
 
+#############################################################################
     case 'Show Request Administrators':
         include 'function_show_request_administrators.php';
     break;
@@ -100,10 +120,7 @@ switch($_POST['action']) {
     case 'Show Courses':
         include 'function_show_courses.php';
     break;
+#############################################################################
 
-    case 'Modify Status':
-    $id     = $data->post($_POST['id']);    
-    $query  = $data->modifystatusbyid($id);
-    break;
 
 }

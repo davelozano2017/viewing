@@ -53,7 +53,7 @@
       <form method="POST">
         <div class="form-group">
           <label>Course</label>
-          <input type="hidden" id="id" class="form-control" required>
+          <input type="hidden" id="course_id" class="form-control" required>
           <input type="text" id="update_course" class="form-control" required>
           </span>
         </div>

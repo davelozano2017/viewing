@@ -27,7 +27,7 @@ function modify_courses($id,$courses,$options) {
   var courses = $courses;
   var options = $options;
   $('#modal_courses_update').modal('show');
-  $('#modal_courses_update').find('#id').val(id);
+  $('#modal_courses_update').find('#course_id').val(id);
   $('#modal_courses_update').find('#update_course').val(courses);
   $('#modal_courses_update').find('#update_option').val(options);
 }

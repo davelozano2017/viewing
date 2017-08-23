@@ -55,12 +55,12 @@ class db extends Controller {
     }
 
     public function updatebranches($id,$branch) {
-        $query = $this->db->query("UPDATE branches_tbl SET branches = '$branch' WHERE id = $id");
+        $query = $this->db->query("UPDATE branches_tbl SET branches = '$branch' WHERE id = '$id'");
         $query ? $this->updated() : null;
     }
 
     public function deletebranches($id) {
-        $query = $this->db->query("DELETE FROM branches_tbl WHERE id = $id");
+        $query = $this->db->query("DELETE FROM branches_tbl WHERE id = '$id'");
         $query ? $this->deleted() : null;
     }
 
@@ -77,12 +77,12 @@ class db extends Controller {
 
     public function updatecourses($id,$course,$option) {
         $query = $this->db->query("UPDATE courses_tbl SET 
-        courses = '$course', options = '$option' WHERE id = $id");
-        $query ? $this->updated() : null;
+        courses = '$course', options = '$option' WHERE id = '$id'");
+        return $query ? $this->updated() : null;
     }
 
     public function deletecourses($id) {
-        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = $id");
+        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = '$id'");
         $query ? $this->deleted() : null;
     }
 

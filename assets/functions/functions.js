@@ -274,7 +274,7 @@ function add_branches() {
 function update_branches() {
     $('#btn_update_branch').click(function(e){
         e.preventDefault();
-        var id = $('#id').val();
+        var id = $('#branch_id').val();
         var branch = $('#update_branch').val();
         btnupdatebranchesdisabled();
         $.ajax({
@@ -292,7 +292,7 @@ function update_branches() {
 function delete_branches() {
     $('#btn_delete_branch').click(function(e){
         e.preventDefault();
-        var id = $('#id').val();
+        var id = $('#branch_id').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
@@ -327,7 +327,7 @@ function add_courses() {
 function update_courses() {
     $('#btn_update_course').click(function(e){
         e.preventDefault();
-        var id = $('#id').val();
+        var id = $('#course_id').val();
         var course = $('#update_course').val();
         var option = $('#update_option').val();
         btnupdatecoursesdisabled();
@@ -346,7 +346,7 @@ function update_courses() {
 function delete_courses() {
     $('#btn_delete_course').click(function(e){
         e.preventDefault();
-        var id = $('#id').val();
+        var id = $('#course_id').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
