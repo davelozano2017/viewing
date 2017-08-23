@@ -3,6 +3,7 @@
     <tr>
       <th>#</th>
       <th>Name</th>
+      <th>Branch</th>
       <th>Course</th>
       <th>Section</th>
       <th></th>
@@ -13,6 +14,7 @@
   <tr>
   <td style="width:1px"><?php echo ++$i?></td>
   <td><?php echo $row['firstname']. ' '.$row['middlename']. ' '.$row['lastname']?></td>
+  <td><?php echo $row['branch']?></td>
   <td><?php echo $row['course']?></td>
   <td><?php echo $row['section']?></td>
   <td></td>

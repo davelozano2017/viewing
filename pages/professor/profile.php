@@ -122,6 +122,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
         </a>
           <ul class="treeview-menu">
           <li><a href="view_students.php">View Students</a></li>
+          <li><a href="view_course_and_section.php">View Course & Section</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>

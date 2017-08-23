@@ -13,6 +13,7 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Last Name</label>
+                            <input type="hidden" id="professor_id" value="<?php echo $_SESSION['id']?>">
                             <input type="text" id="lastname" ng-pattern="/^[a-zA-Z ]*$/" name="lastname" ng-model="lastname" class="form-control" required>
                             <span ng-messages="addstudent.lastname.$error" ng-if="addstudent.lastname.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
@@ -83,10 +84,12 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" id="username" name="username" ng-model="username" class="form-control" required>
-                            <span ng-messages="addstudent.username.$error" ng-if="addstudent.username.$dirty">
-                            <strong ng-message="required" class="text-danger">This field is required.</strong>
+                            <label>Branch</label>
+                            <select class="form-control" id="branch">
+                                <?php foreach($data->showbranches() as $row):?>
+                                <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
+                                <?php endforeach; ?>
+                            </select>
                             </span>
                         </div>
                     </div>
@@ -95,7 +98,9 @@
                         <div class="form-group">
                             <label>Course</label>
                             <select id="course" class="form-control">
-                                <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
+                            <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
+                            <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+                            <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -104,15 +109,9 @@
                         <div class="form-group">
                             <label>Section</label>
                             <select id="section" class="form-control">
-                                <option value="M11">M11</option>
-                                <option value="M12">M12</option>
-                                <option value="M13">M13</option>
-                                <option value="A11">A11</option>
-                                <option value="A12">A12</option>
-                                <option value="A13">A13</option>
-                                <option value="E11">E11</option>
-                                <option value="E12">E12</option>
-                                <option value="E13">E13</option>
+                            <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
+                            <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                            <?php endforeach; ?>
                             </select>
                         </div>
                     </div>

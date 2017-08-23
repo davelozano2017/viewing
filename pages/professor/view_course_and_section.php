@@ -110,8 +110,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
             </span>
         </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="view_students.php">View Students</a></li>
-            <li><a href="view_course_and_section.php">View Course & Section</a></li>
+            <li><a href="view_students.php">View Students</a></li>
+            <li class="active"><a href="view_course_and_section.php">View Course & Section</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
@@ -126,41 +126,48 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Students
+     Course & Section
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
     <li>Students</li>
-    <li class="active">View Students</li>
+    <li class="active">View course & section</li>
     </ol>
   </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
     <div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <button data-toggle="modal" data-target="#addstudents" class="btn btn-primary flat"> Add Student </button>
+    
+        <div class="col-md-6">
+            <div class="form-group">
+                <button data-toggle="modal" data-target="#add_professor_course" class="btn btn-primary flat"> Add Course </button>
+            </div>
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                <!-- Start -->
+                <div id="show_professor_courses"></div>
+                <?php include 'modal-courses.php';?>
+                <!-- End -->
+                </div>
+            </div>
         </div>
-    </div>
 
-
-        <!-- Modal -->
-        <?php include 'modal-container.php';?>
-        <!-- end modal -->
-
-    <div class="col-md-12 col-sm-12">
-      <div class="box box-primary">
-        <div class="box-body box-profile">
-          <!-- Start -->
-          <div id="show_students"></div>
-          <!-- End -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <button data-toggle="modal" data-target="#addprofessorsection" class="btn btn-primary flat"> Add Section </button>
+            </div>
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                <!-- Start -->
+                <div id="show_professor_section"></div>
+                <?php include 'modal-section.php';?>
+                <!-- End -->
+                </div>
+            </div>
         </div>
-      </div>
+
     </div>
-
-  </div>
-
     </section>
     <!-- /.content -->
   </div>
@@ -176,19 +183,18 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
-<script src="../../assets/functions/functions.js"></script>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-
+<script src="../../assets/functions/functions.js"></script>
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-//School information
 var app = angular.module('app', ['ngMessages']);
-
-showstudents();
+showprofessorcourse();
+showprofessorsection();
 
 </script>
+
 </body>
 </html>
