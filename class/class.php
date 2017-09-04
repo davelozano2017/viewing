@@ -1,5 +1,6 @@
 <?php
 include 'controller.php';
+include 'SmsGateway.php';
 class db extends Controller {
 
 
@@ -11,7 +12,8 @@ class db extends Controller {
         $check = $this->db->query("SELECT * FROM accounts_tbl WHERE email = '$email'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'Already exist.';
+            $this->duplicated($message);
         } else {
             $query = $this->db->query("INSERT INTO accounts_tbl 
             (photo,lastname,firstname,middlename,email,contact,
@@ -19,29 +21,67 @@ class db extends Controller {
             VALUES 
             ('$photo','$lastname','$firstname','$middlename','$email',
             '$contact','$gender','$username','$hash','$security_code',1,'$type')");
-            $query ? $this->success() : false;
+            if($type == 1) {
+                $message = 'New administrator has been added';
+            } elseif($type == 2) {
+                $message = 'New professor has been added';
+            }
+            $query ? $this->success($message) : false;
         }
     }
 
-    // Insert Student
-    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$course,$section,$professor_id) {
-        $password = password_hash(12345123,PASSWORD_DEFAULT);
-        $username = $firstname.$lastname.$middlename;
-        $security_code = rand(111111,999999);
-        $photo = $gender == 'Male' ? '../../assets/images/student_male.png' : '../../assets/images/student_female.png';
-        $check = $this->db->query("SELECT * FROM accounts_tbl WHERE email = '$email'");
-        $checkrow = $check->num_rows;
-        if($checkrow > 0) {
-            $this->duplicated();
+    
+
+    public function request($email) {
+        $check   = $this->db->query("SELECT * FROM accounts_tbl WHERE email = '$email'");
+        $checkr  = $check->num_rows;
+        if($checkr > 0) {
+        $row     = $check->fetch_object();
+        $role    = $row->role;
+        $id      = $row->id;
+        $name    = $row->firstname. ' '.$row->lastname;
+        $contact = $row->contact;
+        $checks  = $this->db->query("SELECT * FROM requests_tbl WHERE account_id = '$id'");
+        $checksr = $checks->num_rows;
+        if($checksr > 0) {
+            $message = 'Your request has already sent.';
+            $this->error($message);
         } else {
-            $query = $this->db->query("INSERT INTO accounts_tbl 
-            (photo,lastname,firstname,middlename,email,contact,
-            gender,username,password,security_code,status,role) 
-            VALUES 
-            ('$photo','$lastname','$firstname','$middlename','$email',
-            '$contact','$gender','$username','$password','$security_code',1,'$type')");
-            $query ? $this->insertstudentinfo($professor_id,$section,$course,$username,$branch) : false;
+            $query   = $this->db->query("INSERT INTO requests_tbl (account_id,name,contact,role) VALUES ('$id','$name','$contact','$role')");
+            $message = 'Your request for a temporary password has been sent.';
+            return   $query ? $this->success($message) : null;
+          }
+        } else {
+            $message = $email.' '. ' is not in our database.';
+            $this->error($message);
         }
+
+    }
+
+    function executerequest($id) {
+        $hash     = 12345;
+        $password = password_hash($hash,PASSWORD_DEFAULT);
+        $check    = $this->db->query("SELECT * FROM requests_tbl WHERE id = '$id'");
+        $row      = $check->fetch_object();
+        $acc_id   = $row->account_id;
+        $contact  = $row->contact;
+        $message  = 'Your new password is '.$hash;
+        $query    = $this->db->query("UPDATE accounts_tbl SET password = '$password' WHERE id = '$acc_id'");
+        if($query) {
+            $result = $this->db->query("DELETE FROM requests_tbl WHERE id = '$id'");
+            if($result) {
+                $smsGateway = new SmsGateway('lozanojohndavid@gmail.com', '12345123');
+                $number     = '+63'.$contact;
+                $message    = $message;
+                $deviceID   = 54501;
+                $smsGateway->sendMessageToNumber($number, $message, $deviceID);
+                if($smsGateway) {
+                    $message = 'Temporary password has been sent to '.$number;
+                    $this->success($message);
+                }
+            }
+        }
+
     }
 
     public function addbranches($branch) {
@@ -110,10 +150,12 @@ class db extends Controller {
         $check = $this->db->query("SELECT * FROM professor_courses_tbl WHERE courses = '$professor_course' AND professor_id = '$professor_id'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'This course has already in your list.';
+            $this->duplicated($message);
         } else {
             $query = $this->db->query("INSERT INTO professor_courses_tbl (professor_id,courses) VALUES ('$professor_id','$professor_course')");
-            $query ? $this->success() : null;
+            $message = $professor_course.' '.'has been added to your list';
+            $query ? $this->success($message) : null;
         }
     }
 
@@ -121,10 +163,12 @@ class db extends Controller {
         $check = $this->db->query("SELECT * FROM professor_courses_tbl WHERE courses = '$professor_course'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'This course is already exist.';
+            $this->duplicated($message);
         } else {
             $query= $this->db->query("UPDATE professor_courses_tbl SET courses = '$professor_course' WHERE id = '$update_id'");
-            return $query ? $this->updated() : null;
+            $message = 'Course has been updated';
+            return $query ? $this->updated($message) : null;
         }
     } 
 
@@ -137,10 +181,12 @@ class db extends Controller {
         $check = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_section = '$professor_section' AND professor_id = '$professor_id'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'This course has already in your list.';
+            $this->duplicated($message);
         } else {
             $query = $this->db->query("INSERT INTO professor_sections_tbl (professor_id,professor_section) VALUES ('$professor_id','$professor_section')");
-            $query ? $this->success() : null;
+            $message = $professor_section.' '.'has been added to your list';
+            $query ? $this->success($message) : null;
         }
     }
 
@@ -148,16 +194,19 @@ class db extends Controller {
         $check = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_section = '$prof_section'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'This section has already in your list.';
+            $this->duplicated($message);
         } else {
             $query = $this->db->query("UPDATE professor_sections_tbl SET professor_section = '$prof_section' WHERE id = $hiddenid");
-            return $query ? $this->updated() : null;
+            $message = 'Section has been updated.';
+            return $query ? $this->updated($message) : null;
         }
     } 
 
     public function deleteprofessorsection($hiddenid) {
         $query = $this->db->query("DELETE FROM professor_sections_tbl WHERE id = '$hiddenid'");
-        return $query ? $this->deleted() : null;
+            $message = 'Section has been deleted.';
+            return $query ? $this->deleted($message) : null;
     }
 
     public function updatecourses($id,$course,$option) {
@@ -171,16 +220,84 @@ class db extends Controller {
         $query ? $this->deleted() : null;
     }
 
+    // Insert Student
+    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$course,$section,$professor_id) {
+        $password = password_hash(12345123,PASSWORD_DEFAULT);
+        $security_code = rand(111111,999999);
+        $photo = $gender == 'Male' ? '../../assets/images/student_male.png' : '../../assets/images/student_female.png';
+        $check = $this->db->query("SELECT * FROM accounts_tbl WHERE email = '$email'");
+        $checkrow = $check->num_rows;
+        if($checkrow > 0) {
+            $message = 'This student is already exist in your list.';
+            $this->duplicated($message);
+        } else {
+            $query = $this->db->query("INSERT INTO accounts_tbl 
+            (photo,lastname,firstname,middlename,email,contact,
+            gender,username,password,security_code,status,role) 
+            VALUES 
+            ('$photo','$lastname','$firstname','$middlename','$email',
+            '$contact','$gender','$username','$password','$security_code',1,'$type')");
+            $query ? $this->insertstudentinfo($professor_id,$section,$course,$username,$branch) : false;
+        }
+    }
+
     public function insertstudentinfo($professor_id,$section,$course,$username,$branch) {
         $query = $this->db->query("INSERT INTO students_tbl 
         (professor_id,section,course,branch,username) VALUES ('$professor_id','$section','$course','$branch','$username')");
-        return $query ? $this->success() : false;
+        $message = 'New student has been added.';
+        return $query ? $this->success($message) : false;
+    }
+
+    public function updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$branch,$section,$course) {
+        if(empty($lastname) || empty($firstname) || empty($middlename) || empty($email) || empty($contact) || empty($gender) || empty($username) || empty($branch) || empty($section) || empty($course)) {
+            echo json_encode(array(
+                'bgcolor' => '#ff0000',
+                'color'   => '#fff',
+                'message' => 'Please fill up all fields'
+            ));
+        } else {
+            $query = $this->db->query("UPDATE accounts_tbl SET 
+                lastname = '$lastname', firstname = '$firstname', middlename = '$middlename', email = '$email', 
+                contact = '$contact', gender = '$gender', 
+                username = '$username', username = '$username' WHERE id = '$accountid'");
+            return $query ? $this->updatestudentinfo($studentid, $section,$course,$username,$branch) : null;
+        }
+
+    }
+
+    public function updatestudentinfo($studentid,$section,$course,$username,$branch) {
+        $query = $this->db->query("UPDATE students_tbl SET section = '$section', course = '$course', username = '$username', branch = '$branch' WHERE studentid = '$studentid'");
+        $message = 'Student information has been updated';
+        return $query ? $this->updated($message) : false;
+    }
+
+    public function deletestudents($studentid,$accountid) {
+        $query = $this->db->query("DELETE FROM accounts_tbl WHERE id = '$studentid'");
+        if($query) {
+            $success = $this->db->query("DELETE FROM students_tbl WHERE studentid = '$accountid'");
+            echo json_encode(array('success'=>true));
+        }
     }
 
     //Show Admin Record
     public function showadmin() {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE role = 1");
         return $query;
+    }
+
+    public function countprofessorsection($id) {
+        $query = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_id = $id");
+        return $check = $query->num_rows;
+    }
+
+    public function countprofessorstudent($id) {
+        $query = $this->db->query("SELECT * FROM students_tbl WHERE professor_id = $id");
+        return $check = $query->num_rows;
+    }
+
+    public function countprofessorcourse($id) {
+        $query = $this->db->query("SELECT * FROM professor_courses_tbl WHERE professor_id = $id");
+        return $check = $query->num_rows;
     }
 
     //Show Professor Record
@@ -306,11 +423,21 @@ class db extends Controller {
             $_SESSION['photo'] = $photo;
             echo json_encode(array('success' => true, 'location' => '../pages/student/profile.php.'));
         } else {
-            echo json_encode(array('success' => false, 'message' => 'Invalid username or password.'));
+            echo json_encode(array('success' => false, 'bgcolor' => '#ff0000','color'   => '#fff',
+                'message' => 'Invalid username or password.'));
         }
         } else {
-            echo json_encode(array('success' => false, 'message' => 'Invalid username or password.'));
-            
+            echo json_encode(array('success' => false, 'bgcolor' => '#ff0000','color'   => '#fff',
+            'message' => 'Invalid username or password.'));
+        }
+    }
+
+    public function professorprofile($update_id,$password) {
+        $hash = password_hash($password,PASSWORD_DEFAULT);
+        $query = $this->db->query("UPDATE accounts_tbl SET password = '$hash' WHERE id = '$update_id'");
+        if($query) {
+            $message = 'Password has been changed';
+            $this->updated($message);
         }
     }
 
@@ -325,12 +452,30 @@ class db extends Controller {
         }
     }
 
-
     //redirect to login if ever they're not logged in
     public function redirecttologin() {
         if(!isset($_SESSION['role'])) {
             header('location: ../login.php');
         }
+    }
+
+    public function redirecttopageafterlogin() {
+        if(isset($_SESSION['role'])) {
+            switch($_SESSION['role']) {
+                case 0:
+                    header('location: super/dashboard.php');
+                break;
+                case 1:
+                    header('location: admin/dashboard.php');
+                break;
+                case 2:
+                    header('location: professor/view_students.php');
+                break;
+                case 3:
+                    header('location: student/dashboard.php');
+                break;
+            };
+        } 
     }
 
     public function logout() {
@@ -354,20 +499,25 @@ class db extends Controller {
         return $this->db->real_escape_string(htmlentities($data));
     }
 
-    public function duplicated() {
-      echo json_encode(array('success'=> false, 'message' => 'duplicated'));
+    public function duplicated($message) {
+      echo json_encode(array('success' => false,'bgcolor' => '#ff0000','color'   => '#fff', 'message' => $message));
     }
 
-    public function updated() {
-      echo json_encode(array('success'=> true, 'message' => 'updated'));
+    public function updated($message) {
+      echo json_encode(array('success' => true, 'bgcolor' => '#336699','color'   => '#fff','message' => $message));
     }
 
-    public function success() {
-      echo json_encode(array('success'=> true, 'message' => 'success'));
+    public function success($message) {
+      echo json_encode(array('success' => true, 'bgcolor' => '#336699','color'   => '#fff','message' => $message));
+    }
+
+    public function error($message) {
+        echo json_encode(array('success' => false, 'bgcolor' => '#ff0000','color'   => '#fff',
+        'message' => $message));
     }
 
     public function deleted() {
-        echo json_encode(array('success'=> true, 'message' => 'Successfully Deleted'));
+        echo json_encode(array('success' => false));
     }
 
     public function activate() {

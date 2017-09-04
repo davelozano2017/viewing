@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2017 at 04:33 PM
+-- Generation Time: Sep 04, 2017 at 11:10 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -50,10 +50,12 @@ CREATE TABLE `accounts_tbl` (
 --
 
 INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`, `email`, `contact`, `gender`, `username`, `password`, `security_code`, `status`, `role`, `created`) VALUES
-(14, '../../assets/images/admin.png', '', 'Administrator', '', 'admin@yahoo.com', '9547774444', 'Male', 'administrator', '$2y$10$ybh9eYE20b6ZGrcZQnTeke5TsuuzZT42nxW6WHIBiI/dmOq8RQGKu', 447478, 0, 0, '2017-08-22 05:58:36'),
-(15, '../../assets/images/admin.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9555444888', 'Female', 'jeddahlyncabuga', '$2y$10$n4Gy65TpnohZIApYh.AGEu1g.K1dhuPo2.lLcGFrMM1xNxUdQzSE.', 749861, 0, 2, '2017-08-22 22:51:26'),
-(18, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9562211554', 'Female', 'adoralozano', '$2y$10$8VbiyjnoI5z6suXgrz4p4uOq85qmN0WuVzQUnQL55jGCn.HODfY5y', 699014, 0, 1, '2017-08-22 22:51:27'),
-(38, '../../assets/images/student_male.png', 'Cruz', 'Juan', 'Dela', 'juandelacruz@gmail.com', '9115522447', 'Male', 'JuanCruzDela', '$2y$10$/0p5WQmItCvv.gYWZsRPcOBq/MipxCTwV/iLXVIuOtO/IMcwRnFuK', 860073, 1, 3, '2017-08-23 10:28:35');
+(18, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9562211554', 'Female', 'adoralozano', '$2y$10$8VbiyjnoI5z6suXgrz4p4uOq85qmN0WuVzQUnQL55jGCn.HODfY5y', 699014, 0, 0, '2017-09-04 08:18:52'),
+(54, '../../assets/images/admin.png', 'Admin', 'Admin', 'Admin', 'Admin@yahoo.com', '9222828282', 'Male', 'Admin', '$2y$10$bJxTsWubRofo8t1trbb4Ce8IVa3CHK8EH2w6MZXE6EOPNqHr4jMpm', 880249, 1, 1, '2017-09-04 08:31:49'),
+(55, '../../assets/images/admin.png', 'zxczxc', 'zxczxc', 'zxczxc', 'zxczxc@aa.co', '1313181812', 'Male', 'zxczxc', '$2y$10$rD2ts/G3XqvOGu2jc9rstOI5fmBampm6ndqvFFL9N6m6XMog6KR2q', 379195, 1, 1, '2017-09-04 08:27:58'),
+(56, '../../assets/images/admin.png', 'asd', 'asd', 'asd', 'asd@aa.co', '1313131311', 'Male', 'asdasd', '$2y$10$AUd.vSOUbqQvj3Zy0mOPZ.cdECWMwcIV2bLwzs/Oidqhxe.BhSDYq', 789931, 1, 1, '2017-09-04 08:32:09'),
+(57, '../../assets/images/admin.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9555773952', 'Female', 'jeddahlyncabuga', '$2y$10$UWTXqe5zN.mUGLJMHiahJ.UGWctXlZYWsG7GpEwMnuRxo4Rpg4Rbe', 960688, 0, 2, '2017-09-04 08:33:17'),
+(58, '../../assets/images/student_male.png', 'Lozano', 'John David', 'Sadia', 'lozanojohndavid@gmail.com', '9555773952', 'Male', 'A111G0001', '$2y$10$EICXwqI28paqL8mdrolcDeAU/R3bldEt4P4kIj9QJ02enLzGwEl16', 330200, 1, 3, '2017-09-04 08:35:02');
 
 -- --------------------------------------------------------
 
@@ -129,9 +131,9 @@ CREATE TABLE `professor_courses_tbl` (
 --
 
 INSERT INTO `professor_courses_tbl` (`id`, `professor_id`, `courses`) VALUES
-(30, 15, 'Computer Secretarial'),
-(31, 15, 'B.S.  in Information Technology'),
-(32, 15, 'B.S.  in Business Administration');
+(64, 57, 'B.S.  in Information Technology'),
+(66, 57, 'B.S.  in Computer Science'),
+(67, 57, 'B.S. in Computer Engineering');
 
 -- --------------------------------------------------------
 
@@ -150,8 +152,9 @@ CREATE TABLE `professor_sections_tbl` (
 --
 
 INSERT INTO `professor_sections_tbl` (`id`, `professor_id`, `professor_section`) VALUES
-(20, 15, 'A32'),
-(21, 15, 'A42');
+(34, 57, 'M22'),
+(35, 57, 'M42'),
+(36, 57, 'M62');
 
 -- --------------------------------------------------------
 
@@ -174,7 +177,7 @@ CREATE TABLE `requests_tbl` (
 --
 
 CREATE TABLE `students_tbl` (
-  `id` int(11) NOT NULL,
+  `studentid` int(11) NOT NULL,
   `professor_id` int(11) NOT NULL,
   `section` varchar(255) NOT NULL,
   `course` varchar(255) NOT NULL,
@@ -186,8 +189,8 @@ CREATE TABLE `students_tbl` (
 -- Dumping data for table `students_tbl`
 --
 
-INSERT INTO `students_tbl` (`id`, `professor_id`, `section`, `course`, `branch`, `username`) VALUES
-(7, 15, 'A42', 'B.S.  in Business Administration', 'Lagro', 'JuanCruzDela');
+INSERT INTO `students_tbl` (`studentid`, `professor_id`, `section`, `course`, `branch`, `username`) VALUES
+(19, 57, 'M62', 'B.S.  in Information Technology', 'Camarin', 'A111G0001');
 
 --
 -- Indexes for dumped tables
@@ -233,7 +236,7 @@ ALTER TABLE `requests_tbl`
 -- Indexes for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`studentid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -243,7 +246,7 @@ ALTER TABLE `students_tbl`
 -- AUTO_INCREMENT for table `accounts_tbl`
 --
 ALTER TABLE `accounts_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `branches_tbl`
 --
@@ -258,22 +261,22 @@ ALTER TABLE `courses_tbl`
 -- AUTO_INCREMENT for table `professor_courses_tbl`
 --
 ALTER TABLE `professor_courses_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
 -- AUTO_INCREMENT for table `professor_sections_tbl`
 --
 ALTER TABLE `professor_sections_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `requests_tbl`
 --
 ALTER TABLE `requests_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;COMMIT;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

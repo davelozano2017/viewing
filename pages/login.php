@@ -1,4 +1,8 @@
 
+<?php 
+include '../class/config.php';
+$data->redirecttopageafterlogin();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +19,8 @@
   <link rel="stylesheet" href="../assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../assets/dist/css/animate.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../assets/plugins/iCheck/square/blue.css">
 
@@ -35,7 +41,7 @@
 </div>
 <!-- /.login-logo -->
 <div class="login-box-body">
-  <p class="login-box-msg">Sign in to start your session</p>
+  <p class="login-box-msg">Sign in to start your session </p>
 
   <form method="post">
     <div class="form-group has-feedback">
@@ -47,14 +53,13 @@
       <span class="glyphicon glyphicon-lock form-control-feedback"></span>
     </div>
     <div class="row">
-      <div class="col-xs-4">
+      <div class="col-xs-12">
         <button type="submit" id="signin" class="btn btn-primary  btn-flat">Sign In</button>
+        <a href="request.php" class="btn pull-right">Request password</button>
       </div>
       <!-- /.col -->
     </div>
   </form>
-
-  <a href="#">I forgot my password</a><br>
 
 </div>
 <!-- /.login-box-body -->
@@ -66,6 +71,8 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../assets/functions/functions.js"></script>
+<script src="../assets/dist/js/jquery.amaran.min.js"></script>
+
 
 </body>
 </html>

@@ -18,15 +18,14 @@
 </tbody>
 </table>
 <script>
-jQuery( document ).ready(function( $ ) {
-  $('#professor_courses').DataTable({
-    "paging": true, "lengthChange": true, "searching": true,
-    "ordering": false, "info": false, "autoWidth": true
-  });
-});
+ $(document).ready(function(){
+    $('#professor_courses').DataTable({
+      "paging": true, "lengthChange": true, "searching": true,
+      "ordering": false, "info": false, "autoWidth": true
+    });
+ });
 
 function modify_professor_courses($id,$courses) {
-  jQuery.noConflict();
   var id = $id;
   var courses = $courses;
   $('#update_professor_course').modal('show');

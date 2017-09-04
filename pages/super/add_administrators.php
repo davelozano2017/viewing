@@ -25,6 +25,8 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -152,7 +154,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
     <div class="col-md-4 col-sm-12">
       <div class="box box-primary">
         <div class="box-body box-profile">
-        <form method="POST" name="add" ng-app="app" novalidate>
+        <form method="POST" name="add" ng-app="app" ng-controller="mainController"  novalidate>
         <input type="hidden" id="type" value="1">
 
           <div class="box-body">
@@ -224,7 +226,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 
             <div class="form-group">
               <label>Password</label>
-              <input type="text" id="password" name="password" ng-model="password" class="form-control" required>
+              <input type="password" password-verify="{{confirm_password}}" id="password" name="password" ng-model="password" class="form-control" required>
               <span ng-messages="add.password.$error" ng-if="add.password.$dirty">
                 <strong ng-message="required" class="text-danger">This field is required.</strong>
                 <strong ng-message="minlength" class="text-danger">Password is too short.</strong>
@@ -233,7 +235,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 
             <div class="form-group">
               <label>Confirm Password</label>
-              <input type="text" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required>
+              <input type="password" password-verify="{{password}}" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required>
               <b ng-messages="add.confirm_password.$error" ng-if="add.confirm_password.$dirty">
                 <strong ng-message="required" class="text-danger" style="display:block">This field is required.</strong>
                 <strong ng-show="confirm_password != password" class="text-danger">Password not matched.</strong>
@@ -283,15 +285,51 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <script type="text/javascript">
+(function() {
+  "use strict";
+  angular
+    .module('app', ['ngMessages'])
+    .controller('mainController', mainController)
+    .directive('passwordVerify', passwordVerify);
+
+  function mainController($scope) {
+    // Some code
+  }
+
+  function passwordVerify() {
+    return {
+      restrict: 'A', // only activate on element attribute
+      require: '?ngModel', // get a hold of NgModelController
+      link: function(scope, elem, attrs, ngModel) {
+        if (!ngModel) return; // do nothing if no ng-model
+
+        // watch own value and re-validate on change
+        scope.$watch(attrs.ngModel, function() {
+          validate();
+        });
+
+        // observe the other value and re-validate on change
+        attrs.$observe('passwordVerify', function(val) {
+          validate();
+        });
+
+        var validate = function() {
+          // values
+          var val1 = ngModel.$viewValue;
+          var val2 = attrs.passwordVerify;
+
+          // set validity
+          ngModel.$setValidity('passwordVerify', val1 === val2);
+        };
+      }
+    }
+  }
+})();
+
 //School information
-var app = angular.module('app', ['ngMessages']);
-$(document).ready(function(){
-    $('#show_administrator').DataTable({
-    "paging": true, "lengthChange": true, "searching": true,
-    "ordering": false, "info": true, "autoWidth": true
-    });
-})
+
 showadmin()
 
 </script>

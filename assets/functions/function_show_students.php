@@ -1,4 +1,5 @@
-<table id="tables" class="table table-bordered table-striped">
+<style>.custom{background:transparent;border:none;outline:none};</style>
+<table id="tables" class="table table-striped dt-responsive responsive nowrap" style="width:100%">
   <thead>
     <tr>
       <th>#</th>
@@ -17,7 +18,7 @@
   <td><?php echo $row['branch']?></td>
   <td><?php echo $row['course']?></td>
   <td><?php echo $row['section']?></td>
-  <td></td>
+  <td><button class="custom" onclick="edit_student('<?php echo $row['studentid']?>','<?php echo $row['id']?>','<?php echo $row['firstname']?>','<?php echo $row['middlename']?>','<?php echo $row['lastname']?>','<?php echo $row['branch']?>','<?php echo $row['course']?>','<?php echo $row['section']?>','<?php echo $row['username']?>','<?php echo $row['email']?>','<?php echo $row['contact']?>','<?php echo $row['gender']?>')"><i class="fa fa-pencil"></i></button></td>
   </tr>
 <?php endforeach; ?>
 </tbody>

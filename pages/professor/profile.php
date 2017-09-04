@@ -13,10 +13,14 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
     $contact  = $row['contact'];
     $username = $row['username'];
     $role     = $row['role'] == 2 ? 'Professor' : null;
-    $status   = $row['status'] == 0 ? '<label class="label label-success flat">Activated</label>' : null;
-    
 ?>     
 <?php endforeach; ?>
+<?php 
+$count_section = $data->countprofessorsection($id);
+$count_student = $data->countprofessorstudent($id);
+$count_course = $data->countprofessorcourse($id);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +36,8 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
   <link rel="stylesheet" href="../../assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -161,8 +167,8 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header">Status</h5>
-                    <span class="description-text"><?php echo $status?></a></span>
+                    <h5 class="description-header">Sections</h5>
+                    <span class="description-text"><?php echo $count_section?></a></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -170,15 +176,15 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
                     <h5 class="description-header">Students</h5>
-                    <span class="description-text">0</span>
+                    <span class="description-text"><?php echo $count_student?></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <h5 class="description-header">Subjects</h5>
-                    <span class="description-text">0</span>
+                    <h5 class="description-header">Courses</h5>
+                    <span class="description-text"><?php echo $count_course?></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -199,7 +205,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
           <div class="tab-content">
 
             <div class="tab-pane active" id="information">
-              <form class="form-horizontal">
+              <form class="form-horizontal" method="POST" ng-app="app" ng-controller="mainController"  novalidate name="profile">
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-10">
@@ -229,8 +235,31 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
                 </div>
 
                 <div class="form-group">
+                  <label for="username" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="text" id="password" name="password" ng-model="password" class="form-control" required password-verify="{{confirm_password}}">
+                    <input type="hidden" id="update_id" value="<?php echo$id?>">
+                    <span ng-messages="profile.password.$error" ng-if="profile.password.$dirty">
+                      <strong ng-message="required" class="text-danger">This field is required.</strong>
+                      <strong ng-message="minlength" class="text-danger">Password is too short.</strong>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="username" class="col-sm-2 control-label"> Confirm Password</label>
+                  <div class="col-sm-10">
+                    <input type="text" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required password-verify="{{password}}">
+                    <b ng-messages="profile.confirm_password.$error" ng-if="profile.confirm_password.$dirty">
+                      <strong ng-message="required" class="text-danger" style="display:block">This field is required.</strong>
+                      <strong ng-show="confirm_password != password" class="text-danger">Password not matched.</strong>
+                    </b>
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                  <a href="add_professors.php" class="btn btn-primary flat">Back</a>
+                  <button type="submit" ng-disabled="profile.$invalid" id="profile_update" class="btn btn-primary flat">Save Changes </button>
                   </div>
                 </div>
               </form>
@@ -256,14 +285,10 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../assets/angular/passwordmatch.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript">
-//School information
-var app = angular.module('app', ['ngMessages']);
-
-
-</script>
 </body>
 </html>

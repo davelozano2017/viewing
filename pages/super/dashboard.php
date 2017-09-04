@@ -25,6 +25,8 @@ $all       = $data->countall();
   <link rel="stylesheet" href="../../assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -267,47 +269,29 @@ $all       = $data->countall();
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script>
-    function request_administrators($id) {
-        var id = $id;
-        alert(id);
-    }
-    
-    function request_professors($id) {
-        var id = $id;
-        alert(id);
-    }
+  function request_administrators($id) {
+      var id = $id;
+      execute_request(id)
+  }
+  
+  function request_professors($id) {
+      var id = $id;
+      execute_request(id)
+  }
 
-    function request_students($id) {
-        var id = $id;
-        alert(id);
-    }
-</script>
-<script>
-$(document).ready(function(){
-    $('#administrators').DataTable({
-    "paging": true, "lengthChange": true, "searching": false,
-    "ordering": false, "info": false, "autoWidth": true
-    });
-
-    $('#professors').DataTable({
-    "paging": true, "lengthChange": true, "searching": false,
-    "ordering": false, "info": false, "autoWidth": true
-    });
-
-    $('#students').DataTable({
-    "paging": true, "lengthChange": true, "searching": false,
-    "ordering": false, "info": false, "autoWidth": true
-    });
-})
-</script>
-<script>
+  function request_students($id) {
+      var id = $id;
+      execute_request(id)
+  }
   show_request_administrators();
   show_request_professors();
   show_request_students();
+
 </script>
 </body>
 </html>

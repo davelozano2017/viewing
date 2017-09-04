@@ -21,13 +21,19 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link rel="stylesheet" href="../../assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
-
+  <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
+    
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body ng-app="apps" ng-controller='myCtrl'class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -174,21 +180,59 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 
 </div>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
-<script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 <script type="text/javascript">
 //School information
 var app = angular.module('app', ['ngMessages']);
-
+var apps = angular.module('apps', ['ngMessages']);
+apps.controller('myCtrl',function($scope){
+});
 showstudents();
 
+function edit_student($studentid,$id,$firstname,$middlename,$lastname,$branch,$course,$section,$username,$email,$contact,$gender) {
+  var accountid = $id, firstname = $firstname, middlename = $middlename, lastname = $lastname, branch = $branch, course = $course, section = $section, username = $username, email = $email, contact = $contact, gender = $gender, studentid = $studentid;
+  $('#editstudent').modal('show');
+  $('#editstudent').find('#accountid').val(accountid);
+  $('#editstudent').find('#studentid').val(studentid);
+  $('#editstudent').find('#elastname').val(lastname);
+  $('#editstudent').find('#efirstname').val(firstname);
+  $('#editstudent').find('#emiddlename').val(middlename);
+  $('#editstudent').find('#eemail').val(email);
+  $('#editstudent').find('#econtact').val(contact);
+  $('#editstudent').find('#egender').val(gender);
+  $('#editstudent').find('#eusername').val(username);
+  $('#editstudent').find('#ebranch').val(branch);
+  $('#editstudent').find('#esection').val(section);
+  $('#editstudent').find('#ecourse').val(course);
+  apps.controller('myCtrl',function($scope){
+    $scope.elastname   = elastname;
+    $scope.efirstname  = efirstname;
+    $scope.emiddlename = emiddlename;
+    $scope.eemail      = eemail;
+    $scope.econtact    = econtact;
+    $scope.egender     = egender;
+    $scope.eusername   = eusername;
+    $scope.ebranch     = ebranch;
+    $scope.esection    = esection;
+    $scope.ecourse     = ecourse;
+  });
+}
+updatestudent();
+deletestudent();
 </script>
 </body>
 </html>

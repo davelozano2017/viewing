@@ -214,11 +214,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 
             <div class="tab-pane active" id="information">
               <form class="form-horizontal">
-                <div class="form-group">
-                 
-                </div>
-                
-              
+
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-10">
@@ -272,18 +268,11 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
-<script src="../../assets/angular/angular.min.js"></script>
-<script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-//School information
-var app = angular.module('app', ['ngMessages']);
-   
 showprofessor()
-
 </script>
 </body>
 </html>

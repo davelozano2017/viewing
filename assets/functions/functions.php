@@ -42,10 +42,11 @@ switch($_POST['action']) {
         $gender       = $data->post($_POST['gender']);
         $branch       = $data->post($_POST['branch']);
         $type         = $data->post($_POST['type']);
+        $username     = $data->post($_POST['username']);
         $section      = $data->post($_POST['section']);
         $course       = $data->post($_POST['course']);
         $professor_id = $data->post($_POST['professor_id']);
-        $query        = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$course,$section,$professor_id);
+        $query        = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$course,$section,$professor_id);
     break;
 #############################################################################
     
@@ -121,6 +122,29 @@ switch($_POST['action']) {
     case 'Show Courses':
         include 'function_show_courses.php';
     break;
+
+    case 'Update Student':
+        $accountid  = $data->post($_POST['accountid']);
+        $studentid  = $data->post($_POST['studentid']);
+        $lastname   = $data->post($_POST['lastname']);
+        $firstname  = $data->post($_POST['firstname']);
+        $middlename = $data->post($_POST['middlename']);
+        $email      = $data->post($_POST['email']);
+        $contact    = $data->post($_POST['contact']);
+        $gender     = $data->post($_POST['gender']);
+        $username   = $data->post($_POST['username']);
+        $branch     = $data->post($_POST['branch']);
+        $section    = $data->post($_POST['section']);
+        $course     = $data->post($_POST['course']);
+        $query      = $data->updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$branch,$section,$course);
+    break;
+
+    case 'Delete Student':
+        $accountid  = $data->post($_POST['accountid']);
+        $studentid  = $data->post($_POST['studentid']);
+        $query      = $data->deletestudents($accountid,$studentid);
+    break;
+
 #############################################################################
 
 #############################################################################
@@ -165,6 +189,26 @@ switch($_POST['action']) {
     case 'Delete Professor Section':
         $hiddenid = $data->post($_POST['hiddenid']);
         $query    = $data->deleteprofessorsection($hiddenid);
+    break;
+#############################################################################
+
+#############################################################################
+    case 'Professor Profile':
+        $update_id = $data->post($_POST['update_id']);
+        $password  = $data->post($_POST['password']);
+        $query     = $data->professorprofile($update_id,$password);
+    break;
+#############################################################################
+
+#############################################################################
+    case 'Request':
+        $email = $data->post($_POST['email']);
+        $query = $data->request($email);
+    break;
+
+    case 'Execute Request':
+        $id    = $data->post($_POST['id']);
+        $query = $data->executerequest($id);
     break;
 #############################################################################
 

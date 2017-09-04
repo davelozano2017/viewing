@@ -17,15 +17,12 @@
 </tbody>
 </table>
 <script>
-jQuery( document ).ready(function( $ ) {
   $('#professor_section').DataTable({
     "paging": true, "lengthChange": true, "searching": true,
     "ordering": false, "info": false, "autoWidth": true
   });
-});
 
 function modify_professor_section($id,$section) {
-  jQuery.noConflict();
   var id = $id;
   var section = $section;
   $('#update_professor_section').modal('show');

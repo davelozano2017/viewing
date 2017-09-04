@@ -24,7 +24,9 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+<link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+<link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+<link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -151,7 +153,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
     <div class="col-md-4 col-sm-12">
       <div class="box box-primary">
         <div class="box-body box-profile">
-        <form method="POST" name="add" ng-app="app" name="login" novalidate>
+        <form method="POST" name="add" ng-app="app" ng-controller="mainController"  novalidate>
         <input type="hidden" id="type" value="2">
 
           <div class="box-body">
@@ -223,7 +225,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 
             <div class="form-group">
               <label>Password</label>
-              <input type="text" id="password" name="password" ng-model="password" class="form-control" required>
+              <input type="password" id="password" password-verify="{{confirm_password}}"name="password" ng-model="password" class="form-control" required>
               <span ng-messages="add.password.$error" ng-if="add.password.$dirty">
                 <strong ng-message="required" class="text-danger">This field is required.</strong>
                 <strong ng-message="minlength" class="text-danger">Password is too short.</strong>
@@ -232,7 +234,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 
             <div class="form-group">
               <label>Confirm Password</label>
-              <input type="text" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required>
+              <input type="password" id="confirm_password" password-verify="{{confirm_password}}"name="confirm_password" ng-model="confirm_password" class="form-control" required>
               <b ng-messages="add.confirm_password.$error" ng-if="add.confirm_password.$dirty">
                 <strong ng-message="required" class="text-danger" style="display:block">This field is required.</strong>
                 <strong ng-show="confirm_password != password" class="text-danger">Password not matched.</strong>
@@ -280,14 +282,12 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 <script src="../../assets/functions/functions.js"></script>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
-<script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-
+<script src="../../assets/angular/passwordmatch.js"></script>
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <script type="text/javascript">
 //School information
-var app = angular.module('app', ['ngMessages']);
-   
 showprofessor()
 
 </script>
