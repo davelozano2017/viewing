@@ -114,6 +114,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
           <ul class="treeview-menu">
             <li><a href="view_students.php">View Students</a></li>
             <li class="active"><a href="view_course_and_section.php">View Course & Section</a></li>
+            <li><a href="view_subjects.php">View Subjects</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>

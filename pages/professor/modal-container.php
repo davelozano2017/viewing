@@ -115,12 +115,23 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
                             <select id="course" class="form-control">
                             <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
                             <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+                            <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <select id="subject" class="form-control">
+                            <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
+                            <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>
@@ -260,12 +271,23 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
                             <select id="ecourse" class="form-control">
                             <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
                             <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+                            <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <select id="esubject" class="form-control">
+                            <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
+                            <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>

@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Branch</th>
       <th>Course</th>
+      <th>Subject</th>
       <th>Section</th>
       <th></th>
     </tr>
@@ -17,8 +18,9 @@
   <td><?php echo $row['firstname']. ' '.$row['middlename']. ' '.$row['lastname']?></td>
   <td><?php echo $row['branch']?></td>
   <td><?php echo $row['course']?></td>
+  <td><?php echo $row['subject']?></td>
   <td><?php echo $row['section']?></td>
-  <td><button class="custom" onclick="edit_student('<?php echo $row['studentid']?>','<?php echo $row['id']?>','<?php echo $row['firstname']?>','<?php echo $row['middlename']?>','<?php echo $row['lastname']?>','<?php echo $row['branch']?>','<?php echo $row['course']?>','<?php echo $row['section']?>','<?php echo $row['username']?>','<?php echo $row['email']?>','<?php echo $row['contact']?>','<?php echo $row['gender']?>')"><i class="fa fa-pencil"></i></button></td>
+  <td><button class="custom" onclick="edit_student('<?php echo $row['studentid']?>','<?php echo $row['id']?>','<?php echo $row['firstname']?>','<?php echo $row['middlename']?>','<?php echo $row['lastname']?>','<?php echo $row['branch']?>','<?php echo $row['course']?>','<?php echo $row['subject']?>','<?php echo $row['section']?>','<?php echo $row['username']?>','<?php echo $row['email']?>','<?php echo $row['contact']?>','<?php echo $row['gender']?>')"><i class="fa fa-pencil"></i></button></td>
   </tr>
 <?php endforeach; ?>
 </tbody>

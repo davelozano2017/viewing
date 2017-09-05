@@ -33,7 +33,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
     
 </head>
-<body ng-app="apps" ng-controller='myCtrl' class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -116,9 +116,9 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
             </span>
         </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="view_students.php">View Students</a></li>
+            <li><a href="view_students.php">View Students</a></li>
             <li><a href="view_course_and_section.php">View Course & Section</a></li>
-            <li><a href="view_subjects.php">View Subjects</a></li>
+            <li class="active"><a href="view_subjects.php">View Subjects</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
@@ -133,7 +133,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Students
+     View Subjects
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
@@ -147,20 +147,20 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <button data-toggle="modal" data-target="#addstudents" class="btn btn-primary flat"> Add Student </button>
+            <button data-toggle="modal" data-target="#addsubjects" class="btn btn-primary flat"> Add Subjects </button>
         </div>
     </div>
 
 
         <!-- Modal -->
-        <?php include 'modal-container.php';?>
+        <?php include 'modal-subject-container.php';?>
         <!-- end modal -->
 
     <div class="col-md-12 col-sm-12">
       <div class="box box-primary">
         <div class="box-body box-profile">
           <!-- Start -->
-          <div id="show_students"></div>
+          <div id="show_subjects"></div>
           <!-- End -->
         </div>
       </div>
@@ -199,43 +199,19 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 <script type="text/javascript">
 //School information
 var app = angular.module('app', ['ngMessages']);
-var apps = angular.module('apps', ['ngMessages']);
-apps.controller('myCtrl',function($scope){
-});
-showstudents();
-
-function edit_student($studentid,$id,$firstname,$middlename,$lastname,$branch,$course,$subject,$section,$username,$email,$contact,$gender) {
-  var accountid = $id, firstname = $firstname, middlename = $middlename, lastname = $lastname, branch = $branch, course = $course, subject = $subject,  section = $section, username = $username, email = $email, contact = $contact, gender = $gender, studentid = $studentid;
-  $('#editstudent').modal('show');
-  $('#editstudent').find('#accountid').val(accountid);
-  $('#editstudent').find('#studentid').val(studentid);
-  $('#editstudent').find('#elastname').val(lastname);
-  $('#editstudent').find('#efirstname').val(firstname);
-  $('#editstudent').find('#emiddlename').val(middlename);
-  $('#editstudent').find('#eemail').val(email);
-  $('#editstudent').find('#econtact').val(contact);
-  $('#editstudent').find('#egender').val(gender);
-  $('#editstudent').find('#eusername').val(username);
-  $('#editstudent').find('#ebranch').val(branch);
-  $('#editstudent').find('#esection').val(section);
-  $('#editstudent').find('#ecourse').val(course);
-  $('#editstudent').find('#esubject').val(subject);
-  apps.controller('myCtrl',function($scope){
-    $scope.elastname   = elastname;
-    $scope.efirstname  = efirstname;
-    $scope.emiddlename = emiddlename;
-    $scope.eemail      = eemail;
-    $scope.econtact    = econtact;
-    $scope.egender     = egender;
-    $scope.eusername   = eusername;
-    $scope.ebranch     = ebranch;
-    $scope.esection    = esection;
-    $scope.ecourse     = ecourse;
-    $scope.esubject    = esubject;
-  });
+showsubjects();
+addsubjects();
+deletesubjects();
+updatesubjects();
+function edit_subject($id,$professor_id,$course,$subject,$section) {
+  var  id = $id, professor_id = $professor_id, course = $course, subject = $subject, section = $section;
+  $('#editsubject').modal('show');
+  $('#editsubject').find('#id').val(id);
+  $('#editsubject').find('#professor_id').val(professor_id);
+  $('#editsubject').find('#scourse').val(course);
+  $('#editsubject').find('#ssubject').val(subject);
+  $('#editsubject').find('#ssection').val(section);
 }
-updatestudent();
-deletestudent();
 </script>
 </body>
 </html>
