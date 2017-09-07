@@ -176,6 +176,20 @@ switch($_POST['action']) {
         include 'function_show_students_reports.php';
     break;
 
+    case 'Show Upload Grades': 
+        include 'function_show_upload_grades.php';
+    break;
+
+    case 'Upload Grades':
+        $branch       = $data->post($_POST['branch']);
+        $course       = $data->post($_POST['course']);
+        $subject      = $data->post($_POST['subject']);
+        $section      = $data->post($_POST['section']);
+        $professor_id = $data->post($_POST['professor_id']);
+        $file         = $data->post($_POST['file']);
+        $query        = $data->uploadgrades($file,$professor_id,$branch,$course,$subject,$section);
+    break;
+
 #############################################################################
 
 #############################################################################

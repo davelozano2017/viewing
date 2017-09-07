@@ -1,4 +1,5 @@
 var url = '../assets/functions/functions.php';
+var test = '../assets/functions/test.php';
 //Sign In button
 function btnsinindisabled() {
     $('#signin').html('Please Wait').attr('disabled',true);
@@ -822,6 +823,110 @@ function deletestudent() {
             }
         });
     })
+}
+
+function uploadgrades(){
+    $('#uploadfile').click(function(e){
+        e.preventDefault();
+        var formData = new FormData($("#FormUpload")[0]);
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        var subject = $('#subject').val();
+        var professor_id = $('#professor_id').val();
+        formData.append('branch', branch);
+        formData.append('course', course);
+        formData.append('section', section);
+        formData.append('subject', subject);
+        formData.append('files', $("#FormUpload")[0]);
+        formData.append('professor_id', professor_id);
+        $.ajax({
+            type : 'POST',
+            url : '../' + test,
+            data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData:false,  
+            dataType: 'json',
+            mimeType: "multipart/form-data",
+            success:function(response) {
+                $('#showuploadgrades').html(response.message);
+            }
+        });
+    });
+}
+
+function uploadgradesvalidation() {
+    $('#branch').change(function(e){
+        e.preventDefault();
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        var subject = $('#subject').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Upload Grades', branch : branch, course : course, 
+                section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showuploadgrades').html(response);
+            }
+            
+        });
+    });
+    $('#course').change(function(e){
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        var subject = $('#subject').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Upload Grades', branch : branch, course : course, 
+                section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showuploadgrades').html(response);
+            }
+        });
+    });
+    $('#section').change(function(e){
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        var subject = $('#subject').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Upload Grades', branch : branch, course : course, 
+                section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showuploadgrades').html(response);
+            }
+        });
+    });
+    $('#subject').change(function(e){
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        var subject = $('#subject').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Upload Grades', branch : branch, course : course, 
+                section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showuploadgrades').html(response);
+            }
+        });
+    });
 }
 
 function notify(bgcolor,color,message) {

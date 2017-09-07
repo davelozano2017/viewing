@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2017 at 05:38 AM
+-- Generation Time: Sep 07, 2017 at 11:28 PM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -117,29 +117,6 @@ INSERT INTO `courses_tbl` (`id`, `courses`, `options`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `excel`
---
-
-CREATE TABLE `excel` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `excel`
---
-
-INSERT INTO `excel` (`id`, `username`, `name`) VALUES
-(18, 'A111G0001', 'John David Lozano'),
-(19, 'A111G0002', 'Jeddahlyn Cabuga'),
-(20, 'A111G0003', 'Janice Millanes'),
-(21, 'A111G0004', 'Judilyn Abcede'),
-(22, 'A111G0005', 'Jhansel May Conception');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `professor_courses_tbl`
 --
 
@@ -157,6 +134,53 @@ INSERT INTO `professor_courses_tbl` (`id`, `professor_id`, `courses`) VALUES
 (64, 57, 'B.S.  in Information Technology'),
 (66, 57, 'B.S.  in Computer Science'),
 (67, 57, 'B.S. in Computer Engineering');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `professor_grades_tbl`
+--
+
+CREATE TABLE `professor_grades_tbl` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `q_pl` varchar(255) NOT NULL,
+  `q_mt` varchar(255) NOT NULL,
+  `q_pf` varchar(255) NOT NULL,
+  `q_fn` varchar(255) NOT NULL,
+  `q_ave` varchar(255) NOT NULL,
+  `q_result` varchar(255) NOT NULL,
+  `e_pl` varchar(255) NOT NULL,
+  `e_mt` varchar(255) NOT NULL,
+  `e_pf` varchar(255) NOT NULL,
+  `e_fn` varchar(255) NOT NULL,
+  `e_ave` varchar(255) NOT NULL,
+  `e_result` varchar(255) NOT NULL,
+  `s_sio` varchar(255) NOT NULL,
+  `s_result` varchar(255) NOT NULL,
+  `grades` varchar(255) NOT NULL,
+  `final` varchar(255) NOT NULL,
+  `remarks` varchar(255) NOT NULL,
+  `professor_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `branch` varchar(255) NOT NULL,
+  `course` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `section` varchar(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `professor_grades_tbl`
+--
+
+INSERT INTO `professor_grades_tbl` (`id`, `username`, `name`, `q_pl`, `q_mt`, `q_pf`, `q_fn`, `q_ave`, `q_result`, `e_pl`, `e_mt`, `e_pf`, `e_fn`, `e_ave`, `e_result`, `s_sio`, `s_result`, `grades`, `final`, `remarks`, `professor_id`, `status`, `branch`, `course`, `subject`, `section`, `date`) VALUES
+(46, 'A111G0001', 'John David Lozano', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
+(47, 'A111G0002', 'Jeddahlyn Cabuga', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
+(48, 'A111G0003', 'Janice Millanes', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
+(49, 'A111G0004', 'Judilyn Abcede', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
+(50, 'A111G0005', 'Jhansel May Conception', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '10', '10', '90', '90', '2.5', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07');
 
 -- --------------------------------------------------------
 
@@ -264,15 +288,15 @@ ALTER TABLE `courses_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `excel`
---
-ALTER TABLE `excel`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `professor_courses_tbl`
 --
 ALTER TABLE `professor_courses_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `professor_grades_tbl`
+--
+ALTER TABLE `professor_grades_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -319,15 +343,15 @@ ALTER TABLE `branches_tbl`
 ALTER TABLE `courses_tbl`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
--- AUTO_INCREMENT for table `excel`
---
-ALTER TABLE `excel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
---
 -- AUTO_INCREMENT for table `professor_courses_tbl`
 --
 ALTER TABLE `professor_courses_tbl`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+--
+-- AUTO_INCREMENT for table `professor_grades_tbl`
+--
+ALTER TABLE `professor_grades_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `professor_sections_tbl`
 --
@@ -342,7 +366,7 @@ ALTER TABLE `professor_subjects_tbl`
 -- AUTO_INCREMENT for table `requests_tbl`
 --
 ALTER TABLE `requests_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `students_tbl`
 --

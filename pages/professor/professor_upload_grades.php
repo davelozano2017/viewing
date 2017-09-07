@@ -1,13 +1,12 @@
 <?php 
 include '../../class/config.php';
-include '../../class/PHPExcel/IOFactory.php';
-$con = new mysqli('localhost','root','','viewing');
 $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
 $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,11 +27,6 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
-  <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-  <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-  <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-  <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
     
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -137,12 +131,11 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     View Subjects
+     Upload Grades
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
-    <li>Students</li>
-    <li class="active">View Students</li>
+    <li class="active">Upload grades</li>
     </ol>
   </section>
 
@@ -154,26 +147,61 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
       <div class="box box-primary">
         <div class="box-body box-profile">
           <!-- Start -->
-          <?php
-          $objPHPExcel = PHPExcel_IOFactory::load('../../class/example.xlsx'); 
-          foreach($objPHPExcel->getWorksheetIterator() as $worksheet)
-          {
-            $highestRow = $worksheet->getHighestRow();
-            for($row = 3; $row <= $highestRow; $row++) 
-            {
-                $username   = $con->real_escape_string($worksheet->getCellByColumnAndRow(1,$row)->getValue());
-                $name  = $con->real_escape_string($worksheet->getCellByColumnAndRow(2,$row)->getValue());
-                $query  = $con->query("INSERT INTO excel (username,name) VALUES ('$username','$name')");        
-            }
-            if($query) 
-            {
-                echo '<div class="alert alert-success">Successfully inserted.</div>';
-            }
+          <form method="POST" name="FormUpload" id="FormUpload" enctype="multipart/form-data">
+            <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Branch</label>
+                    <input type="hidden" id="professor_id" value="<?php echo $id?>">
+                    <select class="form-control" id="branch">
+                        <option value=""> Select Branch </option>
+                        <?php foreach($data->showbranches() as $row):?>
+                        <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
 
-          }
-          ?>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Course</label>
+                    <select id="course" class="form-control">
+                    <option value=""> Select Course </option>
+                    <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
+                    <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
 
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select id="subject" class="form-control">
+                    <option value=""> Select Subject </option>
+                    <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
+                    <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Section</label>
+                    <select id="section" class="form-control">
+                    <option value=""> Select Section </option>
+                    <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
+                    <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div id="showuploadgrades"></div>
+            </div>
           <!-- End -->
+          </form>
         </div>
       </div>
     </div>
@@ -199,14 +227,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 <script src="../../assets/functions/functions.js"></script>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
-<script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script> 
+uploadgradesvalidation(); 
+</script>
 </body>
 </html>

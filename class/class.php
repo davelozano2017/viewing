@@ -1,6 +1,7 @@
 <?php
 include 'controller.php';
 include 'SmsGateway.php';
+include 'PHPExcel/IOFactory.php';
 class db extends Controller {
 
     // Insert Administrator & Professor
@@ -420,6 +421,15 @@ class db extends Controller {
         return $query;
     }
 
+    public function show_validate_student($branch,$section,$course,$subject) {
+        $query = $this->db->query("SELECT * FROM students_tbl WHERE 
+        branch = '$branch' AND section = '$section' AND course = '$course' AND subject = '$subject'");
+        $check = $query->num_rows;
+        if($check > 0) {
+            return $query;
+        } 
+    }
+
     public function addsubjects($professor_id,$course,$subject,$section) {
         $query = $this->db->query("SELECT * FROM professor_subjects_tbl WHERE subject = '$subject' AND section = '$section'");
         $check = $query->num_rows;
@@ -432,6 +442,53 @@ class db extends Controller {
             $query ? $this->success($message) : null;
         }
 
+    }
+
+    public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section) {
+        $file		= $_FILES['files'][	'tmp_name'];
+        $objPHPExcel = PHPExcel_IOFactory::load($file); 
+        foreach($objPHPExcel->getWorksheetIterator() as $worksheet) {
+          $highestRow = $worksheet->getHighestRow();
+          for($row = 7; $row <= $highestRow; $row++) {
+              $username   = $this->post($worksheet->getCellByColumnAndRow(1,$row)->getValue());
+              $name       = $this->post($worksheet->getCellByColumnAndRow(2,$row)->getValue());
+              $q_pl       = $this->post($worksheet->getCellByColumnAndRow(4,$row)->getValue());
+              $q_mt       = $this->post($worksheet->getCellByColumnAndRow(5,$row)->getValue());
+              $q_pf       = $this->post($worksheet->getCellByColumnAndRow(6,$row)->getValue());
+              $q_fn       = $this->post($worksheet->getCellByColumnAndRow(7,$row)->getValue());
+              $q_ave      = $this->post($worksheet->getCellByColumnAndRow(8,$row)->getCalculatedValue());
+              $q_result   = $this->post($worksheet->getCellByColumnAndRow(9,$row)->getCalculatedValue());
+        
+              $e_pl       = $this->post($worksheet->getCellByColumnAndRow(11,$row)->getValue());
+              $e_mt       = $this->post($worksheet->getCellByColumnAndRow(12,$row)->getValue());
+              $e_pf       = $this->post($worksheet->getCellByColumnAndRow(13,$row)->getValue());
+              $e_fn       = $this->post($worksheet->getCellByColumnAndRow(14,$row)->getValue());
+              $e_ave      = $this->post($worksheet->getCellByColumnAndRow(15,$row)->getCalculatedValue());
+              $e_result   = $this->post($worksheet->getCellByColumnAndRow(16,$row)->getCalculatedValue());
+              
+              $s_sio      = $this->post($worksheet->getCellByColumnAndRow(18,$row)->getValue());
+              $s_result   = $this->post($worksheet->getCellByColumnAndRow(19,$row)->getCalculatedValue());
+              $grades     = $this->post($worksheet->getCellByColumnAndRow(21,$row)->getCalculatedValue());
+              $final      = $this->post($worksheet->getCellByColumnAndRow(23,$row)->getCalculatedValue());
+              $remarks    = $this->post($worksheet->getCellByColumnAndRow(24,$row)->getCalculatedValue());
+              
+              if(ltrim($username) == '' || ltrim($username) == 'Prepared By:' 
+                 || ltrim($username) == 'Instructor:' && ltrim($name) == '' 
+                 && ltrim($q_pl) == '' && ltrim($q_mt) == '' 
+                 && ltrim($q_pf) == '' && ltrim($q_fn) == ''
+                 && ltrim($q_ave) == 0 && ltrim($q_result) == 0) 
+              continue;
+           
+              $query  = $this->db->query("INSERT INTO professor_grades_tbl 
+              (username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,final,remarks,professor_id,status,branch,course,subject,section) 
+              VALUES 
+              ('$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$final','$remarks','$professor_id',1,'$branch','$course','$subject','$section')");        
+          }
+         
+        }   
+          if($query) {
+            echo json_encode(array('success' => true, 'message' => '<div class="col-md-12">Successfully Uploaded.</div>'));
+        }
     }
 
     public function deletesubjects($id) {
