@@ -253,6 +253,61 @@ function showadmin() {
     })
 }
 
+function showstudentsreports() {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show Students Reports' },
+        success:function(response){
+            dataType: 'json',
+            $('#showstudentsreports').html(response);
+        }
+    })
+}
+
+function search() {
+    $('#branch').change(function(e){
+        e.preventDefault();
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Reports', branch : branch, course : course, section : section},
+            success:function(response) {
+                $('#showstudentsreports').html(response);
+            }
+        });
+    });
+    $('#course').change(function(e){
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Reports', branch : branch, course : course, section : section},
+            success:function(response) {
+                $('#showstudentsreports').html(response);
+            }
+        });
+    });
+    $('#section').change(function(e){
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Reports', branch : branch, course : course, section : section},
+            success:function(response) {
+                $('#showstudentsreports').html(response);
+            }
+        });
+    });
+}
+
 function showprofessor() {
     $.ajax({
         type : 'POST',

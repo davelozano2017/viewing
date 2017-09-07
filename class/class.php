@@ -275,17 +275,10 @@ class db extends Controller {
     }
 
     public function updatestudentinfo($studentid,$subject,$section,$course,$username,$branch) {
-        $query = $this->db->query("SELECT * FROM students_tbl WHERE subject = '$subject' AND username = '$username' AND section = '$section'");
-        $check = $query->num_rows;
-        if($check > 0) {
-            $message = 'Already exist';
-            $this->duplicated($message);
-        } else {
-            $query = $this->db->query("UPDATE students_tbl SET subject = '$subject', section = '$section', 
-            course = '$course', username = '$username', branch = '$branch' WHERE studentid = '$studentid'");
-            $message = 'Student information has been updated';
-            return $query ? $this->updated($message) : false;
-        }
+        $query = $this->db->query("UPDATE students_tbl SET subject = '$subject', section = '$section', 
+        course = '$course', username = '$username', branch = '$branch' WHERE studentid = '$studentid'");
+        $message = 'Student information has been updated';
+        return $query ? $this->updated($message) : false;
     }
 
     public function deletestudents($accountid,$studentid) {
@@ -412,6 +405,13 @@ class db extends Controller {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
         ON accounts_tbl.username = students_tbl.username
         WHERE accounts_tbl.role = 3");
+        return $query;
+    }
+
+    public function show_students_reports($branch,$course,$section) {
+        $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
+        ON accounts_tbl.username = students_tbl.username
+        WHERE accounts_tbl.role = 3 AND students_tbl.branch = '$branch' AND students_tbl.course = '$course' AND students_tbl.section = '$section'");
         return $query;
     }
 

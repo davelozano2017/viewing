@@ -172,6 +172,10 @@ switch($_POST['action']) {
         $query      = $data->deletestudents($accountid,$studentid);
     break;
 
+    case 'Show Students Reports':
+        include 'function_show_students_reports.php';
+    break;
+
 #############################################################################
 
 #############################################################################

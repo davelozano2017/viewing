@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-8 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
                             <select id="course" class="form-control">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Subject</label>
                             <select id="subject" class="form-control">
@@ -271,7 +271,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-8 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
                             <select id="ecourse" class="form-control">
@@ -282,7 +282,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Subject</label>
                             <select id="esubject" class="form-control">

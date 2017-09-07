@@ -133,6 +133,8 @@ $count_course = $data->countprofessorcourse($id);
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
+        <li><a href="professor_upload_grades.php"><i class="fa fa-upload fa-fw"></i><span> Upload Grades</span></a></li>
+
       </ul>
       <!-- /.sidebar-menu -->
     </section>

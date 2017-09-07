@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2017 at 04:49 AM
+-- Generation Time: Sep 07, 2017 at 05:38 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -55,7 +55,7 @@ INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`
 (55, '../../assets/images/admin.png', 'zxczxc', 'zxczxc', 'zxczxc', 'zxczxc@aa.co', '1313181812', 'Male', 'zxczxc', '$2y$10$rD2ts/G3XqvOGu2jc9rstOI5fmBampm6ndqvFFL9N6m6XMog6KR2q', 379195, 1, 1, '2017-09-04 08:27:58'),
 (56, '../../assets/images/admin.png', 'asd', 'asd', 'asd', 'asd@aa.co', '1313131311', 'Male', 'asdasd', '$2y$10$AUd.vSOUbqQvj3Zy0mOPZ.cdECWMwcIV2bLwzs/Oidqhxe.BhSDYq', 789931, 1, 1, '2017-09-04 08:32:09'),
 (57, '../../assets/images/admin.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9555773952', 'Female', 'jeddahlyncabuga', '$2y$10$UWTXqe5zN.mUGLJMHiahJ.UGWctXlZYWsG7GpEwMnuRxo4Rpg4Rbe', 960688, 0, 2, '2017-09-04 08:33:17'),
-(72, '../../assets/images/student_male.png', 'Lozano', 'John David', 'Sadia', 'lozanojohndavid@gmail.com', '9555773952', 'Male', 'A111G0001', '$2y$10$jbnXySo5rLD.t2uJMRU.yuo6qQm6CMoyEe.O6N/q1IODADL3q9B7O', 125465, 1, 3, '2017-09-05 02:44:24');
+(72, '../../assets/images/student_male.png', 'Lozano', 'John David', 'Sadia', 'lozanojohndavid@gmail.com', '9555773952', 'Male', 'A111G0001', '$2y$10$jbnXySo5rLD.t2uJMRU.yuo6qQm6CMoyEe.O6N/q1IODADL3q9B7O', 125465, 1, 3, '2017-09-05 03:40:45');
 
 -- --------------------------------------------------------
 
@@ -113,6 +113,29 @@ INSERT INTO `courses_tbl` (`id`, `courses`, `options`) VALUES
 (18, 'B.S.  in Technical Teacher Education', 'Degree Courses'),
 (19, 'B.S.  in Tourism Management', 'Degree Courses'),
 (29, 'B.S.  in Information Technology', 'Degree Courses');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `excel`
+--
+
+CREATE TABLE `excel` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `excel`
+--
+
+INSERT INTO `excel` (`id`, `username`, `name`) VALUES
+(18, 'A111G0001', 'John David Lozano'),
+(19, 'A111G0002', 'Jeddahlyn Cabuga'),
+(20, 'A111G0003', 'Janice Millanes'),
+(21, 'A111G0004', 'Judilyn Abcede'),
+(22, 'A111G0005', 'Jhansel May Conception');
 
 -- --------------------------------------------------------
 
@@ -175,7 +198,9 @@ CREATE TABLE `professor_subjects_tbl` (
 --
 
 INSERT INTO `professor_subjects_tbl` (`id`, `professor_id`, `course`, `subject`, `section`) VALUES
-(16, 57, 'B.S.  in Information Technology', 'Prola 3', 'M 62');
+(16, 57, 'B.S.  in Information Technology', 'Prola 3', 'M 62'),
+(17, 57, 'B.S.  in Information Technology', 'Advanced Database Management', 'M 42'),
+(18, 57, 'B.S.  in Information Technology', 'Advanced Web Programming', 'M 62');
 
 -- --------------------------------------------------------
 
@@ -212,7 +237,9 @@ CREATE TABLE `students_tbl` (
 --
 
 INSERT INTO `students_tbl` (`studentid`, `professor_id`, `subject`, `section`, `course`, `branch`, `username`) VALUES
-(48, 57, 'Prola 3', 'M 62', 'B.S.  in Information Technology', 'Camarin', 'A111G0001');
+(48, 57, 'Prola 3', 'M 42', 'B.S.  in Information Technology', 'Camarin', 'A111G0001'),
+(49, 57, 'Advanced Database Management', 'M 42', 'B.S.  in Information Technology', 'Camarin', 'A111G0001'),
+(50, 57, 'Advanced Web Programming', 'M 62', 'B.S.  in Information Technology', 'Lagro', 'A111G0001');
 
 --
 -- Indexes for dumped tables
@@ -234,6 +261,12 @@ ALTER TABLE `branches_tbl`
 -- Indexes for table `courses_tbl`
 --
 ALTER TABLE `courses_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `excel`
+--
+ALTER TABLE `excel`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -286,6 +319,11 @@ ALTER TABLE `branches_tbl`
 ALTER TABLE `courses_tbl`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
+-- AUTO_INCREMENT for table `excel`
+--
+ALTER TABLE `excel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+--
 -- AUTO_INCREMENT for table `professor_courses_tbl`
 --
 ALTER TABLE `professor_courses_tbl`
@@ -299,7 +337,7 @@ ALTER TABLE `professor_sections_tbl`
 -- AUTO_INCREMENT for table `professor_subjects_tbl`
 --
 ALTER TABLE `professor_subjects_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `requests_tbl`
 --
@@ -309,7 +347,7 @@ ALTER TABLE `requests_tbl`
 -- AUTO_INCREMENT for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;COMMIT;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
