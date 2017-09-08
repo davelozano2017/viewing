@@ -379,6 +379,17 @@ function showstudents(){
     })
 }
 
+function showgrades(){
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show Grades' },
+        success:function(response){
+            $('#show_grades').html(response);
+        }
+    })
+}
+
 function showsubjects(){
     $.ajax({
         type : 'POST',
@@ -828,6 +839,7 @@ function deletestudent() {
 function uploadgrades(){
     $('#uploadfile').click(function(e){
         e.preventDefault();
+        $('#uploadfile').html('Please Wait').attr('disabled',true);
         var formData = new FormData($("#FormUpload")[0]);
         var branch = $('#branch').val();
         var course = $('#course').val();
@@ -934,6 +946,32 @@ function notify(bgcolor,color,message) {
         'theme'     : 'colorful', 'content'   : { bgcolor: bgcolor,color: color,message: message },
         'position'  : 'top right', 'outEffect' : 'slideBottom'
     });
+}
+
+function removeuploadedgrades(code) {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data: { action : 'Delete Uploaded Grades', code : code },
+        dataType: 'json',
+        success:function(response) {
+            response.success == true ? showgrades() : null;
+            notify(response.bgcolor,response.color,response.message);
+        }
+    })
+}
+
+function approveuploadedgrades(code) {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data: { action : 'Approve Uploaded Grades', code : code },
+        dataType: 'json',
+        success:function(response) {
+            response.success == true ? showgrades() : null;
+            notify(response.bgcolor,response.color,response.message);
+        }
+    })
 }
 
 add_courses();

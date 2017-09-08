@@ -116,6 +116,12 @@ switch($_POST['action']) {
         include 'function_show_students.php';
     break;
 
+    case 'Show Grades':
+        include 'function_show_grades.php';
+    break;
+
+    
+
     case 'Show Subjects':
         include 'function_show_subjects.php';
     break;
@@ -170,6 +176,16 @@ switch($_POST['action']) {
         $accountid  = $data->post($_POST['accountid']);
         $studentid  = $data->post($_POST['studentid']);
         $query      = $data->deletestudents($accountid,$studentid);
+    break;
+
+    case 'Delete Uploaded Grades':
+        $code  = $data->post($_POST['code']);
+        $query = $data->removeuploadedgrades($code);
+    break;
+
+    case 'Approve Uploaded Grades':
+        $code  = $data->post($_POST['code']);
+        $query = $data->approveuploadedgrades($code);
     break;
 
     case 'Show Students Reports':

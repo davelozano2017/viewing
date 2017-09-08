@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2017 at 11:28 PM
+-- Generation Time: Sep 08, 2017 at 05:30 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -52,7 +52,7 @@ CREATE TABLE `accounts_tbl` (
 INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`, `email`, `contact`, `gender`, `username`, `password`, `security_code`, `status`, `role`, `created`) VALUES
 (18, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9562211554', 'Female', 'adoralozano', '$2y$10$8VbiyjnoI5z6suXgrz4p4uOq85qmN0WuVzQUnQL55jGCn.HODfY5y', 699014, 0, 0, '2017-09-04 08:18:52'),
 (54, '../../assets/images/admin.png', 'Admin', 'Admin', 'Admin', 'Admin@yahoo.com', '9222828282', 'Male', 'Admin', '$2y$10$bJxTsWubRofo8t1trbb4Ce8IVa3CHK8EH2w6MZXE6EOPNqHr4jMpm', 880249, 1, 1, '2017-09-04 08:31:49'),
-(55, '../../assets/images/admin.png', 'zxczxc', 'zxczxc', 'zxczxc', 'zxczxc@aa.co', '1313181812', 'Male', 'zxczxc', '$2y$10$rD2ts/G3XqvOGu2jc9rstOI5fmBampm6ndqvFFL9N6m6XMog6KR2q', 379195, 1, 1, '2017-09-04 08:27:58'),
+(55, '../../assets/images/admin.png', 'zxczxc', 'zxczxc', 'zxczxc', 'zxczxc@aa.co', '1313181812', 'Male', 'zxczxc', '$2y$10$rD2ts/G3XqvOGu2jc9rstOI5fmBampm6ndqvFFL9N6m6XMog6KR2q', 379195, 1, 1, '2017-09-08 03:16:01'),
 (56, '../../assets/images/admin.png', 'asd', 'asd', 'asd', 'asd@aa.co', '1313131311', 'Male', 'asdasd', '$2y$10$AUd.vSOUbqQvj3Zy0mOPZ.cdECWMwcIV2bLwzs/Oidqhxe.BhSDYq', 789931, 1, 1, '2017-09-04 08:32:09'),
 (57, '../../assets/images/admin.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9555773952', 'Female', 'jeddahlyncabuga', '$2y$10$UWTXqe5zN.mUGLJMHiahJ.UGWctXlZYWsG7GpEwMnuRxo4Rpg4Rbe', 960688, 0, 2, '2017-09-04 08:33:17'),
 (72, '../../assets/images/student_male.png', 'Lozano', 'John David', 'Sadia', 'lozanojohndavid@gmail.com', '9555773952', 'Male', 'A111G0001', '$2y$10$jbnXySo5rLD.t2uJMRU.yuo6qQm6CMoyEe.O6N/q1IODADL3q9B7O', 125465, 1, 3, '2017-09-05 03:40:45');
@@ -168,19 +168,9 @@ CREATE TABLE `professor_grades_tbl` (
   `course` varchar(255) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `section` varchar(255) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `code` int(11) NOT NULL,
+  `date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `professor_grades_tbl`
---
-
-INSERT INTO `professor_grades_tbl` (`id`, `username`, `name`, `q_pl`, `q_mt`, `q_pf`, `q_fn`, `q_ave`, `q_result`, `e_pl`, `e_mt`, `e_pf`, `e_fn`, `e_ave`, `e_result`, `s_sio`, `s_result`, `grades`, `final`, `remarks`, `professor_id`, `status`, `branch`, `course`, `subject`, `section`, `date`) VALUES
-(46, 'A111G0001', 'John David Lozano', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
-(47, 'A111G0002', 'Jeddahlyn Cabuga', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
-(48, 'A111G0003', 'Janice Millanes', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
-(49, 'A111G0004', 'Judilyn Abcede', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07'),
-(50, 'A111G0005', 'Jhansel May Conception', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '10', '10', '90', '90', '2.5', 57, 1, 'Camarin', 'B.S.  in Information Technology', 'Prola 3', 'M 42', '2017-09-07 21:28:07');
 
 -- --------------------------------------------------------
 
@@ -351,7 +341,7 @@ ALTER TABLE `professor_courses_tbl`
 -- AUTO_INCREMENT for table `professor_grades_tbl`
 --
 ALTER TABLE `professor_grades_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `professor_sections_tbl`
 --

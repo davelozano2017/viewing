@@ -1,4 +1,5 @@
 <?php 
+date_default_timezone_set('Asia/Manila');
 include '../../class/config.php';
 $branch       = $data->post($_POST['branch']);
 $course       = $data->post($_POST['course']);

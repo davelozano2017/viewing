@@ -33,7 +33,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
     
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body ng-app="apps" ng-controller='myCtrl' class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -118,8 +118,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
           <ul class="treeview-menu">
             <li><a href="view_students.php">View Students</a></li>
             <li><a href="view_course_and_section.php">View Course & Section</a></li>
-            <li class="active"><a href="view_subjects.php">View Subjects</a></li>
-            <li><a href="view_grades.php">View Grades</a></li>
+            <li><a href="view_subjects.php">View Subjects</a></li>
+            <li class="active"><a href="view_grades.php">View Grades</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
@@ -136,39 +136,27 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     View Subjects
+     View Grades
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
     <li>Students</li>
-    <li class="active">View Students</li>
+    <li class="active">View Grades</li>
     </ol>
   </section>
 
+    <div class="row">
     <!-- Main content -->
     <section class="content container-fluid">
-    <div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <button data-toggle="modal" data-target="#addsubjects" class="btn btn-primary flat"> Add Subjects </button>
-        </div>
-    </div>
-
-
-        <!-- Modal -->
-        <?php include 'modal-subject-container.php';?>
-        <!-- end modal -->
-
-    <div class="col-md-12 col-sm-12">
-      <div class="box box-primary">
-        <div class="box-body box-profile">
-          <!-- Start -->
-          <div id="show_subjects"></div>
-          <!-- End -->
+      <div class="col-md-12 col-sm-12">
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <!-- Start -->
+            <div id="show_grades"></div>
+            <!-- End -->
+          </div>
         </div>
       </div>
-    </div>
-
   </div>
 
     </section>
@@ -199,22 +187,6 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 <script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script type="text/javascript">
-//School information
-var app = angular.module('app', ['ngMessages']);
-showsubjects();
-addsubjects();
-deletesubjects();
-updatesubjects();
-function edit_subject($id,$professor_id,$course,$subject,$section) {
-  var  id = $id, professor_id = $professor_id, course = $course, subject = $subject, section = $section;
-  $('#editsubject').modal('show');
-  $('#editsubject').find('#id').val(id);
-  $('#editsubject').find('#professor_id').val(professor_id);
-  $('#editsubject').find('#scourse').val(course);
-  $('#editsubject').find('#ssubject').val(subject);
-  $('#editsubject').find('#ssection').val(section);
-}
-</script>
+<script>showgrades()</script>
 </body>
 </html>

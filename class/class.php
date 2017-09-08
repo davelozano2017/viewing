@@ -409,6 +409,11 @@ class db extends Controller {
         return $query;
     }
 
+    public function show_grades() {
+        $query = $this->db->query("SELECT * FROM professor_grades_tbl GROUP BY code");
+        return $query;
+    }
+
     public function show_students_reports($branch,$course,$section) {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
         ON accounts_tbl.username = students_tbl.username
@@ -445,7 +450,9 @@ class db extends Controller {
     }
 
     public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section) {
-        $file		= $_FILES['files'][	'tmp_name'];
+        $file		 = $_FILES['files']['tmp_name'];
+        $date        = date('Y-m-d');
+        $code        = rand(111111,999999);
         $objPHPExcel = PHPExcel_IOFactory::load($file); 
         foreach($objPHPExcel->getWorksheetIterator() as $worksheet) {
           $highestRow = $worksheet->getHighestRow();
@@ -480,9 +487,9 @@ class db extends Controller {
               continue;
            
               $query  = $this->db->query("INSERT INTO professor_grades_tbl 
-              (username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,final,remarks,professor_id,status,branch,course,subject,section) 
+              (username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,final,remarks,professor_id,status,branch,course,subject,section,code,date) 
               VALUES 
-              ('$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$final','$remarks','$professor_id',1,'$branch','$course','$subject','$section')");        
+              ('$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$final','$remarks','$professor_id',1,'$branch','$course','$subject','$section','$code','$date')");        
           }
          
         }   
@@ -600,6 +607,18 @@ class db extends Controller {
                 break;
             };
         } 
+    }
+
+    public function removeuploadedgrades($code) {
+        $query = $this->db->query("DELETE FROM professor_grades_tbl WHERE code = '$code'");
+        $message = 'Uploaded grades has been deleted.';
+        return $query ? $this->success($message) : null;
+    }
+
+    public function approveuploadedgrades($code) {
+        $query = $this->db->query("UPDATE professor_grades_tbl SET status = 0 WHERE code = '$code'");
+        $message = 'Uploaded grades has been approved.';
+        return $query ? $this->success($message) : null;
     }
 
     public function logout() {

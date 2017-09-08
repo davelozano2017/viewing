@@ -218,6 +218,23 @@ $all       = $data->countall();
       </div>
       <!-- /.row -->
       <!-- End  -->
+
+      <!-- Uploaded grades Start  -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Uploaded Grades <small>Waiting for approval</small></h3>
+            </div>
+            <div class="box-body">
+              <div id="show_grades"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Uploaded Grades End  -->
+
+      <!-- Request Password Start  -->
       <div class="row">
         <div class="col-md-4">
           <div class="box box-solid">
@@ -225,7 +242,7 @@ $all       = $data->countall();
               <h3 class="box-title">Requesting <small>Administrators</small></h3>
             </div>
             <div class="box-body">
-            <div id="show_request_administrators"></div>
+              <div id="show_request_administrators"></div>
             </div>
           </div>
         </div>
@@ -252,6 +269,7 @@ $all       = $data->countall();
           </div>
         </div>
       </div>
+      <!-- Request Password End -->
 
     </section>
     <!-- /.content -->
@@ -291,6 +309,7 @@ $all       = $data->countall();
   show_request_administrators();
   show_request_professors();
   show_request_students();
+  showgrades();
 
 </script>
 </body>
