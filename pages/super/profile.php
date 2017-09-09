@@ -1,9 +1,10 @@
 <?php include '../../class/config.php';
 $data->redirecttologin();
+$id        = $_SESSION['id'];
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
 $roles     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
-foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
+foreach($data->getadmininfobyid($id) as $row) : ?>
 <?php 
     $id       = $row['id'];
     $photo    = $row['photo'];
@@ -11,12 +12,9 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     $email    = $row['email'];
     $contact  = $row['contact'];
     $username = $row['username'];
-    $role     = $row['role'] == 1 ? 'Admin' : null;
-    $status   = $row['status'] == 0 ? '<label class="label label-success flat"> Activated </label>' : '<label class="label label-danger flat">Deactivated </label>';
-    
+    $role     = $row['role'] == 0 ? 'Super Admin' : null;
 ?>     
 <?php endforeach; ?>
-<?php if(empty($id)){ header('location: add_professors.php'); } ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +30,8 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
   <link rel="stylesheet" href="../../assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -111,36 +111,37 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview active">
-        <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-          <ul class="treeview-menu">
-          <li class="active"><a href="add_administrators.php">Administrators</a></li>
-          <li><a href="add_professors.php">Professors</a></li>
-          </ul>
-        </li>
+      <li class="header">MAIN NAVIGATION</li>
+      <!-- Optionally, you can add icons to the links -->
+      <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+      <li class="treeview">
+      <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
+          <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+          </span>
+      </a>
+        <ul class="treeview-menu">
+        <li><a href="add_administrators.php">Administrators</a></li>
+        <li><a href="add_professors.php">Professors</a></li>
+        </ul>
+      </li>
 
-        <li class="treeview">
-        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-          <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
-          <li><a href="add_professors.php">Maintenance</a></li>
-          </ul>
-        </li>
+      <li class="treeview">
+      <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
+          <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+          </span>
+      </a>
+        <ul class="treeview-menu">
+        <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+        <li><a href="add_professors.php">Maintenance</a></li>
+        </ul>
+      </li>
+      
 
-        
-      </ul>
-      <!-- /.sidebar-menu -->
+
+    </ul>
+    <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -150,13 +151,11 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Administrator
+     Profile
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
-    <li>Manage Users</li>
-    <li>Add Administrator</li>
-    <li class="active">Information</li>
+    <li class="active">Profile</li>
     </ol>
   </section>
 
@@ -173,33 +172,6 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
               <img class="img-circle" src="<?php echo $photo?>" alt="User Avatar">
             </div>
             <div class="box-footer">
-              <div class="row">
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
-                    <h5 class="description-header">Status</h5>
-                    <span class="description-text"><a onclick="modify_status('<?php echo $id?>')"  id="show_status"><?php echo $status?></a></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4">
-                  <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
             </div>
           </div>
           <!-- /.widget-user -->
@@ -214,12 +186,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
           <div class="tab-content">
 
             <div class="tab-pane active" id="information">
-              <form class="form-horizontal">
-                <div class="form-group">
-                 
-                </div>
-                
-              
+              <form class="form-horizontal" method="POST" ng-app="app" ng-controller="mainController"  novalidate name="profile">
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-10">
@@ -249,8 +216,31 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
                 </div>
 
                 <div class="form-group">
+                  <label for="username" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" id="password" name="password" ng-model="password" class="form-control" required password-verify="{{confirm_password}}">
+                    <input type="hidden" id="update_id" value="<?php echo$id?>">
+                    <span ng-messages="profile.password.$error" ng-if="profile.password.$dirty">
+                      <strong ng-message="required" class="text-danger">This field is required.</strong>
+                      <strong ng-message="minlength" class="text-danger">Password is too short.</strong>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="username" class="col-sm-2 control-label"> Confirm Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required password-verify="{{password}}">
+                    <b ng-messages="profile.confirm_password.$error" ng-if="profile.confirm_password.$dirty">
+                      <strong ng-message="required" class="text-danger" style="display:block">This field is required.</strong>
+                      <strong ng-show="confirm_password != password" class="text-danger">Password not matched.</strong>
+                    </b>
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                  <a href="add_administrators.php" class="btn btn-primary flat">Back</a>
+                  <button type="submit" ng-disabled="profile.$invalid" id="profile_update" class="btn btn-primary flat">Save Changes </button>
                   </div>
                 </div>
               </form>
@@ -276,15 +266,10 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../assets/angular/passwordmatch.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript">
-//School information
-var app = angular.module('app', ['ngMessages']);
-   
-showprofessor()
-
-</script>
 </body>
 </html>

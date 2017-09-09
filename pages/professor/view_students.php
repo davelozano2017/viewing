@@ -106,7 +106,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
         <li class="treeview active">

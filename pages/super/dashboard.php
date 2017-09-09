@@ -31,6 +31,10 @@ $all       = $data->countall();
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -105,7 +109,7 @@ $all       = $data->countall();
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
         <li class="treeview">
@@ -164,7 +168,7 @@ $all       = $data->countall();
               <p>Administrators</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-ios-people"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -179,7 +183,7 @@ $all       = $data->countall();
               <p>Professors</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="ion ion-ios-people"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -194,7 +198,7 @@ $all       = $data->countall();
               <p>Students</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-ios-people"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -291,6 +295,16 @@ $all       = $data->countall();
 <!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 <script>
   function request_administrators($id) {
       var id = $id;

@@ -451,6 +451,10 @@ class db extends Controller {
 
     public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section) {
         $file		 = $_FILES['files']['tmp_name'];
+        if(empty($file)) {
+            $errormsg = 'Please upload .xlxs | .xls | .csv files.';
+            $this->error($errormsg);
+        } else {
         $date        = date('Y-m-d');
         $code        = rand(111111,999999);
         $objPHPExcel = PHPExcel_IOFactory::load($file); 
@@ -493,8 +497,8 @@ class db extends Controller {
           }
          
         }   
-          if($query) {
-            echo json_encode(array('success' => true, 'message' => '<div class="col-md-12">Successfully Uploaded.</div>'));
+            $message = 'Excel file has been uploaded successfully.';
+            $query ? $this->success($message) : null;
         }
     }
 
@@ -617,8 +621,21 @@ class db extends Controller {
 
     public function approveuploadedgrades($code) {
         $query = $this->db->query("UPDATE professor_grades_tbl SET status = 0 WHERE code = '$code'");
-        $message = 'Uploaded grades has been approved.';
-        return $query ? $this->success($message) : null;
+        return $query ? $this->notifystudents() : null;
+    }
+
+    public function notifystudents() {
+        $query = $this->db->query("SELECT professor_grades_tbl.username,accounts_tbl.username,accounts_tbl.contact FROM accounts_tbl INNER JOIN professor_grades_tbl ON professor_grades_tbl.username = accounts_tbl.username");
+        foreach($query as $row) {
+            $contact[] = $row['contact'];
+        }
+        $message = 'Your grades are now available. (this is test mode, please do not reply.)';
+        $smsGateway = new SmsGateway('lozanojohndavid@gmail.com', '12345123');
+        $message    = $message;
+        $deviceID   = 54501;
+        $smsGateway->sendMessageToNumber($contact, $message, $deviceID);
+        $message = 'Uploaded grades has been approved';
+        return $smsGateway ? $this->success($message) : null;
     }
 
     public function logout() {

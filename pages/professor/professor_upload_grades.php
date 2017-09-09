@@ -102,7 +102,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
         <li class="treeview">
@@ -148,7 +148,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
       <div class="box box-primary">
         <div class="box-body box-profile">
           <!-- Start -->
-          <form method="POST" name="FormUpload" id="FormUpload" enctype="multipart/form-data">
+          <form method="POST" name="FormUpload" id="FormUpload" enctype="multipart/form-data" ng-app="app" novalidate>
             <div class="row">
             <div class="col-md-12">
                 <div class="form-group">

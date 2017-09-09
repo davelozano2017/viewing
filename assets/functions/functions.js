@@ -152,6 +152,14 @@ function btnupdatesubjectdisabled() {
     $('#update_subject').html('Please Wait').attr('disabled',true);
 }
 
+function btnuploadfiledisabled() {
+    $('#uploadfile').html('Please Wait').attr('disabled',true);
+}
+function btnuploadfileenabled(bgcolor,color,message) {
+    notify(bgcolor,color,message);
+    $('#uploadfile').html('Upload').attr('disabled',false);
+}
+
 //login 
 function login() {
     $('#signin').click(function(e){
@@ -836,10 +844,11 @@ function deletestudent() {
     })
 }
 
+
 function uploadgrades(){
     $('#uploadfile').click(function(e){
         e.preventDefault();
-        $('#uploadfile').html('Please Wait').attr('disabled',true);
+        btnuploadfiledisabled();
         var formData = new FormData($("#FormUpload")[0]);
         var branch = $('#branch').val();
         var course = $('#course').val();
@@ -862,7 +871,7 @@ function uploadgrades(){
             dataType: 'json',
             mimeType: "multipart/form-data",
             success:function(response) {
-                $('#showuploadgrades').html(response.message);
+                response.success == true ? btnuploadfileenabled(response.bgcolor,response.color,response.message) : btnuploadfileenabled(response.bgcolor,response.color,response.message)
             }
         });
     });

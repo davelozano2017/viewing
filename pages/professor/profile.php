@@ -117,7 +117,7 @@ $count_course = $data->countprofessorcourse($id);
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
         <li class="treeview">
@@ -241,7 +241,7 @@ $count_course = $data->countprofessorcourse($id);
                 <div class="form-group">
                   <label for="username" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
-                    <input type="text" id="password" name="password" ng-model="password" class="form-control" required password-verify="{{confirm_password}}">
+                    <input type="password" id="password" name="password" ng-model="password" class="form-control" required password-verify="{{confirm_password}}">
                     <input type="hidden" id="update_id" value="<?php echo$id?>">
                     <span ng-messages="profile.password.$error" ng-if="profile.password.$dirty">
                       <strong ng-message="required" class="text-danger">This field is required.</strong>
@@ -253,7 +253,7 @@ $count_course = $data->countprofessorcourse($id);
                 <div class="form-group">
                   <label for="username" class="col-sm-2 control-label"> Confirm Password</label>
                   <div class="col-sm-10">
-                    <input type="text" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required password-verify="{{password}}">
+                    <input type="password" id="confirm_password" name="confirm_password" ng-model="confirm_password" class="form-control" required password-verify="{{password}}">
                     <b ng-messages="profile.confirm_password.$error" ng-if="profile.confirm_password.$dirty">
                       <strong ng-message="required" class="text-danger" style="display:block">This field is required.</strong>
                       <strong ng-show="confirm_password != password" class="text-danger">Password not matched.</strong>

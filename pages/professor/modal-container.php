@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label>Last Name</label>
                             <input type="hidden" id="professor_id" value="<?php echo $_SESSION['id']?>">
-                            <input type="text" id="lastname" ng-pattern="/^[a-zA-Z ]*$/" name="lastname" ng-model="lastname" class="form-control" required>
+                            <input type="text" id="lastname" ng-pattern="/^[a-zA-Z ñ]*$/" name="lastname" ng-model="lastname" class="form-control" required>
                             <span ng-messages="addstudent.lastname.$error" ng-if="addstudent.lastname.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             <strong ng-message="pattern" class="text-danger">This field only requires alphabets.</strong>
@@ -25,7 +25,7 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" id="firstname" name="firstname" ng-model="firstname" ng-pattern="/^[a-zA-Z ]*$/" class="form-control" required>
+                            <input type="text" id="firstname" name="firstname" ng-model="firstname" ng-pattern="/^[a-zA-Z ñ]*$/" class="form-control" required>
                             <span ng-messages="addstudent.firstname.$error" ng-if="addstudent.firstname.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             <strong ng-message="pattern" class="text-danger">This field only requires alphabets.</strong>
@@ -36,7 +36,7 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Middle Name</label>
-                            <input type="text" id="middlename" name="middlename" ng-model="middlename" ng-pattern="/^[a-zA-Z ]*$/"  class="form-control" required>
+                            <input type="text" id="middlename" name="middlename" ng-model="middlename" ng-pattern="/^[a-zA-Z ñ]*$/"  class="form-control" required>
                             <span ng-messages="addstudent.middlename.$error" ng-if="addstudent.middlename.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             <strong ng-message="pattern" class="text-danger">This field only requires alphabets.</strong>
@@ -170,7 +170,7 @@
                             <label>Last Name</label>
                             <input type="hidden" id="accountid">
                             <input type="hidden" id="studentid">
-                            <input type="text" id="elastname" ng-pattern="/^[a-zA-Z ]*$/" name="elastname" ng-model="elastname" class="form-control" required>
+                            <input type="text" id="elastname" ng-pattern="/^[a-zA-Z ñ]*$/" name="elastname" ng-model="elastname" class="form-control" required>
                             <span ng-messages="editstudents.elastname.$error" ng-if="editstudents.elastname.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             <strong ng-message="pattern" class="text-danger">This field only requires alphabets.</strong>
@@ -181,22 +181,20 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" id="efirstname" name="efirstname" ng-model="efirstname" ng-pattern="/^[a-zA-Z ]*$/" class="form-control" required>
+                            <input type="text" id="efirstname" name="efirstname" ng-model="efirstname" ng-pattern="/^[a-zA-Z ñ]*$/" class="form-control" required>
                             <span ng-messages="editstudents.efirstname.$error" ng-if="editstudents.efirstname.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             <strong ng-message="pattern" class="text-danger">This field only requires alphabets.</strong>
-                            </span>
                         </div>
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Middle Name</label>
-                            <input type="text" id="emiddlename" name="emiddlename" ng-model="emiddlename" ng-pattern="/^[a-zA-Z ]*$/"  class="form-control" required>
+                            <input type="text" id="emiddlename" name="emiddlename" ng-model="emiddlename" ng-pattern="/^[a-zA-Z ñ]*$/"  class="form-control" required>
                             <span ng-messages="editstudents.emiddlename.$error" ng-if="editstudents.emiddlename.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             <strong ng-message="pattern" class="text-danger">This field only requires alphabets.</strong>
-                            </span>
                         </div>
                     </div>
                 </div>
