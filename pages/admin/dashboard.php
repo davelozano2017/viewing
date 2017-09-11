@@ -4,7 +4,11 @@ $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
-$role     = $_SESSION['role'] == 2 ? 'Professor' : null;
+$role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
+$administrators = $data->countadministrators();
+$professors     = $data->countprofessors();
+$students       = $data->countstudents();
+$all       = $data->countall();
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,9 +35,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
-    
 </head>
-<body ng-app="apps" ng-controller='myCtrl' class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -108,22 +111,31 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview active">
-        <a href="#"><i class="fa fa-user fa-fw"></i><span> Students</span>
+        <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+        <li class="treeview">
+        <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="view_students.php">View Students</a></li>
-            <li><a href="view_course_and_section.php">View Course & Section</a></li>
-            <li><a href="view_subjects.php">View Subjects</a></li>
-            <li><a href="view_grades.php">View Grades</a></li>
+          <li><a href="add_professors.php">Professors</a></li>
+          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
-        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
-        <li><a href="professor_upload_grades.php"><i class="fa fa-upload fa-fw"></i><span> Upload Grades</span></a></li>
+
+        <li class="treeview">
+        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+          <ul class="treeview-menu">
+          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          </ul>
+        </li>
+        
+
 
       </ul>
       <!-- /.sidebar-menu -->
@@ -136,40 +148,132 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Students
+     Dashboard
     </h1>
     <ol class="breadcrumb">
-    <li>Dashboard</li>
-    <li>Students</li>
-    <li class="active">View Students</li>
+      <li class="active">Dashboard</li>
     </ol>
   </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
     <div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <button data-toggle="modal" data-target="#addstudents" class="btn btn-primary flat"> Add Student </button>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3><?php echo $administrators?></h3>
+
+              <p>Administrators</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-people"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
         </div>
-    </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3><?php echo $professors?></h3>
 
+              <p>Professors</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-people"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3><?php echo $students?></h3>
 
-        <!-- Modal -->
-        <?php include 'modal-container.php';?>
-        <!-- end modal -->
+              <p>Students</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-people"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3><?php echo $all ?></h3>
 
-    <div class="col-md-12 col-sm-12">
-      <div class="box box-primary">
-        <div class="box-body box-profile">
-          <!-- Start -->
-          <div id="show_students"></div>
-          <!-- End -->
+              <p>Total Users</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+      <!-- End  -->
+
+      <!-- Uploaded grades Start  -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Uploaded Grades <small>Waiting for approval</small></h3>
+            </div>
+            <div class="box-body">
+              <div id="show_grades"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- Uploaded Grades End  -->
+
+      <!-- Request Password Start  -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Requesting <small>Administrators</small></h3>
+            </div>
+            <div class="box-body">
+              <div id="show_request_administrators"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Requesting <small>Professors</small></h3>
+            </div>
+            <div class="box-body">
+              <div id="show_request_professors"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Requesting <small>Students</small></h3>
+            </div>
+            <div class="box-body">
+              <div id="show_request_students"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-  </div>
+      <!-- Request Password End -->
 
     </section>
     <!-- /.content -->
@@ -184,14 +288,17 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 
 </div>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
-<script src="../../assets/angular/angular.min.js"></script>
-<script src="../../assets/angular/1.4.2.angular.min.js"></script>
+
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
+<!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
@@ -199,47 +306,33 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 <script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script type="text/javascript">
-//School information
+<script src="../../assets/angular/angular.min.js"></script>
+<script src="../../assets/angular/1.4.2.angular.min.js"></script>
+<script>
 var app = angular.module('app', ['ngMessages']);
-var apps = angular.module('apps', ['ngMessages']);
-apps.controller('myCtrl',function($scope){
-});
-showstudents();
+  function request_administrators($id) {
+      var id = $id;
+      execute_request(id)
+  }
+  
+  function request_professors($id) {
+      var id = $id;
+      execute_request(id)
+  }
 
-function edit_student($studentid,$id,$firstname,$middlename,$lastname,$branch,$course,$subject,$section,$username,$email,$contact,$gender,$sy) {
-  var accountid = $id, firstname = $firstname, middlename = $middlename, lastname = $lastname, branch = $branch, course = $course, subject = $subject,  section = $section, username = $username, email = $email, contact = $contact, gender = $gender, studentid = $studentid, sy = $sy;
-  $('#editstudent').modal('show');
-  $('#editstudent').find('#accountid').val(accountid);
-  $('#editstudent').find('#studentid').val(studentid);
-  $('#editstudent').find('#elastname').val(lastname);
-  $('#editstudent').find('#efirstname').val(firstname);
-  $('#editstudent').find('#emiddlename').val(middlename);
-  $('#editstudent').find('#eemail').val(email);
-  $('#editstudent').find('#econtact').val(contact);
-  $('#editstudent').find('#egender').val(gender);
-  $('#editstudent').find('#eusername').val(username);
-  $('#editstudent').find('#ebranch').val(branch);
-  $('#editstudent').find('#esection').val(section);
-  $('#editstudent').find('#ecourse').val(course);
-  $('#editstudent').find('#esubject').val(subject);
-  $('#editstudent').find('#esy').val(sy);
-  apps.controller('myCtrl',function($scope){
-    $scope.elastname   = elastname;
-    $scope.efirstname  = efirstname;
-    $scope.emiddlename = emiddlename;
-    $scope.eemail      = eemail;
-    $scope.econtact    = econtact;
-    $scope.egender     = egender;
-    $scope.eusername   = eusername;
-    $scope.ebranch     = ebranch;
-    $scope.esection    = esection;
-    $scope.ecourse     = ecourse;
-    $scope.esubject    = esubject;
-  });
-}
-updatestudent();
-deletestudent();
+  function request_students($id) {
+      var id = $id;
+      execute_request(id)
+  }
+  show_request_administrators();
+  show_request_professors();
+  show_request_students();
+  showgrades();
+  showschoolyear();
+  addschoolyearmodal();
+  addschoolyear();
+ 
+
 </script>
 </body>
 </html>

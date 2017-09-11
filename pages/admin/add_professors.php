@@ -4,7 +4,7 @@ $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
-$role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
+$role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -112,9 +112,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="add_administrators.php">Administrators</a></li>
           <li class="active"><a href="add_professors.php">Professors</a></li>
-          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
         <li class="treeview">

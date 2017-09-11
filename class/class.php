@@ -93,6 +93,10 @@ class db extends Controller {
         }
     }
 
+    public function showsections() {
+        $query = $this->db->query("SELECT * FROM professor_sections_tbl");
+        return $query;
+    }
     public function showbranches() {
         $query = $this->db->query("SELECT * FROM branches_tbl");
         return $query;
@@ -225,7 +229,7 @@ class db extends Controller {
     }
 
     // Insert Student
-    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$professor_id) {
+    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$professor_id,$sy) {
         $password = password_hash(12345123,PASSWORD_DEFAULT);
         $security_code = rand(111111,999999);
         $photo = $gender == 'Male' ? '../../assets/images/student_male.png' : '../../assets/images/student_female.png';
@@ -238,27 +242,27 @@ class db extends Controller {
                 $message = 'This student is already exist in your list.';
                 $this->duplicated($message);
             } else {
-                $this->insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch);
+                $this->insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch,$sy);
             }
         } else { 
             $query = $this->db->query("INSERT INTO accounts_tbl 
             (photo,lastname,firstname,middlename,email,contact,
-            gender,username,password,security_code,status,role) 
+            gender,username,password,security_code,role) 
             VALUES 
             ('$photo','$lastname','$firstname','$middlename','$email',
-            '$contact','$gender','$username','$password','$security_code',1,'$type')");
-            $query ? $this->insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch) : false;
+            '$contact','$gender','$username','$password','$security_code','$type')");
+            $query ? $this->insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch,$sy) : false;
         }
     }
 
-    public function insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch) {
+    public function insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch,$sy) {
         $query = $this->db->query("INSERT INTO students_tbl 
-        (professor_id,subject,section,course,branch,username) VALUES ('$professor_id','$subject','$section','$course','$branch','$username')");
+        (professor_id,subject,section,course,branch,username,sy) VALUES ('$professor_id','$subject','$section','$course','$branch','$username','$sy')");
         $message = 'New student has been added.';
         return $query ? $this->success($message) : false;
     }
 
-    public function updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$subject,$branch,$section,$course) {
+    public function updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$subject,$branch,$section,$course,$esy) {
         if(empty($lastname) || empty($firstname) || empty($middlename) || empty($email) || empty($contact) || empty($gender) || empty($username) || empty($branch) || empty($section) || empty($course) || empty($subject)) {
             echo json_encode(array(
                 'bgcolor' => '#ff0000',
@@ -270,14 +274,14 @@ class db extends Controller {
                 lastname = '$lastname', firstname = '$firstname', middlename = '$middlename', 
                 email = '$email', contact = '$contact', gender = '$gender', 
                 username = '$username', username = '$username' WHERE id = '$accountid'");
-            return $query ? $this->updatestudentinfo($studentid,$subject,$section,$course,$username,$branch) : null;
+            return $query ? $this->updatestudentinfo($studentid,$subject,$section,$course,$username,$branch,$esy) : null;
         }
 
     }
 
-    public function updatestudentinfo($studentid,$subject,$section,$course,$username,$branch) {
+    public function updatestudentinfo($studentid,$subject,$section,$course,$username,$branch,$esy) {
         $query = $this->db->query("UPDATE students_tbl SET subject = '$subject', section = '$section', 
-        course = '$course', username = '$username', branch = '$branch' WHERE studentid = '$studentid'");
+        course = '$course', username = '$username', branch = '$branch', sy = '$esy' WHERE studentid = '$studentid'");
         $message = 'Student information has been updated';
         return $query ? $this->updated($message) : false;
     }
@@ -414,6 +418,29 @@ class db extends Controller {
         return $query;
     }
 
+    public function filter_professor($id) {
+        $query = $this->db->query("SELECT * FROM accounts_tbl WHERE id = $id");
+        return $query;
+    }
+
+    public function addschoolyear($sy) {
+        $query = $this->db->query("SELECT * FROM school_year_tbl WHERE schoolyear = '$sy'");
+        $check = $query->num_rows;
+        if($check > 0) {
+            $message = 'School year '.$sy.' is already exist';
+            $this->duplicated($message);
+        } else {
+            $query = $this->db->query("INSERT INTO school_year_tbl (schoolyear) VALUES ('$sy')");
+            $message = 'School year '.$sy.' has been added.';
+            $query ? $this->success($message) : null;
+        }
+    }
+
+    public function show_school_year() {
+        $query = $this->db->query("SELECT * FROM school_year_tbl");
+        return $query;
+    }
+
     public function show_students_reports($branch,$course,$section) {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
         ON accounts_tbl.username = students_tbl.username
@@ -426,9 +453,9 @@ class db extends Controller {
         return $query;
     }
 
-    public function show_validate_student($branch,$section,$course,$subject) {
+    public function show_validate_student($branch,$section,$course,$subject,$sy) {
         $query = $this->db->query("SELECT * FROM students_tbl WHERE 
-        branch = '$branch' AND section = '$section' AND course = '$course' AND subject = '$subject'");
+        branch = '$branch' AND section = '$section' AND course = '$course' AND subject = '$subject' AND sy = '$sy'");
         $check = $query->num_rows;
         if($check > 0) {
             return $query;
@@ -449,7 +476,7 @@ class db extends Controller {
 
     }
 
-    public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section) {
+    public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section,$sy) {
         $file		 = $_FILES['files']['tmp_name'];
         if(empty($file)) {
             $errormsg = 'Please upload .xlxs | .xls | .csv files.';
@@ -480,8 +507,10 @@ class db extends Controller {
               $s_sio      = $this->post($worksheet->getCellByColumnAndRow(18,$row)->getValue());
               $s_result   = $this->post($worksheet->getCellByColumnAndRow(19,$row)->getCalculatedValue());
               $grades     = $this->post($worksheet->getCellByColumnAndRow(21,$row)->getCalculatedValue());
+              $g_add      = $this->post($worksheet->getCellByColumnAndRow(22,$row)->getValue());
               $final      = $this->post($worksheet->getCellByColumnAndRow(23,$row)->getCalculatedValue());
               $remarks    = $this->post($worksheet->getCellByColumnAndRow(24,$row)->getCalculatedValue());
+
               
               if(ltrim($username) == '' || ltrim($username) == 'Prepared By:' 
                  || ltrim($username) == 'Instructor:' && ltrim($name) == '' 
@@ -491,9 +520,9 @@ class db extends Controller {
               continue;
            
               $query  = $this->db->query("INSERT INTO professor_grades_tbl 
-              (username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,final,remarks,professor_id,status,branch,course,subject,section,code,date) 
+              (username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,g_add,final,remarks,professor_id,status,branch,course,subject,section,sy,code,date) 
               VALUES 
-              ('$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$final','$remarks','$professor_id',1,'$branch','$course','$subject','$section','$code','$date')");        
+              ('$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$g_add','$final','$remarks','$professor_id',1,'$branch','$course','$subject','$section','$sy','$code','$date')");        
           }
          
         }   
@@ -533,6 +562,7 @@ class db extends Controller {
             $hash   = $row->password;
             $name   = $row->firstname;
             $photo  = $row->photo;
+            $uname  = $row->username;
         if(password_verify($password,$hash) AND $role == 0) {
             $_SESSION['id'] = $id;
             $_SESSION['role'] = $role;
@@ -556,7 +586,8 @@ class db extends Controller {
             $_SESSION['name'] = $name;
             $_SESSION['role'] = $role;
             $_SESSION['photo'] = $photo;
-            echo json_encode(array('success' => true, 'location' => '../pages/student/profile.php.'));
+            $_SESSION['username'] = $uname;
+            echo json_encode(array('success' => true, 'location' => '../pages/student/view_grades.php.'));
         } else {
             echo json_encode(array('success' => false, 'bgcolor' => '#ff0000','color'   => '#fff',
                 'message' => 'Invalid username or password.'));
@@ -574,6 +605,19 @@ class db extends Controller {
             $message = 'Password has been changed';
             $this->updated($message);
         }
+    }
+
+    public function showstudentinfo($username) {
+        $query = $this->db->query("SELECT * FROM students_tbl WHERE username = '$username' GROUP BY subject");
+        return $query;
+    }
+
+    public function showstudentgrades($username,$branch,$subject,$section,$sy){
+        $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE username = '$username' AND branch = '$branch' AND subject = '$subject' AND section = '$section' AND sy = '$sy' AND status = 0");
+        $check = $query->num_rows;
+        if($check > 0) {
+            return $query;
+        } 
     }
 
     //redirect users to pages after login depends on their role

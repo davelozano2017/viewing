@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
                             <select id="course" class="form-control">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Subject</label>
                             <select id="subject" class="form-control">
@@ -136,6 +136,19 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>School Year</label>
+                            <select id="sy" class="form-control">
+                            <?php foreach($data->show_school_year() as $row):?>
+                            <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
+                            <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    
 
                 </div>
 
@@ -269,7 +282,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
                             <select id="ecourse" class="form-control">
@@ -280,12 +293,23 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Subject</label>
                             <select id="esubject" class="form-control">
                             <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
                             <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
+                            <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>School Year</label>
+                            <select id="esy" class="form-control">
+                            <?php foreach($data->show_school_year() as $row):?>
+                            <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>

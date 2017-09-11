@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2017 at 08:36 AM
+-- Generation Time: Sep 11, 2017 at 06:09 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -51,13 +51,16 @@ CREATE TABLE `accounts_tbl` (
 
 INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`, `email`, `contact`, `gender`, `username`, `password`, `security_code`, `status`, `role`, `created`) VALUES
 (18, '../../assets/images/admin.png', '', 'Administrator', '', 'admin@gmail.com', '9562211554', 'Female', 'Administrator', '$2y$10$.TO3f0wO3xGy/fNh6SINz.TIwFcX6k0D3Q7XSj.gYxDCJEmlqUSOC', 699014, 0, 0, '2017-09-09 06:05:38'),
-(73, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9123344556', 'Female', 'adoralozano', '$2y$10$5e1y16v6l9BvSm7Eh0plcOd8muZwPcUWu5tflEqXAoEGsEFKG13YG', 500006, 0, 2, '2017-09-08 17:17:07'),
-(74, '../../assets/images/student_female.png', 'Romano', 'Mary Claire', 'Qui&ntilde;ones', 'romanomaryclaire@gmail.com', '9336101918', 'Female', 'A114C0270', '$2y$10$UbK81Z.aOdG.LicFZpI28OA2fLX5XA5UYaTrtlCk2DOfgonrW8fgu', 845925, 1, 3, '2017-09-08 18:16:08'),
-(75, '../../assets/images/student_female.png', 'Lucena', 'Diana Jane', 'Davis', 'dianalucenau121598@gmail.com', '9553318477', 'Female', 'A114C0440', '$2y$10$83wBF7pkAD1IzO9B00ptmu09FzEYhLrf/zf5k8za9eC.RrVQuzPte', 429635, 1, 3, '2017-09-08 17:44:11'),
-(76, '../../assets/images/student_male.png', 'Saracanlao', 'Sam', 'japitana', 'zhamsaracanlao@yahoo.com', '9297470474', 'Male', 'A114C0447', '$2y$10$eMwhFPOcdlQZK9RY6y0A7.lqzfQaUrLJCwYxEA7wm4PgRpNS0Du3.', 538499, 1, 3, '2017-09-08 18:01:37'),
-(77, '../../assets/images/student_male.png', 'Serquina', 'Dennis Dondon', 'Frando', 'ddserquina@gmail.com', '9970846704', 'Male', 'A114C0426', '$2y$10$TOZ8YCh7i64yF07M54SJ3OBvNxs.n9bvs0R3CpMTic4qM0r4f2nv.', 398920, 1, 3, '2017-09-08 18:02:12'),
-(78, '../../assets/images/student_male.png', 'Francisco', 'Judy', 'Dela Fuente', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0268', '$2y$10$0ebZc6c2m3DK4tcGE7Yk8OO1DDlA3azuQqcpuSbhGiZPIs4OC9ujm', 902139, 1, 3, '2017-09-08 18:02:39'),
-(79, '../../assets/images/student_male.png', 'Romano', 'Carmela', 'Qui&ntilde;ones', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0269', '$2y$10$CF9LQ4i0.VzFtS82JKSsz.rU2cneDrJPEocZ7aR6GwqieiodAt5Ie', 914527, 1, 3, '2017-09-08 18:16:19');
+(73, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9123344556', 'Female', 'adoralozano', '$2y$10$5e1y16v6l9BvSm7Eh0plcOd8muZwPcUWu5tflEqXAoEGsEFKG13YG', 500006, 0, 2, '2017-09-09 22:36:20'),
+(74, '../../assets/images/student_female.png', 'Romano', 'Mary Claire', 'Qui&ntilde;ones', 'romanomaryclaire@gmail.com', '9336101918', 'Female', 'A114C0270', '$2y$10$BsqLnv4Cn.QzDmIPZhEDxONv4RorGDlPwfwoPfbLDu.wpODJSAkG2', 845925, 0, 3, '2017-09-09 22:46:54'),
+(75, '../../assets/images/student_female.png', 'Lucena', 'Diana Jane', 'Davis', 'dianalucenau121598@gmail.com', '9553318477', 'Female', 'A114C0440', '$2y$10$83wBF7pkAD1IzO9B00ptmu09FzEYhLrf/zf5k8za9eC.RrVQuzPte', 429635, 0, 3, '2017-09-09 08:17:46'),
+(76, '../../assets/images/student_male.png', 'Saracanlao', 'Sam', 'japitana', 'zhamsaracanlao@yahoo.com', '9297470474', 'Male', 'A114C0447', '$2y$10$eMwhFPOcdlQZK9RY6y0A7.lqzfQaUrLJCwYxEA7wm4PgRpNS0Du3.', 538499, 0, 3, '2017-09-09 08:17:52'),
+(77, '../../assets/images/student_male.png', 'Serquina', 'Dennis Dondon', 'Frando', 'ddserquina@gmail.com', '9970846704', 'Male', 'A114C0426', '$2y$10$TOZ8YCh7i64yF07M54SJ3OBvNxs.n9bvs0R3CpMTic4qM0r4f2nv.', 398920, 0, 3, '2017-09-09 08:17:50'),
+(78, '../../assets/images/student_male.png', 'Francisco', 'Judy', 'Dela Fuente', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0268', '$2y$10$0ebZc6c2m3DK4tcGE7Yk8OO1DDlA3azuQqcpuSbhGiZPIs4OC9ujm', 902139, 0, 3, '2017-09-09 08:17:49'),
+(79, '../../assets/images/student_male.png', 'Romano', 'Carmela', 'Qui&ntilde;ones', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0269', '$2y$10$CF9LQ4i0.VzFtS82JKSsz.rU2cneDrJPEocZ7aR6GwqieiodAt5Ie', 914527, 0, 3, '2017-09-09 08:17:55'),
+(80, '../../assets/images/student_female.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9265691158', 'Camarin', 'Capstone ', '$2y$10$3etoU.nvyRaVgaUCga6s2OojxA9KHeXSDkkD/X1RrBKgVUNF/D3/.', 268117, 0, 0, '2017-09-09 20:53:57'),
+(81, '../../assets/images/student_female.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9265691158', 'Female', 'A111G0001', '$2y$10$fl2V1GFMAw/7GIPPTzMQRO8RqLvSkKwoeS55NMXnLn1o4YQONdkZi', 883277, 0, 3, '2017-09-09 20:56:18'),
+(82, '../../assets/images/admin.png', 'Admin', 'Admin', 'Admin', 'Admin@yahoo.com', '9228828288', 'Male', 'adminmoto', '$2y$10$7q6smPeiE/BF1PR36sV8tupQ6B7XbB7Vvs08lvKNVWw1kQ5f0G1fm', 488991, 0, 1, '2017-09-09 22:22:52');
 
 -- --------------------------------------------------------
 
@@ -160,6 +163,7 @@ CREATE TABLE `professor_grades_tbl` (
   `s_sio` varchar(255) NOT NULL,
   `s_result` varchar(255) NOT NULL,
   `grades` varchar(255) NOT NULL,
+  `g_add` varchar(255) NOT NULL,
   `final` varchar(255) NOT NULL,
   `remarks` varchar(255) NOT NULL,
   `professor_id` int(11) NOT NULL,
@@ -168,6 +172,7 @@ CREATE TABLE `professor_grades_tbl` (
   `course` varchar(255) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `section` varchar(255) NOT NULL,
+  `sy` varchar(255) NOT NULL,
   `code` int(11) NOT NULL,
   `date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -176,13 +181,13 @@ CREATE TABLE `professor_grades_tbl` (
 -- Dumping data for table `professor_grades_tbl`
 --
 
-INSERT INTO `professor_grades_tbl` (`id`, `username`, `name`, `q_pl`, `q_mt`, `q_pf`, `q_fn`, `q_ave`, `q_result`, `e_pl`, `e_mt`, `e_pf`, `e_fn`, `e_ave`, `e_result`, `s_sio`, `s_result`, `grades`, `final`, `remarks`, `professor_id`, `status`, `branch`, `course`, `subject`, `section`, `code`, `date`) VALUES
-(22, 'A114C0270', 'Mary Claire Q. Romano', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', 201562, '2017-09-09'),
-(23, 'A114C0440', 'Diana Jane D. Lucena', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', 201562, '2017-09-09'),
-(24, 'A114C0447', 'Sam J. Saracanlao', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', 201562, '2017-09-09'),
-(25, 'A114C0426', 'Dennis Dondon F. Serquina', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', 201562, '2017-09-09'),
-(26, 'A114C0268', 'Judy Dela F. Francisco', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', 201562, '2017-09-09'),
-(27, 'A114C0269', 'Carmela Q. Romano', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '0', '20', '20', '100', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', 201562, '2017-09-09');
+INSERT INTO `professor_grades_tbl` (`id`, `username`, `name`, `q_pl`, `q_mt`, `q_pf`, `q_fn`, `q_ave`, `q_result`, `e_pl`, `e_mt`, `e_pf`, `e_fn`, `e_ave`, `e_result`, `s_sio`, `s_result`, `grades`, `g_add`, `final`, `remarks`, `professor_id`, `status`, `branch`, `course`, `subject`, `section`, `sy`, `code`, `date`) VALUES
+(52, 'A114C0270', 'Mary Claire Q. Romano', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '0', '100', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', '2017 - 2018', 252846, '2017-09-10'),
+(53, 'A114C0440', 'Diana Jane D. Lucena', '98', '98', '98', '98', '98', '39.2', '98', '98', '98', '98', '98', '39.2', '20', '20', '98.4', '1', '99.4', '4.0', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', '2017 - 2018', 252846, '2017-09-10'),
+(54, 'A114C0447', 'Sam J. Saracanlao', '94', '94', '94', '94', '94', '37.6', '94', '94', '94', '94', '94', '37.6', '20', '20', '95.2', '2', '97.2', '3.5', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', '2017 - 2018', 252846, '2017-09-10'),
+(55, 'A114C0426', 'Dennis Dondon F. Serquina', '90', '90', '90', '90', '90', '36', '90', '90', '90', '90', '90', '36', '20', '20', '92', '3', '95', '3.5', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', '2017 - 2018', 252846, '2017-09-10'),
+(56, 'A114C0268', 'Judy Dela F. Francisco', '88', '88', '88', '88', '88', '35.2', '88', '88', '88', '88', '88', '35.2', '20', '20', '90.4', '4', '94.4', '3.5', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', '2017 - 2018', 252846, '2017-09-10'),
+(57, 'A114C0269', 'Carmela Q. Romano', '82', '82', '82', '82', '82', '32.8', '82', '82', '82', '82', '82', '32.8', '20', '20', '85.6', '5', '90.6', '2.5', 73, 0, 'Cubao 2', 'B.S.  in Information Technology', 'Capstone ', 'M72', '2017 - 2018', 252846, '2017-09-10');
 
 -- --------------------------------------------------------
 
@@ -241,6 +246,24 @@ CREATE TABLE `requests_tbl` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `school_year_tbl`
+--
+
+CREATE TABLE `school_year_tbl` (
+  `id` int(11) NOT NULL,
+  `schoolyear` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `school_year_tbl`
+--
+
+INSERT INTO `school_year_tbl` (`id`, `schoolyear`) VALUES
+(1, '2017 - 2018');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students_tbl`
 --
 
@@ -251,20 +274,24 @@ CREATE TABLE `students_tbl` (
   `section` varchar(255) NOT NULL,
   `course` varchar(255) NOT NULL,
   `branch` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL
+  `username` varchar(255) NOT NULL,
+  `sy` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `students_tbl`
 --
 
-INSERT INTO `students_tbl` (`studentid`, `professor_id`, `subject`, `section`, `course`, `branch`, `username`) VALUES
-(51, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0270'),
-(52, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0440'),
-(53, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0447'),
-(54, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0426'),
-(55, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0268'),
-(56, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0269');
+INSERT INTO `students_tbl` (`studentid`, `professor_id`, `subject`, `section`, `course`, `branch`, `username`, `sy`) VALUES
+(51, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0270', '2017 - 2018'),
+(52, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0440', '2017 - 2018'),
+(53, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0447', '2017 - 2018'),
+(54, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0426', '2017 - 2018'),
+(55, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0268', '2017 - 2018'),
+(56, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0269', '2017 - 2018'),
+(57, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0270', '2017 - 2018'),
+(59, 73, 'Capstone ', 'M72', 'B.S.  in Information Technology', 'Camarin', 'A111G0001', '2017 - 2018'),
+(60, 73, 'Prola2', 'M52', 'B.S.  in Information Technology', 'Cubao 2', 'A114C0270', '2017 - 2018');
 
 --
 -- Indexes for dumped tables
@@ -319,6 +346,12 @@ ALTER TABLE `requests_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `school_year_tbl`
+--
+ALTER TABLE `school_year_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
@@ -332,7 +365,7 @@ ALTER TABLE `students_tbl`
 -- AUTO_INCREMENT for table `accounts_tbl`
 --
 ALTER TABLE `accounts_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `branches_tbl`
 --
@@ -347,12 +380,12 @@ ALTER TABLE `courses_tbl`
 -- AUTO_INCREMENT for table `professor_courses_tbl`
 --
 ALTER TABLE `professor_courses_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- AUTO_INCREMENT for table `professor_grades_tbl`
 --
 ALTER TABLE `professor_grades_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `professor_sections_tbl`
 --
@@ -369,10 +402,15 @@ ALTER TABLE `professor_subjects_tbl`
 ALTER TABLE `requests_tbl`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `school_year_tbl`
+--
+ALTER TABLE `school_year_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;COMMIT;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

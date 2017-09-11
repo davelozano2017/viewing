@@ -183,7 +183,6 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
               </select>
           </div>
         </div>
-      
       </div>
     </div>
     <br>

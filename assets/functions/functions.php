@@ -47,7 +47,8 @@ switch($_POST['action']) {
         $section      = $data->post($_POST['section']);
         $course       = $data->post($_POST['course']);
         $professor_id = $data->post($_POST['professor_id']);
-        $query        = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$professor_id);
+        $sy           = $data->post($_POST['sy']);
+        $query        = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$professor_id,$sy);
     break;
 #############################################################################
     
@@ -120,8 +121,10 @@ switch($_POST['action']) {
         include 'function_show_grades.php';
     break;
 
+    case 'Show School Year':
+        include 'function_show_school_year.php';
+    break;
     
-
     case 'Show Subjects':
         include 'function_show_subjects.php';
     break;
@@ -132,6 +135,15 @@ switch($_POST['action']) {
     
     case 'Show Courses':
         include 'function_show_courses.php';
+    break;
+    
+    case 'Add School Year':
+        $sy = $data->post($_POST['sy']);
+        $query = $data->addschoolyear($sy);
+    break;
+    
+    case 'Show Student Grades':
+        include 'function_show_students_grades.php';
     break;
 
     case 'Add Subjects': 
@@ -169,7 +181,8 @@ switch($_POST['action']) {
         $branch     = $data->post($_POST['branch']);
         $section    = $data->post($_POST['section']);
         $course     = $data->post($_POST['course']);
-        $query      = $data->updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$subject,$branch,$section,$course);
+        $esy        = $data->post($_POST['esy']);
+        $query      = $data->updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$subject,$branch,$section,$course,$esy);
     break;
 
     case 'Delete Student':
@@ -177,6 +190,8 @@ switch($_POST['action']) {
         $studentid  = $data->post($_POST['studentid']);
         $query      = $data->deletestudents($accountid,$studentid);
     break;
+
+
 
     case 'Delete Uploaded Grades':
         $code  = $data->post($_POST['code']);

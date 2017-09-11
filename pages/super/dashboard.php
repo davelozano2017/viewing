@@ -121,6 +121,7 @@ $all       = $data->countall();
           <ul class="treeview-menu">
           <li><a href="add_administrators.php">Administrators</a></li>
           <li><a href="add_professors.php">Professors</a></li>
+          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
 
@@ -132,7 +133,6 @@ $all       = $data->countall();
         </a>
           <ul class="treeview-menu">
           <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
-          <li><a href="add_professors.php">Maintenance</a></li>
           </ul>
         </li>
         
@@ -225,13 +225,26 @@ $all       = $data->countall();
 
       <!-- Uploaded grades Start  -->
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-7">
           <div class="box box-solid">
             <div class="box-header with-border">
               <h3 class="box-title">Uploaded Grades <small>Waiting for approval</small></h3>
             </div>
             <div class="box-body">
               <div id="show_grades"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">School Year </h3><small class="pull-right">
+              <button id="addschoolyear" style="background:transparent;border:none;outline:none"><i class="fa fa-plus"></i></button></small>
+            </div>
+            <div class="box-body">
+              <?php include 'modal-container.php';?>
+              <div id="show_school_year"></div>
             </div>
           </div>
         </div>
@@ -291,6 +304,7 @@ $all       = $data->countall();
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
+
 <script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -305,7 +319,10 @@ $all       = $data->countall();
 <script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="../../assets/angular/angular.min.js"></script>
+<script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script>
+var app = angular.module('app', ['ngMessages']);
   function request_administrators($id) {
       var id = $id;
       execute_request(id)
@@ -324,6 +341,10 @@ $all       = $data->countall();
   show_request_professors();
   show_request_students();
   showgrades();
+  showschoolyear();
+  addschoolyearmodal();
+  addschoolyear();
+ 
 
 </script>
 </body>

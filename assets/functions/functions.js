@@ -160,6 +160,15 @@ function btnuploadfileenabled(bgcolor,color,message) {
     $('#uploadfile').html('Upload').attr('disabled',false);
 }
 
+function btnaddschoolyearenabled(bgcolor,color,message) {
+    $('#btnaddschoolyear').html('Add').attr('disabled',false);
+    showschoolyear();
+    notify(bgcolor,color,message);
+}
+function btnaddschoolyeardisabled() {
+    $('#btnaddschoolyear').html('Please Wait').attr('disabled',true);
+}
+
 //login 
 function login() {
     $('#signin').click(function(e){
@@ -232,6 +241,7 @@ function insertstudents() {
         var section     = $('#section').val();
         var course      = $('#course').val();
         var type        = $('#type').val();
+        var sy          = $('#sy').val();
         var id          = $('#professor_id').val();
         
         $.ajax({
@@ -239,9 +249,9 @@ function insertstudents() {
             url : '../' + url,
             data : {
                 action : 'Insert Students', lastname : lastname, firstname : firstname,
-                middlename : middlename, email : email, contact : contact, 
-                gender : gender, branch : branch, professor_id : id, type : type, 
-                subject : subject, section : section, course : course,username : username 
+                middlename : middlename, email : email, contact : contact, gender : gender, 
+                branch : branch, professor_id : id, type : type, subject : subject, section : section, 
+                course : course,username : username, sy : sy 
             },
             dataType : 'json',
             success:function(response) {
@@ -397,6 +407,19 @@ function showgrades(){
         }
     })
 }
+
+function showschoolyear(){
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show School Year' },
+        success:function(response){
+            $('#show_school_year').html(response);
+        }
+    })
+}
+
+
 
 function showsubjects(){
     $.ajax({
@@ -803,14 +826,16 @@ function updatestudent() {
             var branch     = $('#ebranch').val();
             var section    = $('#esection').val();
             var course     = $('#ecourse').val();
-
+            var esy        = $('#esy').val();
+            
             $.ajax({
                 type : 'POST',
                 url : '../' + url,
                 data: {
                     action : 'Update Student', lastname : lastname, firstname : firstname, middlename : middlename,
                     email : email, contact : contact, gender : gender, username : username, branch : branch,
-                    subject : subject, section : section, course : course, accountid : accountid, studentid : studentid
+                    subject : subject, section : section, course : course, accountid : accountid, 
+                    studentid : studentid, esy : esy
                 },
                 dataType: 'json',
                 success:function(response) {
@@ -850,15 +875,17 @@ function uploadgrades(){
         e.preventDefault();
         btnuploadfiledisabled();
         var formData = new FormData($("#FormUpload")[0]);
-        var branch = $('#branch').val();
-        var course = $('#course').val();
+        var branch  = $('#branch').val();
+        var course  = $('#course').val();
         var section = $('#section').val();
         var subject = $('#subject').val();
+        var sy      = $('#sy').val();
         var professor_id = $('#professor_id').val();
         formData.append('branch', branch);
         formData.append('course', course);
         formData.append('section', section);
         formData.append('subject', subject);
+        formData.append('sy', sy);
         formData.append('files', $("#FormUpload")[0]);
         formData.append('professor_id', professor_id);
         $.ajax({
@@ -880,16 +907,19 @@ function uploadgrades(){
 function uploadgradesvalidation() {
     $('#branch').change(function(e){
         e.preventDefault();
+
         var branch = $('#branch').val();
         var course = $('#course').val();
         var section = $('#section').val();
         var subject = $('#subject').val();
+        var sy = $('#sy').val();
+        
         $.ajax({
             type : 'POST',
             url : '../' + url,
             data: { 
                 action : 'Show Upload Grades', branch : branch, course : course, 
-                section : section, subject : subject
+                section : section, subject : subject,  sy : sy
             },
             success:function(response) {
                 $('#showuploadgrades').html(response);
@@ -902,12 +932,13 @@ function uploadgradesvalidation() {
         var course = $('#course').val();
         var section = $('#section').val();
         var subject = $('#subject').val();
+        var sy = $('#sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
             data: { 
                 action : 'Show Upload Grades', branch : branch, course : course, 
-                section : section, subject : subject
+                section : section, subject : subject, sy : sy
             },
             success:function(response) {
                 $('#showuploadgrades').html(response);
@@ -919,12 +950,13 @@ function uploadgradesvalidation() {
         var course = $('#course').val();
         var section = $('#section').val();
         var subject = $('#subject').val();
+        var sy = $('#sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
             data: { 
                 action : 'Show Upload Grades', branch : branch, course : course, 
-                section : section, subject : subject
+                section : section, subject : subject, sy : sy
             },
             success:function(response) {
                 $('#showuploadgrades').html(response);
@@ -936,12 +968,32 @@ function uploadgradesvalidation() {
         var course = $('#course').val();
         var section = $('#section').val();
         var subject = $('#subject').val();
+        var sy = $('#sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
             data: { 
                 action : 'Show Upload Grades', branch : branch, course : course, 
-                section : section, subject : subject
+                section : section, subject : subject, sy : sy
+            },
+            success:function(response) {
+                $('#showuploadgrades').html(response);
+            }
+        });
+    });
+
+    $('#sy').change(function(e){
+        var branch = $('#branch').val();
+        var course = $('#course').val();
+        var section = $('#section').val();
+        var subject = $('#subject').val();
+        var sy = $('#sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Upload Grades', branch : branch, course : course, 
+                section : section, subject : subject, sy : sy
             },
             success:function(response) {
                 $('#showuploadgrades').html(response);
@@ -950,6 +1002,85 @@ function uploadgradesvalidation() {
     });
 }
 
+
+function showstudentgrades() {
+    $('#branch').change(function(e){
+        e.preventDefault();
+        var username = $('#username').val();
+        var branch  = $('#branch').val();
+        var subject = $('#subject').val();
+        var section = $('#section').val();
+        var sy      = $('#sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Student Grades', username : username, branch : branch, 
+                subject : subject, section : section, sy : sy
+            },
+            success:function(response) {
+                $('#showstudentgrades').html(response);
+            }
+            
+        });
+    });
+    $('#sy').change(function(e){
+        var username = $('#username').val();
+        var branch   = $('#branch').val();
+        var subject  = $('#subject').val();
+        var section  = $('#section').val();
+        var sy       = $('#sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Student Grades', username : username, branch : branch, 
+                sy : sy, section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showstudentgrades').html(response);
+            }
+        });
+    });
+
+    $('#section').change(function(e){
+        var username = $('#username').val();
+        var branch   = $('#branch').val();
+        var subject  = $('#subject').val();
+        var section  = $('#section').val();
+        var sy       = $('#sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Student Grades', username : username, branch : branch, 
+                sy : sy, section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showstudentgrades').html(response);
+            }
+        });
+    });
+
+    $('#subject').change(function(e){
+        var username = $('#username').val();
+        var branch   = $('#branch').val();
+        var subject  = $('#subject').val();
+        var section  = $('#section').val();
+        var sy       = $('#sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { 
+                action : 'Show Student Grades', username : username, branch : branch, 
+                sy : sy, section : section, subject : subject
+            },
+            success:function(response) {
+                $('#showstudentgrades').html(response);
+            }
+        });
+    });
+}
 function notify(bgcolor,color,message) {
     $.amaran({
         'theme'     : 'colorful', 'content'   : { bgcolor: bgcolor,color: color,message: message },
@@ -980,6 +1111,28 @@ function approveuploadedgrades(code) {
             response.success == true ? showgrades() : null;
             notify(response.bgcolor,response.color,response.message);
         }
+    })
+}
+
+function addschoolyear() {
+    $('#btnaddschoolyear').click(function(e){
+        e.preventDefault();
+        var sy = $('#sy').val();
+        btnaddschoolyeardisabled();
+        $.ajax({
+            type: 'POST',
+            url : '../' + url,
+            data: { action : 'Add School Year', sy : sy},
+            dataType: 'json',
+            success:function(response) {
+                response.success == true ? btnaddschoolyearenabled(response.bgcolor,response.color,response.message) : btnaddschoolyearenabled(response.bgcolor,response.color,response.message);
+            }
+        })
+    })
+}
+function addschoolyearmodal() {
+    $('#addschoolyear').click(function(e){
+        $('#modalschoolyear').modal('show');
     })
 }
 

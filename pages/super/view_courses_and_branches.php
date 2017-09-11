@@ -126,7 +126,6 @@ $all       = $data->countall();
         </a>
           <ul class="treeview-menu">
           <li class="active"><a href="view_courses_and_branches.php">View courses and branches</a></li>
-          <li><a href="add_professors.php">Maintenance</a></li>
           </ul>
         </li>
         

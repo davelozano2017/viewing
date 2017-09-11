@@ -25,7 +25,7 @@
 
             <div class="modal-footer">
                 <div class="row">
-                    <button type="submit"  id="btn_professor_course" class="btn btn-primary btn-flat">Add</button>
+                    <button type="submit" id="btn_professor_course" class="btn btn-primary btn-flat">Add</button>
                     <a class="btn" data-dismiss="modal">Close</a>
                 </div>
             </div>

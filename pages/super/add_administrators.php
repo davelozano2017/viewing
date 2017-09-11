@@ -113,6 +113,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
           <ul class="treeview-menu">
           <li class="active"><a href="add_administrators.php">Administrators</a></li>
           <li><a href="add_professors.php">Professors</a></li>
+          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
 
@@ -124,7 +125,6 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
         </a>
           <ul class="treeview-menu">
           <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
-          <li><a href="add_professors.php">Maintenance</a></li>
           </ul>
         </li>
         

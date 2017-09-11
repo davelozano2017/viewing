@@ -1,10 +1,12 @@
 <?php 
-if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['section']) && isset($_POST['subject'])) {
+if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['section']) && isset($_POST['subject']) && isset($_POST['sy'])) {
     $branch = $data->post($_POST['branch']);
     $course = $data->post($_POST['course']);
     $section = $data->post($_POST['section']);
     $subject = $data->post($_POST['subject']);
-    $result = $data->show_validate_student($branch,$section,$course,$subject);
+    $sy = $data->post($_POST['sy']);
+    
+    $result = $data->show_validate_student($branch,$section,$course,$subject,$sy);
     if($result) { ?> 
         <div class="col-md-12">
             <div class="form-group">

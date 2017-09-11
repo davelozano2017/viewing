@@ -4,9 +4,8 @@ $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
-$role     = $_SESSION['role'] == 2 ? 'Professor' : null;
+$role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +26,11 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
     
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -105,23 +109,29 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview">
-        <a href="#"><i class="fa fa-user fa-fw"></i><span> Students</span>
+        <li class="treeview active">
+        <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-            <li><a href="view_students.php">View Students</a></li>
-            <li><a href="view_course_and_section.php">View Course & Section</a></li>
-            <li><a href="view_subjects.php">View Subjects</a></li>
-            <li><a href="view_grades.php">View Grades</a></li>
+          <li><a href="add_professors.php">Professors</a></li>
+          <li class="active"><a href="view_students.php">Students</a></li>
           </ul>
         </li>
-        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
-        <li class="active"><a href="professor_upload_grades.php"><i class="fa fa-upload fa-fw"></i><span> Upload Grades</span></a></li>
-
-      </ul>
+  
+        <li class="treeview">
+        <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+          <ul class="treeview-menu">
+          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          </ul>
+        </li>
+    </ul>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
@@ -132,89 +142,68 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Upload Grades
+     Students
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
-    <li class="active">Upload grades</li>
+    <li>Manage Users</li>
+    <li class="active">Students</li>
     </ol>
   </section>
 
     <!-- Main content -->
-    <section class="content container-fluid">
-    <div class="row">
 
+
+    <section class="content container-fluid">
+
+    <div class="row">
+      <div class="form-group">
+        <div class="col-md-4 col-sm-12">
+          <label for="">Branch</label>
+          <select class="form-control" id="branch">
+              <option value="">Select Branch</option>
+              <?php foreach($data->showbranches() as $row):?>
+              <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
+              <?php endforeach; ?>
+          </select>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="form-group">
+              <label>Course</label>
+              <select id="course" class="form-control">
+              <option value="">Select Course</option>
+              <?php foreach($data->showcourse() as $row):?>
+              <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+              <?php endforeach; ?>
+              </select>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="form-group">
+              <label>Section</label>
+              <select id="section" class="form-control">
+              <option value="">Select Section</option>
+              <?php foreach($data->showsections() as $row):?>
+              <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+              <?php endforeach; ?>
+              </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
     <div class="col-md-12 col-sm-12">
       <div class="box box-primary">
         <div class="box-body box-profile">
           <!-- Start -->
-          <form method="POST" name="FormUpload" id="FormUpload" enctype="multipart/form-data" ng-app="app" novalidate>
-            <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Branch</label>
-                    <input type="hidden" id="professor_id" value="<?php echo $id?>">
-                    <select class="form-control" id="branch">
-                        <option value=""> Select Branch </option>
-                        <?php foreach($data->showbranches() as $row):?>
-                        <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
 
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Course</label>
-                    <select id="course" class="form-control">
-                    <option value=""> Select Course </option>
-                    <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
-                    <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
-                    <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
+          
+            <div id="showstudentsreports"></div>
 
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Subject</label>
-                    <select id="subject" class="form-control">
-                    <option value=""> Select Subject </option>
-                    <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
-                    <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
-                    <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Section</label>
-                    <select id="section" class="form-control">
-                    <option value=""> Select Section </option>
-                    <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
-                    <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
-                    <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>School Year</label>
-                    <select id="sy" class="form-control">
-                    <option value=""> Select School Year </option>
-                    <?php foreach($data->show_school_year() as $row):?>
-                    <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
-                    <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
-            <div id="showuploadgrades"></div>
-            </div>
           <!-- End -->
-          </form>
         </div>
       </div>
     </div>
@@ -238,10 +227,23 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
-<script src="../../assets/angular/angular.min.js"></script>
-<script src="../../assets/angular/1.4.2.angular.min.js"></script>
-<script> 
-uploadgradesvalidation(); 
+<script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+
+
+<script type="text/javascript">
+showstudentsreports();
+search();
 </script>
 </body>
 </html>

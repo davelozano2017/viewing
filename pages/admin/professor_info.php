@@ -2,7 +2,7 @@
 $data->redirecttologin();
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
-$roles     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
+$roles     = $_SESSION['role'] == 1 ? 'Administrator' : null;
 foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <?php 
     $id       = $row['id'];
@@ -11,7 +11,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     $email    = $row['email'];
     $contact  = $row['contact'];
     $username = $row['username'];
-    $role     = $row['role'] == 1 ? 'Admin' : null;
+    $role     = $row['role'] == 2 ? 'Professor' : null;
     $status   = $row['status'] == 0 ? '<label class="label label-success flat"> Activated </label>' : '<label class="label label-danger flat">Deactivated </label>';
     
 ?>     
@@ -121,8 +121,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li class="active"><a href="add_administrators.php">Administrators</a></li>
-          <li><a href="add_professors.php">Professors</a></li>
+          <li class="active"><a href="add_professors.php">Professors</a></li>
           <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
@@ -137,7 +136,6 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
           <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
           </ul>
         </li>
-
         
       </ul>
       <!-- /.sidebar-menu -->
@@ -150,12 +148,12 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Administrator
+     Professor
     </h1>
     <ol class="breadcrumb">
     <li>Dashboard</li>
     <li>Manage Users</li>
-    <li>Add Administrator</li>
+    <li >Add Professor</li>
     <li class="active">Information</li>
     </ol>
   </section>
@@ -176,24 +174,24 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
                     <h5 class="description-header">Status</h5>
                     <span class="description-text"><a onclick="modify_status('<?php echo $id?>')"  id="show_status"><?php echo $status?></a></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
+                <div class="col-sm-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header">Students</h5>
+                    <span class="description-text">0</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <h5 class="description-header"></h5>
-                    <span class="description-text"></span>
+                    <h5 class="description-header">Subjects</h5>
+                    <span class="description-text">0</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -215,11 +213,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 
             <div class="tab-pane active" id="information">
               <form class="form-horizontal">
-                <div class="form-group">
-                 
-                </div>
-                
-              
+
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-10">
@@ -250,7 +244,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                  <a href="add_administrators.php" class="btn btn-primary flat">Back</a>
+                  <a href="add_professors.php" class="btn btn-primary flat">Back</a>
                   </div>
                 </div>
               </form>
@@ -273,18 +267,11 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
-<script src="../../assets/angular/angular.min.js"></script>
-<script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-//School information
-var app = angular.module('app', ['ngMessages']);
-   
 showprofessor()
-
 </script>
 </body>
 </html>

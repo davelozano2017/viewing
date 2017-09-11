@@ -11,8 +11,8 @@
   <tr>
   <td style="width:1px"><?php echo ++$i?></td>
   <td><?php echo $row['courses']?></td>
-  <td><a style="cursor:pointer" class="btn" 
-  onclick="modify_professor_courses('<?php echo$row['id']?>','<?php echo$row['courses']?>')"> View </a></td>
+  <td style="width:1px"><a style="cursor:pointer"
+  onclick="modify_professor_courses('<?php echo$row['id']?>','<?php echo$row['courses']?>')"> <i class="fa fa-pencil"></i> </a></td>
   </tr>
 <?php endforeach; ?>
 </tbody>
