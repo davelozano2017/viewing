@@ -1,4 +1,4 @@
-<div id="addsubjects" class="modal fade" role="dialog">
+<div id="add_modal_subjects" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -6,13 +6,13 @@
             <h4 class="modal-title">Subject Information</h4>
         </div>
         <div class="modal-body">  
-            <form method="POST" name="frmaddsubject" ng-app="app" novalidate>
+            <form method="POST" name="frmsubjects" ng-app="app" novalidate>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
-                            <select id="course" class="form-control">
-                            <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
+                            <select id="sub_course" class="form-control">
+                            <?php foreach($data->show_courses() as $row):?>
                             <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
                             <?php endforeach; ?>
                             </select>
@@ -21,9 +21,8 @@
                     <div class="col-md-12 col-sm-12">
                          <div class="form-group">
                             <label>Subject</label>
-                            <input type="hidden" id="professor_id" value="<?php echo $_SESSION['id']?>">
-                            <input type="text" id="subject" name="subject" ng-model="subject" class="form-control" required>
-                            <span ng-messages="frmaddsubject.subject.$error" ng-if="frmaddsubject.subject.$dirty">
+                            <input type="text" id="sub_subject" name="sub_subject" ng-model="sub_subject" class="form-control" required>
+                            <span ng-messages="frmsubjects.sub_subject.$error" ng-if="frmsubjects.sub_subject.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
                             </span>
                         </div>
@@ -32,9 +31,9 @@
                     <div class="col-md-12 col-sm-12">
                          <div class="form-group">
                             <label>Section</label>
-                            <select id="section" class="form-control">
-                            <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
-                            <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                            <select id="sub_section" class="form-control">
+                            <?php foreach($data->show_sections() as $row):?>
+                            <option value="<?php echo $row['sections']?>"><?php echo $row['sections']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>
@@ -45,7 +44,7 @@
 
             <div class="modal-footer">
                 <div class="row">
-                    <button type="submit" ng-disabled="!frmaddsubject.$valid" id="create_subject" class="btn btn-primary btn-flat">Create</button>
+                    <button type="submit" ng-disabled="!frmsubjects.$valid" id="add_subjects" class="btn btn-primary btn-flat">Add</button>
                     <a class="btn" data-dismiss="modal">Close</a>
                 </div>
             </div>
@@ -57,7 +56,7 @@
 </div>
 
 
-<div id="editsubject" class="modal fade" role="dialog">
+<div id="update_modal_subjects" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -65,16 +64,15 @@
             <h4 class="modal-title">Subject Information</h4>
         </div>
         <div class="modal-body">  
-            <form method="POST" name="frmeditsubject" novalidate>
+            <form method="POST" novalidate>
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>Course</label>
-                            <input type="hidden" id="professor_id" >
-                            <input type="hidden" id="id" >
-                            <select id="scourse" class="form-control">
-                            <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
+                            <input type="hidden" id="update_sub_id" >
+                            <select id="update_sub_course" class="form-control">
+                            <?php foreach($data->show_courses() as $row):?>
                             <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
                             <?php endforeach; ?>
                             </select>
@@ -83,16 +81,16 @@
                     <div class="col-md-12 col-sm-12">
                          <div class="form-group">
                             <label>Subject</label>
-                            <input type="text" id="ssubject" class="form-control" required>
+                            <input type="text" id="update_sub_subject" class="form-control" required>
                             </span>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12">
                          <div class="form-group">
                             <label>Section</label>
-                            <select id="ssection" class="form-control">
-                            <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
-                            <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                            <select id="update_sub_section" class="form-control">
+                            <?php foreach($data->show_sections() as $row):?>
+                            <option value="<?php echo $row['sections']?>"><?php echo $row['sections']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>

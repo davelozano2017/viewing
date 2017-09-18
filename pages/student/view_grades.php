@@ -108,7 +108,7 @@ $username = $_SESSION['username'];
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="dashboard.php"><i class="fa fa-graduation-cap fa-fw"></i><span>  Grades</span></a></li>
+        <li class="active"><a href="view_grades.php"><i class="fa fa-graduation-cap fa-fw"></i><span>  Grades</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

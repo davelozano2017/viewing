@@ -17,7 +17,7 @@ class db extends Controller {
         } else {
             $query = $this->db->query("INSERT INTO accounts_tbl 
             (photo,lastname,firstname,middlename,email,contact,
-            gender,username,password,security_code,status,role) 
+            gender,username,password,fsecurity_code,status,role) 
             VALUES 
             ('$photo','$lastname','$firstname','$middlename','$email',
             '$contact','$gender','$username','$hash','$security_code',1,'$type')");
@@ -86,10 +86,12 @@ class db extends Controller {
         $check = $this->db->query("SELECT * FROM branches_tbl WHERE branches = '$branch'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'This branch is already exist.';
+            $this->duplicated($message);
         } else {
             $query = $this->db->query("INSERT INTO branches_tbl (branches) VALUES ('$branch')");
-            return $query ? $this->success() : null;
+            $message = 'New branch has been added.';
+            return $query ? $this->success($message) : null;
         }
     }
 
@@ -104,7 +106,8 @@ class db extends Controller {
 
     public function updatebranches($id,$branch) {
         $query = $this->db->query("UPDATE branches_tbl SET branches = '$branch' WHERE id = '$id'");
-        $query ? $this->updated() : null;
+        $message = 'Branch has been updated.';
+        $query ? $this->updated($message) : null;
     }
 
     public function deletebranches($id) {
@@ -112,13 +115,8 @@ class db extends Controller {
         $query ? $this->deleted() : null;
     }
 
-    function show_professor_courses($id) {
-        $query = $this->db->query("SELECT * FROM professor_courses_tbl WHERE professor_id = '$id'");
-        return $query;
-    }
-
-    function show_professor_section($id) {
-        $query = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_id = '$id'");
+    function show_sections() {
+        $query = $this->db->query("SELECT * FROM sections_tbl");
         return $query;
     }
 
@@ -143,94 +141,77 @@ class db extends Controller {
         return $query;
     }
 
+// admin course execution begin
     public function addcourses($course,$option) {
         $check = $this->db->query("SELECT * FROM courses_tbl WHERE courses = '$course'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $this->duplicated();
+            $message = 'This course '.$course.' is already exist.';
+            $this->duplicated($message);
         } else {
             $query = $this->db->query("INSERT INTO courses_tbl (courses,options) VALUES ('$course','$option')");
-            return $query ? $this->success() : null;
+            $message = 'New course has been added.';
+            return $query ? $this->success($message) : null;
         }
     }
 
-    public function addprofessorcourse($professor_id,$professor_course) {
-        $check = $this->db->query("SELECT * FROM professor_courses_tbl WHERE courses = '$professor_course' AND professor_id = '$professor_id'");
-        $checkrow = $check->num_rows;
-        if($checkrow > 0) {
-            $message = 'This course has already in your list.';
-            $this->duplicated($message);
-        } else {
-            $query = $this->db->query("INSERT INTO professor_courses_tbl (professor_id,courses) VALUES ('$professor_id','$professor_course')");
-            $message = $professor_course.' '.'has been added to your list';
-            $query ? $this->success($message) : null;
-        }
-    }
-
-    public function updateprofessorcourses($update_id,$professor_course) {
-        $check = $this->db->query("SELECT * FROM professor_courses_tbl WHERE courses = '$professor_course'");
-        $checkrow = $check->num_rows;
-        if($checkrow > 0) {
-            $message = 'This course is already exist.';
-            $this->duplicated($message);
-        } else {
-            $query= $this->db->query("UPDATE professor_courses_tbl SET courses = '$professor_course' WHERE id = '$update_id'");
-            $message = 'Course has been updated';
+    public function updatecourses($courses_update,$options_update,$courses_id) {
+        
+            $query = $this->db->query("UPDATE courses_tbl SET 
+            courses = '$courses_update', options = '$options_update' WHERE id = '$courses_id'");
+            $message = 'Course has been updated.';
             return $query ? $this->updated($message) : null;
-        }
-    } 
+    }
+
+    public function deletecourses($course_id) {
+        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = '$course_id'");
+        $query ? $this->deleted() : null;
+    }
+// delete course execution end 
 
     public function deleteprofessorcourses($update_id) {
         $query = $this->db->query("DELETE FROM professor_courses_tbl WHERE id = '$update_id'");
         return $query ? $this->deleted() : null;
     }
 
-    public function addprofessorsection($professor_id,$professor_section) {
-        $check = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_section = '$professor_section' AND professor_id = '$professor_id'");
+    // admin section execution begin 
+    public function add_sections($sections) {
+        $check = $this->db->query("SELECT * FROM sections_tbl WHERE sections = '$sections'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $message = 'This course has already in your list.';
+            $message = 'This section '.$sections.' is already exist.';
             $this->duplicated($message);
         } else {
-            $query = $this->db->query("INSERT INTO professor_sections_tbl (professor_id,professor_section) VALUES ('$professor_id','$professor_section')");
-            $message = $professor_section.' '.'has been added to your list';
+            $query = $this->db->query("INSERT INTO sections_tbl (sections) VALUES ('$sections')");
+            $message = 'Section '.$sections.' has been added to your list';
             $query ? $this->success($message) : null;
         }
     }
 
-    public function updateprofessorsection($hiddenid,$prof_section) {
-        $check = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_section = '$prof_section'");
+    public function update_sections($section_id,$section_update) {
+        $check = $this->db->query("SELECT * FROM sections_tbl WHERE sections = '$section_update'");
         $checkrow = $check->num_rows;
         if($checkrow > 0) {
-            $message = 'This section has already in your list.';
+            $message = 'This section '.$section_update.' is already exist.';
             $this->duplicated($message);
         } else {
-            $query = $this->db->query("UPDATE professor_sections_tbl SET professor_section = '$prof_section' WHERE id = $hiddenid");
+            $query = $this->db->query("UPDATE sections_tbl SET sections = '$section_update' WHERE id = $section_id");
             $message = 'Section has been updated.';
             return $query ? $this->updated($message) : null;
         }
     } 
 
-    public function deleteprofessorsection($hiddenid) {
-        $query = $this->db->query("DELETE FROM professor_sections_tbl WHERE id = '$hiddenid'");
-            $message = 'Section has been deleted.';
-            return $query ? $this->deleted($message) : null;
+    public function delete_sections($section_id) {
+        $query = $this->db->query("DELETE FROM sections_tbl WHERE id = '$section_id'");
+        $message = 'Section has been deleted.';
+        return $query ? $this->deleted($message) : null;
     }
 
-    public function updatecourses($id,$course,$option) {
-        $query = $this->db->query("UPDATE courses_tbl SET 
-        courses = '$course', options = '$option' WHERE id = '$id'");
-        return $query ? $this->updated() : null;
-    }
-
-    public function deletecourses($id) {
-        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = '$id'");
-        $query ? $this->deleted() : null;
-    }
+    // admin section execution end
 
     // Insert Student
-    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$professor_id,$sy) {
-        $password = password_hash(12345123,PASSWORD_DEFAULT);
+    public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$sy) {
+        $password = password_hash(12345,PASSWORD_DEFAULT);
         $security_code = rand(111111,999999);
         $photo = $gender == 'Male' ? '../../assets/images/student_male.png' : '../../assets/images/student_female.png';
         $check = $this->db->query("SELECT * FROM accounts_tbl WHERE username = '$username'");
@@ -242,7 +223,7 @@ class db extends Controller {
                 $message = 'This student is already exist in your list.';
                 $this->duplicated($message);
             } else {
-                $this->insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch,$sy);
+                $this->insertstudentinfo($subject,$section,$course,$username,$branch,$sy);
             }
         } else { 
             $query = $this->db->query("INSERT INTO accounts_tbl 
@@ -251,13 +232,30 @@ class db extends Controller {
             VALUES 
             ('$photo','$lastname','$firstname','$middlename','$email',
             '$contact','$gender','$username','$password','$security_code','$type')");
-            $query ? $this->insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch,$sy) : false;
+            $query ? $this->insertstudentinfo($subject,$section,$course,$username,$branch,$sy) : false;
         }
     }
 
-    public function insertstudentinfo($professor_id,$subject,$section,$course,$username,$branch,$sy) {
+// add professor student execution begin 
+    public function add_professor_students($student_id,$professor_id){
+        $query = $this->db->query("SELECT * FROM professor_students_tbl WHERE student_id = $student_id AND professor_id = $professor_id");
+        $check = $query->num_rows;
+        if($check > 0) {
+            $query = $this->db->query("DELETE FROM professor_students_tbl WHERE student_id = $student_id AND professor_id = $professor_id");
+            $message = 'Successfully Removed.';
+            $query ? $this->success($message) : null;
+            
+        } else {
+            $query = $this->db->query("INSERT INTO professor_students_tbl (student_id,professor_id) VALUES ('$student_id','$professor_id')");
+            $message = 'Successfully added.';
+            $query ? $this->success($message) : null;
+        }
+    }
+// add professor student execution end 
+
+    public function insertstudentinfo($subject,$section,$course,$username,$branch,$sy) {
         $query = $this->db->query("INSERT INTO students_tbl 
-        (professor_id,subject,section,course,branch,username,sy) VALUES ('$professor_id','$subject','$section','$course','$branch','$username','$sy')");
+        (subject,section,course,branch,username,sy) VALUES ('$subject','$section','$course','$branch','$username','$sy')");
         $message = 'New student has been added.';
         return $query ? $this->success($message) : false;
     }
@@ -281,7 +279,7 @@ class db extends Controller {
 
     public function updatestudentinfo($studentid,$subject,$section,$course,$username,$branch,$esy) {
         $query = $this->db->query("UPDATE students_tbl SET subject = '$subject', section = '$section', 
-        course = '$course', username = '$username', branch = '$branch', sy = '$esy' WHERE studentid = '$studentid'");
+        course = '$course', username = '$username', branch = '$branch', sy = '$esy' WHERE student_id = '$studentid'");
         $message = 'Student information has been updated';
         return $query ? $this->updated($message) : false;
     }
@@ -295,11 +293,11 @@ class db extends Controller {
         if($check == 1) {
             $query = $this->db->query("DELETE FROM accounts_tbl WHERE id = '$accountid'");
             if($query) {
-                $this->db->query("DELETE FROM students_tbl WHERE studentid = '$studentid'");
+                $this->db->query("DELETE FROM students_tbl WHERE student_id = '$studentid'");
                 echo json_encode(array('success'=>true));
             }
         } else {
-            $success = $this->db->query("DELETE FROM students_tbl WHERE studentid = '$studentid'");
+            $success = $this->db->query("DELETE FROM students_tbl WHERE student_id = '$studentid'");
             echo json_encode(array('success'=>true));
         }
             
@@ -311,18 +309,13 @@ class db extends Controller {
         return $query;
     }
 
-    public function countprofessorsection($id) {
-        $query = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_id = $id");
-        return $check = $query->num_rows;
+    public function count_professor_students($id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl WHERE professor_id = $id");
+        $check = $query->num_rows;
+        return $check;
     }
-
     public function countprofessorstudent($id) {
         $query = $this->db->query("SELECT * FROM students_tbl WHERE professor_id = $id");
-        return $check = $query->num_rows;
-    }
-
-    public function countprofessorcourse($id) {
-        $query = $this->db->query("SELECT * FROM professor_courses_tbl WHERE professor_id = $id");
         return $check = $query->num_rows;
     }
 
@@ -413,6 +406,12 @@ class db extends Controller {
         return $query;
     }
 
+    public function students() {
+        $query = $this->db->query("SELECT * FROM  professor_students_tbl");
+        return $query;
+            
+    }
+
     public function show_grades() {
         $query = $this->db->query("SELECT * FROM professor_grades_tbl GROUP BY code");
         return $query;
@@ -441,15 +440,40 @@ class db extends Controller {
         return $query;
     }
 
-    public function show_students_reports($branch,$course,$section) {
+    public function search_student($branch,$course,$section) {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
         ON accounts_tbl.username = students_tbl.username
         WHERE accounts_tbl.role = 3 AND students_tbl.branch = '$branch' AND students_tbl.course = '$course' AND students_tbl.section = '$section'");
         return $query;
     }
 
-    public function show_subjects($professor_id) {
-        $query = $this->db->query("SELECT * FROM professor_subjects_tbl WHERE professor_id = $professor_id");
+    public function show_section() {
+        $query = $this->db->query("SELECT * FROM students_tbl GROUP BY section");
+        return $query;
+    }
+
+    public function show_subjects() {
+        $query = $this->db->query("SELECT * FROM subjects_tbl");
+        return $query;
+    }
+
+    public function show_professor_courses($id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY course");
+        return $query;
+    }
+
+    public function show_professor_subject($id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY subject");
+        return $query;
+    }
+
+    public function show_professor_section($id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY section");
+        return $query;
+    }
+
+    public function show_professor_branch($id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY branch");
         return $query;
     }
 
@@ -462,19 +486,7 @@ class db extends Controller {
         } 
     }
 
-    public function addsubjects($professor_id,$course,$subject,$section) {
-        $query = $this->db->query("SELECT * FROM professor_subjects_tbl WHERE subject = '$subject' AND section = '$section'");
-        $check = $query->num_rows;
-        if($check > 0) {
-            $message = 'Already exist';
-            $this->duplicated($message);
-        } else {
-            $query = $this->db->query("INSERT INTO professor_subjects_tbl (professor_id,course,subject,section) VALUES ('$professor_id','$course','$subject','$section')");
-            $message = 'New subject has been added.';
-            $query ? $this->success($message) : null;
-        }
-
-    }
+    
 
     public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section,$sy) {
         $file		 = $_FILES['files']['tmp_name'];
@@ -531,25 +543,39 @@ class db extends Controller {
         }
     }
 
-    public function deletesubjects($id) {
-        $query = $this->db->query("DELETE FROM professor_subjects_tbl WHERE id = $id");
+// admin subject begin
+    public function addsubjects($sub_course,$sub_subject,$sub_section) {
+        $query = $this->db->query("SELECT * FROM subjects_tbl WHERE subject = '$sub_subject' AND section = '$sub_section'");
+        $check = $query->num_rows;
+        if($check > 0) {
+            $message = 'This subject '.$sub_subject.' is already exist';
+            $this->duplicated($message);
+        } else {
+            $query = $this->db->query("INSERT INTO subjects_tbl (course,subject,section) VALUES ('$sub_course','$sub_subject','$sub_section')");
+            $message = 'New subject has been added.';
+            $query ? $this->success($message) : null;
+        }
+
+    }
+
+    public function deletesubjects($update_sub_id) {
+        $query = $this->db->query("DELETE FROM subjects_tbl WHERE id = $update_sub_id");
         return $query ? $this->deleted() : null;
     }
 
-    public function updatesubjects($id,$course,$subject,$section) {
-        $query = $this->db->query("SELECT * FROM professor_subjects_tbl WHERE subject = '$subject' AND section = '$section'");
+    public function updatesubjects($update_sub_id,$update_sub_course,$update_sub_subject,$update_sub_section) {
+        $query = $this->db->query("SELECT * FROM subjects_tbl WHERE subject = '$update_sub_subject' AND section = '$update_sub_section'");
         $check = $query->num_rows;
         if($check > 0) {
-            $message = 'Already exist';
+            $message = 'This subject '.$subject.' is already exist';
             $this->duplicated($message);
         } else {
-            $query = $this->db->query("UPDATE professor_subjects_tbl SET course = '$course', subject = '$subject', section = '$section' WHERE id = $id");
+            $query = $this->db->query("UPDATE subjects_tbl SET course = '$update_sub_course', subject = '$update_sub_subject', section = '$update_sub_section' WHERE id = $update_sub_id");
             $message = 'Successfully updated.';
             $query ? $this->updated($message) : null;
         }
     }
-
-
+// admin subject end
 
     // Login Codes
     public function login($username,$password) {
@@ -568,26 +594,26 @@ class db extends Controller {
             $_SESSION['role'] = $role;
             $_SESSION['name'] = $name;
             $_SESSION['photo'] = $photo;
-            echo json_encode(array('success' => true, 'location' => '../pages/super/dashboard.php.'));
+            echo json_encode(array('success' => true, 'location' => '../pages/super/dashboard.php'));
         } elseif(password_verify($password,$hash) AND $role == 1) {
             $_SESSION['id'] = $id;
             $_SESSION['name'] = $name;
             $_SESSION['role'] = $role;
             $_SESSION['photo'] = $photo;
-            echo json_encode(array('success' => true, 'location' => '../pages/admin/dashboard.php.'));
+            echo json_encode(array('success' => true, 'location' => '../pages/admin/dashboard.php'));
         } elseif(password_verify($password,$hash) AND $role == 2) {
             $_SESSION['id'] = $id;
             $_SESSION['name'] = $name;
             $_SESSION['role'] = $role;
             $_SESSION['photo'] = $photo;
-            echo json_encode(array('success' => true, 'location' => '../pages/professor/profile.php.'));
+            echo json_encode(array('success' => true, 'location' => '../pages/professor/profile.php?id='.$id.''));
         }  elseif(password_verify($password,$hash) AND $role == 3) {
             $_SESSION['id'] = $id;
             $_SESSION['name'] = $name;
             $_SESSION['role'] = $role;
             $_SESSION['photo'] = $photo;
             $_SESSION['username'] = $uname;
-            echo json_encode(array('success' => true, 'location' => '../pages/student/view_grades.php.'));
+            echo json_encode(array('success' => true, 'location' => '../pages/student/view_grades.php'));
         } else {
             echo json_encode(array('success' => false, 'bgcolor' => '#ff0000','color'   => '#fff',
                 'message' => 'Invalid username or password.'));

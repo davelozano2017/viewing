@@ -1,4 +1,3 @@
-
 <?php 
 include '../class/config.php';
 $data->redirecttopageafterlogin();

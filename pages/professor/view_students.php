@@ -117,8 +117,6 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
         </a>
           <ul class="treeview-menu">
             <li class="active"><a href="view_students.php">View Students</a></li>
-            <li><a href="view_course_and_section.php">View Course & Section</a></li>
-            <li><a href="view_subjects.php">View Subjects</a></li>
             <li><a href="view_grades.php">View Grades</a></li>
           </ul>
         </li>
@@ -148,22 +146,14 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Main content -->
     <section class="content container-fluid">
     <div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <button data-toggle="modal" data-target="#addstudents" class="btn btn-primary flat"> Add Student </button>
-        </div>
-    </div>
-
-
-        <!-- Modal -->
-        <?php include 'modal-container.php';?>
+  
         <!-- end modal -->
 
     <div class="col-md-12 col-sm-12">
       <div class="box box-primary">
         <div class="box-body box-profile">
           <!-- Start -->
-          <div id="show_students"></div>
+          <div id="show_all_students"></div>
           <!-- End -->
         </div>
       </div>
@@ -205,8 +195,7 @@ var app = angular.module('app', ['ngMessages']);
 var apps = angular.module('apps', ['ngMessages']);
 apps.controller('myCtrl',function($scope){
 });
-showstudents();
-
+show_all_students();
 function edit_student($studentid,$id,$firstname,$middlename,$lastname,$branch,$course,$subject,$section,$username,$email,$contact,$gender,$sy) {
   var accountid = $id, firstname = $firstname, middlename = $middlename, lastname = $lastname, branch = $branch, course = $course, subject = $subject,  section = $section, username = $username, email = $email, contact = $contact, gender = $gender, studentid = $studentid, sy = $sy;
   $('#editstudent').modal('show');

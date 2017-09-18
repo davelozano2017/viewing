@@ -19,11 +19,11 @@ function btnadminenabled(bgcolor,color,message) {
     notify(bgcolor,color,message);
 }
 
-function btnstudentdisabled() {
+function btn_student_disabled() {
     $('#create_students').html('Please Wait').attr('disabled',true);
 }
 
-function btnstudentenabled(bgcolor,color,message) {
+function btn_student_enabled(bgcolor,color,message) {
     $('#create_students').html('Create').attr('disabled',false);
     notify(bgcolor,color,message);
     showstudents();
@@ -33,36 +33,40 @@ function btnbranchesdisabled() {
     $('#btn_branches').html('Please Wait').attr('disabled',true);
 }
 
-function btnbranchesenabled(message) {
+function btnbranchesenabled(bgcolor,color,message) {
     $('#btn_branches').html('Add').attr('disabled',false);
     showbranches();
+    notify(bgcolor,color,message);
 }
 
-function btncoursesdisabled() {
+function btn_courses_disabled() {
     $('#btn_courses').html('Please Wait').attr('disabled',true);
 }
 
-function btncoursesenabled(message) {
+function btn_courses_enabled(bgcolor,color,message) {
     $('#btn_courses').html('Add').attr('disabled',false);
     showcourses();
+    notify(bgcolor,color,message);
 }
 
-function btnupdatecoursesdisabled() {
+function btn_update_courses_disabled() {
     $('#btn_update_course').html('Please Wait').attr('disabled',true);
 }
 
-function btnupdatecoursesenabled(message) {
+function btn_update_courses_enabled(bgcolor,color,message) {
     $('#btn_update_course').html('Update').attr('disabled',false);
     showcourses();
+    notify(bgcolor,color,message);
 }
 
 function btnupdatebranchesdisabled() {
     $('#btn_update_branch').html('Please Wait').attr('disabled',true);
 }
 
-function btnupdatebranchesenabled(message) {
+function btnupdatebranchesenabled(bgcolor,color,message) {
     $('#btn_update_branch').html('Update').attr('disabled',false);
     showbranches();
+    notify(bgcolor,color,message);
 }
 
 function btnprofessorcourseenabled(bgcolor,color,message) {
@@ -85,24 +89,24 @@ function btnprofessorupdatecoursedisabled() {
     $('#btn_professor_update_course').html('Please Wait.').attr('disabled',true);
 }
 
-function btnprofessorsectionenabled(bgcolor,color,message) {
+function btn_section_enabled(bgcolor,color,message) {
     notify(bgcolor,color,message);
-    $('#btn_professor_section').html('Add').attr('disabled', false);
-    showprofessorsection();
+    $('#btn_add_section').html('Add').attr('disabled', false);
+    showsections();
 }
 
-function btnprofessorsectiondisabled() {
-    $('#btn_professor_section').html('Please Wait.').attr('disabled',true);
+function btn_section_disabled() {
+    $('#btn_add_section').html('Please Wait.').attr('disabled',true);
 }
 
-function btnprofessorupdatesectionenabled(bgcolor,color,message) {
-    $('#btn_professor_update_section').html('Update').attr('disabled', false);
-    showprofessorsection();
+function btn_update_section_enabled(bgcolor,color,message) {
+    $('#btn_update_section').html('Update').attr('disabled', false);
+    showsections();
     notify(bgcolor,color,message)
 }
 
-function btnprofessorupdatesectiondisabled() {
-    $('#btn_professor_update_section').html('Please Wait.').attr('disabled',true);
+function btn_update_section_disabled() {
+    $('#btn_update_section').html('Please Wait.').attr('disabled',true);
 }
 
 function btnprofessorprofileenabled(bgcolor,color,message) {
@@ -132,29 +136,30 @@ function btneditstudentenabled(bgcolor,color,message) {
     showstudents();
 }
 
-function btncreatesubjectenabled(bgcolor,color,message) {
-    $('#create_subject').html('Create').attr('disabled',false);
+function btn_add_subjects_enabled(bgcolor,color,message) {
+    $('#add_subjects').html('Add').attr('disabled',false);
     notify(bgcolor,color,message);
     showsubjects();
 }
 
-function btncreatesubjectdisabled() {
-    $('#create_subject').html('Please Wait').attr('disabled',true);
+function btn_add_subjects_disabled() {
+    $('#add_subjects').html('Please Wait').attr('disabled',true);
 }
 
-function btnupdatesubjectenabled(bgcolor,color,message) {
+function btn_update_subjects_enabled(bgcolor,color,message) {
     $('#update_subject').html('Update').attr('disabled',false);
     notify(bgcolor,color,message);
     showsubjects();
 }
 
-function btnupdatesubjectdisabled() {
+function btn_update_subjects_disabled() {
     $('#update_subject').html('Please Wait').attr('disabled',true);
 }
 
 function btnuploadfiledisabled() {
     $('#uploadfile').html('Please Wait').attr('disabled',true);
 }
+
 function btnuploadfileenabled(bgcolor,color,message) {
     notify(bgcolor,color,message);
     $('#uploadfile').html('Upload').attr('disabled',false);
@@ -165,8 +170,22 @@ function btnaddschoolyearenabled(bgcolor,color,message) {
     showschoolyear();
     notify(bgcolor,color,message);
 }
+
 function btnaddschoolyeardisabled() {
     $('#btnaddschoolyear').html('Please Wait').attr('disabled',true);
+}
+
+function btn_add_student_disabled(id) {
+    $('#add'+id).html('Please Wait.');
+}
+
+function btn_add_students_enabled_1(id,bgcolor,color,message) {
+    $('#add'+id).html('Add Student').addClass('btn-primary').removeClass('btn-danger');
+    notify(bgcolor,color,message);
+}
+function btn_add_students_enabled_2(id,bgcolor,color,message) {
+    $('#add'+id).html('Remove Student').addClass('btn-danger').removeClass('btn-primary');
+    notify(bgcolor,color,message);
 }
 
 //login 
@@ -228,7 +247,7 @@ function insertuser() {
 function insertstudents() {
     $('#create_students').click(function(e){
         e.preventDefault();
-        btnstudentdisabled();
+        btn_student_disabled();
         var lastname    = $('#lastname').val();
         var firstname   = $('#firstname').val();
         var middlename  = $('#middlename').val();
@@ -242,20 +261,19 @@ function insertstudents() {
         var course      = $('#course').val();
         var type        = $('#type').val();
         var sy          = $('#sy').val();
-        var id          = $('#professor_id').val();
-        
+
         $.ajax({
             type: 'POST',
             url : '../' + url,
             data : {
                 action : 'Insert Students', lastname : lastname, firstname : firstname,
                 middlename : middlename, email : email, contact : contact, gender : gender, 
-                branch : branch, professor_id : id, type : type, subject : subject, section : section, 
+                branch : branch, type : type, subject : subject, section : section, 
                 course : course,username : username, sy : sy 
             },
             dataType : 'json',
             success:function(response) {
-                response.success == true ? btnstudentenabled(response.bgcolor,response.color,response.message) : btnstudentenabled(response.bgcolor,response.color,response.message)
+                response.success == true ? btn_student_enabled(response.bgcolor,response.color,response.message) : btn_student_enabled(response.bgcolor,response.color,response.message)
             }
         })
     });
@@ -272,56 +290,69 @@ function showadmin() {
     })
 }
 
-function showstudentsreports() {
+// function showstudentsreports() {
+//     $.ajax({
+//         type : 'POST',
+//         url : '../' + url,
+//         data : { action : 'Show Students Search' },
+//         dataType: 'json',
+//         success:function(response){
+//             $('#show_students').html(response);
+//         }
+//     })
+// }
+
+function show_student_report(){
     $.ajax({
         type : 'POST',
         url : '../' + url,
-        data : { action : 'Show Students Reports' },
+        data : { action : 'Show Students Report' },
         success:function(response){
-            dataType: 'json',
-            $('#showstudentsreports').html(response);
+            $('#show_reports').html(response);
         }
     })
 }
 
 function search() {
-    $('#branch').change(function(e){
+    $('#search_branch').change(function(e){
         e.preventDefault();
-        var branch = $('#branch').val();
-        var course = $('#course').val();
-        var section = $('#section').val();
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var section = $('#search_section').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Reports', branch : branch, course : course, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, section : section},
             success:function(response) {
-                $('#showstudentsreports').html(response);
+                $('#show_reports').html(response);
             }
         });
     });
-    $('#course').change(function(e){
-        var branch = $('#branch').val();
-        var course = $('#course').val();
-        var section = $('#section').val();
+
+    $('#search_course').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var section = $('#search_section').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Reports', branch : branch, course : course, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, section : section},
             success:function(response) {
-                $('#showstudentsreports').html(response);
+                $('#show_reports').html(response);
             }
         });
     });
-    $('#section').change(function(e){
-        var branch = $('#branch').val();
-        var course = $('#course').val();
-        var section = $('#section').val();
+
+    $('#search_section').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var section = $('#search_section').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Reports', branch : branch, course : course, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, section : section},
             success:function(response) {
-                $('#showstudentsreports').html(response);
+                $('#show_reports').html(response);
             }
         });
     });
@@ -397,6 +428,18 @@ function showstudents(){
     })
 }
 
+function show_all_students() {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show All Students' },
+        success:function(response){
+            $('#show_all_students').html(response);
+        }
+    }) 
+}
+
+
 function showgrades(){
     $.ajax({
         type : 'POST',
@@ -465,7 +508,7 @@ function add_branches() {
             data : { action : 'Add Branches', branch : branch },
             dataType: 'json',
             success:function(response){
-                response.success == true ? btnbranchesenabled(response.message) : btnbranchesenabled(response.message)
+                response.success == true ? btnbranchesenabled(response.bgcolor,response.colo,response.message) : btnbranchesenabled(response.bgcolor,response.colo,response.message)
             }
         })
     })
@@ -484,7 +527,7 @@ function update_branches() {
             data : { action : 'Update Branches', branch : branch, id : id },
             dataType: 'json',
             success:function(response){
-                response.success == true ? btnupdatebranchesenabled(response.message) : btnupdatebranchesenabled(response.message)
+                response.success == true ? btnupdatebranchesenabled(response.bgcolor,response.color,response.message) : btnupdatebranchesenabled(response.bgcolor,response.color,response.message)
             }
         })
     })
@@ -500,26 +543,27 @@ function delete_branches() {
             data : { action : 'Delete Branches', id : id },
             dataType: 'json',
             success:function(response){
-                response.success == true ? $('#modal_branches_update').modal('hide') : null;
+                response.success == false ? $('#modal_branches_update').modal('hide') : null;
                 showbranches();
             }
         })
     })
 }
 
+// admin courses begin 
 function add_courses() {
     $('#btn_courses').click(function(e){
         e.preventDefault();
         var course = $('#course').val();
         var option = $('#option').val();
-        btncoursesdisabled();
+        btn_courses_disabled();
         $.ajax({
             type : 'POST',
             url : '../' + url,
             data : { action : 'Add Courses', course : course, option : option },
             dataType: 'json',
             success:function(response){
-                response.success == true ? btncoursesenabled(response.message) : btncoursesenabled(response.message)
+                response.success == true ? btn_courses_enabled(response.bgcolor,response.color,response.message) : btn_courses_enabled(response.bgcolor,response.color,response.message)
             }
         })
     })
@@ -528,17 +572,17 @@ function add_courses() {
 function update_courses() {
     $('#btn_update_course').click(function(e){
         e.preventDefault();
-        var id = $('#course_id').val();
-        var course = $('#update_course').val();
-        var option = $('#update_option').val();
-        btnupdatecoursesdisabled();
+        var courses_id     = $('#courses_id').val();
+        var courses_update = $('#courses_update').val();
+        var options_update = $('#options_update').val();
+        btn_update_courses_disabled();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data : { action : 'Update Courses', course : course, option : option, id : id },
+            data : { action : 'Update Courses', courses_update : courses_update, options_update : options_update,courses_id : courses_id },
             dataType: 'json',
             success:function(response){
-                response.success == true ? btnupdatecoursesenabled(response.message) : btnupdatecoursesenabled(response.message)
+                response.success == true ? btn_update_courses_enabled(response.bgcolor,response.color,response.message) : btn_update_courses_enabled(response.bgcolor,response.color,response.message)
             }
         })
     })
@@ -547,146 +591,90 @@ function update_courses() {
 function delete_courses() {
     $('#btn_delete_course').click(function(e){
         e.preventDefault();
-        var id = $('#course_id').val();
+        var course_id = $('#course_id').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data : { action : 'Delete Courses', id : id },
+            data : { action : 'Delete Courses', course_id : course_id },
             dataType: 'json',
             success:function(response){
-                response.success == true ? $('#modal_courses_update').modal('hide') : null;
+                response.success == false ? $('#modal_courses_update').modal('hide') : null;
                 showcourses();
             }
         })
     })
 }
 
-function showprofessorcourse() {
-    $.ajax({
-        type : 'POST',
-        url : '../' + url,
-        data : { action : 'Show Professor Courses' },
-        success:function(response){
-            $('#show_professor_courses').html(response);
-        }
-    })
-}
+// admin courses end 
 
-function add_professor_course() {
-    $('#btn_professor_course').click(function(e){
+// executions ng sections sa administrator start  
+
+function add_sections() {
+    $('#btn_add_section').click(function(e){
         e.preventDefault();
-        var professor_course = $('#professor_course').val();
-        var professor_id     = $('#professor_id').val();
-        btnprofessorcoursedisabled();
+        var section     = $('#section').val();
+        var section_id  = $('#section_id').val();
+        btn_section_disabled();
         $.ajax({
             type : 'POST',
             url  : '../' + url,
-            data : { action : 'Add Professor Courses', professor_course : professor_course, professor_id : professor_id },
+            data : { action : 'Add Sections', section : section },
             dataType: 'json',
             success:function(response) {
-                response.success == true ? btnprofessorcourseenabled(response.bgcolor,response.color,response.message) : btnprofessorcourseenabled(response.bgcolor,response.color,response.message);
+                response.success == true ? btn_section_enabled(response.bgcolor,response.color,response.message) : btn_section_enabled(response.bgcolor,response.color,response.message);
             }
         })
     })
 }
 
-function update_professor_course() {
-    $('#btn_professor_update_course').click(function(e){
+function update_sections() {
+    $('#btn_update_section').click(function(e){
         e.preventDefault();
-        btnprofessorupdatecoursedisabled();
-        var update_id     = $('#update_id').val();
-        var professor_course = $('#professor_update_course').val();
+        btn_update_section_disabled();
+        var section_id     = $('#section_id').val();
+        var section_update = $('#section_update').val();
         $.ajax({
             type : 'POST',
             url  : '../' + url,
-            data : { action : 'Update Professor Courses', update_id : update_id, professor_course : professor_course },
+            data : { action : 'Update Sections', section_id : section_id, section_update : section_update },
             dataType: 'json',
             success:function(response) {
-                response.success == true ? btnprofessorupdatecourseenabled(response.bgcolor,response.color,response.message) : btnprofessorupdatecourseenabled(response.bgcolor,response.color,response.message);
+                response.success == true ? btn_update_section_enabled(response.bgcolor,response.color,response.message) : btn_update_section_enabled(response.bgcolor,response.color,response.message);
             }
         });
     })
 }
 
-function delete_professor_course() {
-    $('#btn_professor_delete_course').click(function(e){
+function delete_sections() {
+    $('#btn_delete_section').click(function(e){
         e.preventDefault();
-        var update_id     = $('#update_id').val();
+        var section_id = $('#section_id').val();
         $.ajax({
             type : 'POST',
             url  : '../' + url,
-            data : { action : 'Delete Professor Courses', update_id : update_id },
+            data : { action : 'Delete Sections', section_id : section_id },
             dataType: 'json',
             success:function(response) {
-                response.success == false ? $('#update_professor_course').modal('hide') : null;
-                showprofessorcourse();
+                response.success == false ? $('#update_modal_section').modal('hide') : null;
+                showsections();
             }
         });
     })
 }
 
-function add_professor_section() {
-    $('#btn_professor_section').click(function(e){
-        e.preventDefault();
-        var section = $('#section').val();
-        var professor_id          = $('#professor_id').val();
-        btnprofessorsectiondisabled();
-        $.ajax({
-            type : 'POST',
-            url  : '../' + url,
-            data : { action : 'Add Professor Section', section : section, professor_id : professor_id },
-            dataType: 'json',
-            success:function(response) {
-                response.success == true ? btnprofessorsectionenabled(response.bgcolor,response.color,response.message) : btnprofessorsectionenabled(response.bgcolor,response.color,response.message);
-            }
-        })
-    })
-}
-
-function update_professor_section() {
-    $('#btn_professor_update_section').click(function(e){
-        e.preventDefault();
-        btnprofessorupdatesectiondisabled();
-        var hiddenid    = $('#hiddenid').val();
-        var prof_section = $('#prof_section').val();
-        $.ajax({
-            type : 'POST',
-            url  : '../' + url,
-            data : { action : 'Update Professor Section', hiddenid : hiddenid, prof_section : prof_section },
-            dataType: 'json',
-            success:function(response) {
-                response.success == true ? btnprofessorupdatesectionenabled(response.bgcolor,response.color,response.message) : btnprofessorupdatesectionenabled(response.bgcolor,response.color,response.message);
-            }
-        });
-    })
-}
-
-function delete_professor_section() {
-    $('#btn_professor_delete_section').click(function(e){
-        e.preventDefault();
-        var hiddenid     = $('#hiddenid').val();
-        $.ajax({
-            type : 'POST',
-            url  : '../' + url,
-            data : { action : 'Delete Professor Section', hiddenid : hiddenid },
-            dataType: 'json',
-            success:function(response) {
-                response.success == false ? $('#update_professor_section').modal('hide') : null;
-                showprofessorsection();
-            }
-        });
-    })
-}
-function showprofessorsection() {
+function showsections() {
     $.ajax({
         type : 'POST',
         url : '../' + url,
-        data : { action : 'Show Professor Section' },
+        data : { action : 'Show Sections' },
         success:function(response){
-            $('#show_professor_section').html(response);
+            $('#show_sections').html(response);
         }
     })
 }
+
+// executions ng sections sa administrator end  
+
 
 function professor_profile() {
     $('#profile_update').click(function(e){
@@ -741,24 +729,24 @@ function execute_request(id) {
     })
 }
 
-function addsubjects() {
+// admin subjects execution begin
+function add_subjects() {
     $(document).ready(function(){
-        $('#create_subject').click(function(e){
+        $('#add_subjects').click(function(e){
             e.preventDefault();
-            var course  = $('#course').val();
-            var subject = $('#subject').val();
-            var section  = $('#section').val();
-            var professor_id = $('#professor_id').val();
-            btncreatesubjectdisabled();
+            var sub_course   = $('#sub_course').val();
+            var sub_subject  = $('#sub_subject').val();
+            var sub_section  = $('#sub_section').val();
+            btn_add_subjects_disabled();
             $.ajax({
                 type : 'POST',
                 url : '../'+url,
                 data: {
-                    action: 'Add Subjects', course : course, subject : subject, professor_id : professor_id, section : section
+                    action: 'Add Subjects', sub_course : sub_course, sub_subject : sub_subject, sub_section : sub_section
                 },
                 dataType: 'json',
                 success:function(response){
-                    response.success == true ? btncreatesubjectenabled(response.bgcolor,response.color,response.message) : btncreatesubjectenabled(response.bgcolor,response.color,response.message);
+                    response.success == true ? btn_add_subjects_enabled(response.bgcolor,response.color,response.message) : btn_add_subjects_enabled(response.bgcolor,response.color,response.message);
                 }
             })
 
@@ -766,18 +754,18 @@ function addsubjects() {
     });
 }
 
-function deletesubjects() {
+function delete_subjects() {
     $(document).ready(function(){
         $('#delete_subject').click(function(e){
             e.preventDefault();
-            var id = $('#id').val();
+            var update_sub_id = $('#update_sub_id').val();
             $.ajax({
                 type : 'POST',
                 url : '../' + url,
-                data: { action : 'Delete Subjects', id : id },
+                data: { action : 'Delete Subjects', update_sub_id : update_sub_id },
                 dataType: 'json',
                 success:function(response) {
-                    response.success == false ? $('#editsubject').modal('hide') : null;
+                    response.success == false ? $('#update_modal_subjects').modal('hide') : null;
                     showsubjects();
                 }
             });
@@ -785,27 +773,28 @@ function deletesubjects() {
     });
 }
 
-function updatesubjects() {
+function update_subjects() {
     $(document).ready(function(){
         $('#update_subject').click(function(e){
             e.preventDefault();
-            btnupdatesubjectdisabled();
-            var id = $('#id').val();
-            var course = $('#scourse').val();
-            var section = $('#ssection').val();
-            var subject = $('#ssubject').val();
+            btn_update_subjects_disabled();
+            var update_sub_id      = $('#update_sub_id').val();
+            var update_sub_course  = $('#update_sub_course').val();
+            var update_sub_section = $('#update_sub_section').val();
+            var update_sub_subject = $('#update_sub_subject').val();
             $.ajax({
                 type : 'POST',
                 url : '../' + url,
-                data: { action : 'Update Subjects', id : id, course : course, section : section, subject : subject },
+                data: { action : 'Update Subjects', update_sub_id : update_sub_id, update_sub_course : update_sub_course, update_sub_section : update_sub_section, update_sub_subject : update_sub_subject },
                 dataType: 'json',
                 success:function(response) {
-                    response.success == true ? btnupdatesubjectenabled(response.bgcolor,response.color,response.message) : btnupdatesubjectenabled(response.bgcolor,response.color,response.message);
+                    response.success == true ? btn_update_subjects_enabled(response.bgcolor,response.color,response.message) : btn_update_subjects_enabled(response.bgcolor,response.color,response.message);
                 }
             });
         });
     });
 }
+// admin subjects executions end
 
 function updatestudent() {
 
@@ -904,6 +893,26 @@ function uploadgrades(){
     });
 }
 
+function add_student($student_id,$professor_id) {
+    var student_id = $student_id;
+    var professor_id = $professor_id;
+    btn_add_student_disabled(student_id);
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data: { action : 'Add Professor Student', student_id : student_id, professor_id : professor_id },
+        dataType: 'json',
+        success:function(response) {
+            if(response.message == 'Successfully Removed.'){
+                btn_add_students_enabled_1(student_id,response.bgcolor,response.color,response.message);
+            } else {
+                btn_add_students_enabled_2(student_id,response.bgcolor,response.color,response.message);
+            }
+        }
+        
+    });
+}
+
 function uploadgradesvalidation() {
     $('#branch').change(function(e){
         e.preventDefault();
@@ -927,6 +936,7 @@ function uploadgradesvalidation() {
             
         });
     });
+
     $('#course').change(function(e){
         var branch = $('#branch').val();
         var course = $('#course').val();
@@ -1136,24 +1146,11 @@ function addschoolyearmodal() {
     })
 }
 
-add_courses();
-update_courses();
-delete_courses();
-
 add_branches();
 update_branches();
 delete_branches();
 
 login();
 insertuser();
-insertstudents();
-
-add_professor_course();
-update_professor_course();
-delete_professor_course();
-
-add_professor_section();
-update_professor_section();
-delete_professor_section();
 
 professor_profile();

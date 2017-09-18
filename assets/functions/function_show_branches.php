@@ -1,4 +1,4 @@
-<table id="branches" class="table table-bordered table-striped">
+<table id="table_branches" class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>#</th>
@@ -17,8 +17,8 @@
 </tbody>
 </table>
 <script>
-$('#branches').DataTable({
-  "paging": true, "lengthChange": true, "searching": false,
+$('#table_branches').DataTable({
+  "paging": true, "lengthChange": true, "searching": true,
   "ordering": false, "info": false, "autoWidth": true
 });
 

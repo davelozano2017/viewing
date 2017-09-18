@@ -46,9 +46,8 @@ switch($_POST['action']) {
         $subject      = $data->post($_POST['subject']);
         $section      = $data->post($_POST['section']);
         $course       = $data->post($_POST['course']);
-        $professor_id = $data->post($_POST['professor_id']);
         $sy           = $data->post($_POST['sy']);
-        $query        = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$professor_id,$sy);
+        $query        = $data->insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$sy);
     break;
 #############################################################################
     
@@ -78,15 +77,15 @@ switch($_POST['action']) {
     break;
 
     case 'Update Courses':
-        $id         = $data->post($_POST['id']);
-        $course     = $data->post($_POST['course']);
-        $option     = $data->post($_POST['option']);
-        $query      = $data->updatecourses($id,$course,$option);
+        $courses_id     = $data->post($_POST['courses_id']);
+        $courses_update = $data->post($_POST['courses_update']);
+        $options_update = $data->post($_POST['options_update']);
+        $query          = $data->updatecourses($courses_update,$options_update,$courses_id);
     break;
 
     case 'Delete Courses':
-        $id         = $data->post($_POST['id']);
-        $query      = $data->deletecourses($id);
+        $course_id  = $data->post($_POST['course_id']);
+        $query      = $data->deletecourses($course_id);
     break;
 #############################################################################
 
@@ -115,6 +114,10 @@ switch($_POST['action']) {
 
     case 'Show Students':
         include 'function_show_students.php';
+    break;
+
+    case 'Show All Students':
+        include 'function_show_all_students.php';
     break;
 
     case 'Show Grades':
@@ -146,26 +149,39 @@ switch($_POST['action']) {
         include 'function_show_students_grades.php';
     break;
 
-    case 'Add Subjects': 
-        $professor_id = $data->post($_POST['professor_id']);
-        $course       = $data->post($_POST['course']);
-        $subject      = $data->post($_POST['subject']);
-        $section      = $data->post($_POST['section']);
-        $query        = $data->addsubjects($professor_id,$course,$subject,$section);
+    case 'Students':
+        include 'function_students.php';
     break;
+
+// professor add students begin
+    case 'Add Professor Student':
+    $student_id   = $data->post($_POST['student_id']);
+    $professor_id = $data->post($_POST['professor_id']);
+    $query        = $data->add_professor_students($student_id,$professor_id);
+    break;
+// professor add student end 
+
+// admin add subjects begin 
+    case 'Add Subjects': 
+        $sub_course   = $data->post($_POST['sub_course']);
+        $sub_subject  = $data->post($_POST['sub_subject']);
+        $sub_section  = $data->post($_POST['sub_section']);
+        $query        = $data->addsubjects($sub_course,$sub_subject,$sub_section);
+        break;
     
     case 'Delete Subjects':
-        $id     = $data->post($_POST['id']);
-        $query  = $data->deletesubjects($id);
+        $update_sub_id = $data->post($_POST['update_sub_id']);
+        $query         = $data->deletesubjects($update_sub_id);
     break;
 
     case 'Update Subjects':
-        $id       = $data->post($_POST['id']);
-        $course   = $data->post($_POST['course']);
-        $subject  = $data->post($_POST['subject']);
-        $section  = $data->post($_POST['section']);
-        $query    = $data->updatesubjects($id,$course,$subject,$section);
+        $update_sub_id         = $data->post($_POST['update_sub_id']);
+        $update_sub_course     = $data->post($_POST['update_sub_course']);
+        $update_sub_subject    = $data->post($_POST['update_sub_subject']);
+        $update_sub_section    = $data->post($_POST['update_sub_section']);
+        $query                 = $data->updatesubjects($update_sub_id,$update_sub_course,$update_sub_subject,$update_sub_section);
     break;
+// admin add subjects end 
 
     case 'Update Student':
         $accountid  = $data->post($_POST['accountid']);
@@ -191,8 +207,6 @@ switch($_POST['action']) {
         $query      = $data->deletestudents($accountid,$studentid);
     break;
 
-
-
     case 'Delete Uploaded Grades':
         $code  = $data->post($_POST['code']);
         $query = $data->removeuploadedgrades($code);
@@ -203,7 +217,7 @@ switch($_POST['action']) {
         $query = $data->approveuploadedgrades($code);
     break;
 
-    case 'Show Students Reports':
+    case 'Show Students Report':
         include 'function_show_students_reports.php';
     break;
 
@@ -214,47 +228,24 @@ switch($_POST['action']) {
 #############################################################################
 
 #############################################################################
-    case 'Show Professor Courses':
-        include 'function_show_professor_courses.php';
+    case 'Show Sections':
+        include 'function_show_sections.php';
     break;
 
-    case 'Add Professor Courses':
-        $professor_id     = $data->post($_POST['professor_id']);
-        $professor_course = $data->post($_POST['professor_course']);
-        $query            = $data->addprofessorcourse($professor_id,$professor_course);
-    break;
-    case 'Update Professor Courses':
-        $update_id        = $data->post($_POST['update_id']);
-        $professor_course = $data->post($_POST['professor_course']);
-        $query            = $data->updateprofessorcourses($update_id,$professor_course);
+    case 'Add Sections':
+        $sections     = $data->post($_POST['section']);
+        $query        = $data->add_sections($sections);
     break;
 
-    case 'Delete Professor Courses':
-        $update_id        = $data->post($_POST['update_id']);
-        $query            = $data->deleteprofessorcourses($update_id);
-    break;
-#############################################################################
-
-#############################################################################
-    case 'Show Professor Section':
-        include 'function_show_professor_section.php';
+    case 'Update Sections':
+        $section_id     = $data->post($_POST['section_id']);
+        $section_update = $data->post($_POST['section_update']);
+        $query          = $data->update_sections($section_id,$section_update);
     break;
 
-    case 'Add Professor Section':
-        $professor_id = $data->post($_POST['professor_id']);
-        $section      = $data->post($_POST['section']);
-        $query        = $data->addprofessorsection($professor_id,$section);
-    break;
-
-    case 'Update Professor Section':
-        $hiddenid    = $data->post($_POST['hiddenid']);
-        $prof_section = $data->post($_POST['prof_section']);
-        $query        = $data->updateprofessorsection($hiddenid,$prof_section);
-    break;
-
-    case 'Delete Professor Section':
-        $hiddenid = $data->post($_POST['hiddenid']);
-        $query    = $data->deleteprofessorsection($hiddenid);
+    case 'Delete Sections':
+        $section_id = $data->post($_POST['section_id']);
+        $query      = $data->delete_sections($section_id);
     break;
 #############################################################################
 

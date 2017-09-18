@@ -53,14 +53,14 @@
       <form method="POST">
         <div class="form-group">
           <label>Course</label>
-          <input type="hidden" id="course_id" class="form-control" required>
-          <input type="text" id="update_course" class="form-control" required>
+          <input type="hidden" id="courses_id" class="form-control" required>
+          <input type="text" id="courses_update" class="form-control" required>
           </span>
         </div>
 
         <div class="form-group">
           <label>Option</label>
-          <select id="update_option" class="form-control" required>
+          <select id="options_update" class="form-control" required>
             <option value="Degree Courses">Degree Courses</option>
             <option value="Vocational Courses">Vocational Courses</option>
           </select>

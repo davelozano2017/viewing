@@ -113,8 +113,6 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
         </a>
           <ul class="treeview-menu">
             <li><a href="view_students.php">View Students</a></li>
-            <li><a href="view_course_and_section.php">View Course & Section</a></li>
-            <li><a href="view_subjects.php">View Subjects</a></li>
             <li><a href="view_grades.php">View Grades</a></li>
           </ul>
         </li>
@@ -156,8 +154,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
                     <input type="hidden" id="professor_id" value="<?php echo $id?>">
                     <select class="form-control" id="branch">
                         <option value=""> Select Branch </option>
-                        <?php foreach($data->showbranches() as $row):?>
-                        <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
+                        <?php foreach($data->show_professor_branch($id) as $row):?>
+                        <option value="<?php echo $row['branch']?>"><?php echo $row['branch']?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -168,8 +166,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
                     <label>Course</label>
                     <select id="course" class="form-control">
                     <option value=""> Select Course </option>
-                    <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
-                    <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+                    <?php foreach($data->show_professor_courses($id) as $row):?>
+                    <option value="<?php echo $row['course']?>"><?php echo $row['course']?></option>
                     <?php endforeach; ?>
                     </select>
                 </div>
@@ -180,7 +178,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
                     <label>Subject</label>
                     <select id="subject" class="form-control">
                     <option value=""> Select Subject </option>
-                    <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
+                    <?php foreach($data->show_professor_subject($id) as $row):?>
                     <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
                     <?php endforeach; ?>
                     </select>
@@ -192,8 +190,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
                     <label>Section</label>
                     <select id="section" class="form-control">
                     <option value=""> Select Section </option>
-                    <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
-                    <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                    <?php foreach($data->show_professor_section($id) as $row):?>
+                    <option value="<?php echo $row['section']?>"><?php echo $row['section']?></option>
                     <?php endforeach; ?>
                     </select>
                 </div>

@@ -1,4 +1,3 @@
-
 <table id="show_professors" class="table table-bordered table-striped">
 <thead>
 <tr>

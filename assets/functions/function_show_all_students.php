@@ -8,7 +8,7 @@
       <th>Course</th>
       <th>Subject</th>
       <th>Section</th>
-      <th></th>
+      <th style="width:1px"></th>
     </tr>
   </thead>
 <tbody>
@@ -20,15 +20,30 @@
   <td><?php echo $row['course']?></td>
   <td><?php echo $row['subject']?></td>
   <td><?php echo $row['section']?></td>
-  <td><button class="custom" onclick="edit_student('<?php echo $row['student_id']?>','<?php echo $row['id']?>','<?php echo $row['firstname']?>','<?php echo $row['middlename']?>','<?php echo $row['lastname']?>','<?php echo $row['branch']?>','<?php echo $row['course']?>','<?php echo $row['subject']?>','<?php echo $row['section']?>','<?php echo $row['username']?>','<?php echo $row['email']?>','<?php echo $row['contact']?>','<?php echo $row['gender']?>','<?php echo $row['sy']?>')"><i class="fa fa-pencil"></i></button></td>
+  <td><button class="btn btn-primary flat" id="add<?php echo $row['student_id']?>" onclick="add_student('<?php echo $row['student_id']?>','<?php echo $_SESSION['id']?>')">Add Student</button></td>
   </tr>
 <?php endforeach; ?>
 </tbody>
 </table>
 
 <script>
+
 $('#tables').DataTable({
 "paging": true, "lengthChange": true, "searching": true,
 "ordering": false, "info": false, "autoWidth": true
 });
+  $.ajax({
+      type : 'POST',
+      url : '../' +url,
+      data : { action : 'Students' },
+      success:function(response){
+        var array = response.split(",");
+        for (var i in array){
+            
+            $('#add'+array[i]).html('Remove Student').removeClass('btn-primary').addClass('btn-danger');
+        }
+      }
+});
 </script>
+
+

@@ -16,10 +16,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
 ?>     
 <?php endforeach; ?>
 <?php 
-$count_section = $data->countprofessorsection($id);
-$count_student = $data->countprofessorstudent($id);
-$count_course = $data->countprofessorcourse($id);
-
+$count_student = $data->count_professor_students($id);
 ?>
 <!DOCTYPE html>
 <html>
@@ -128,8 +125,6 @@ $count_course = $data->countprofessorcourse($id);
         </a>
           <ul class="treeview-menu">
           <li><a href="view_students.php">View Students</a></li>
-          <li><a href="view_course_and_section.php">View Course & Section</a></li>
-          <li><a href="view_subjects.php">View Subjects</a></li>
           <li><a href="view_grades.php">View Grades</a></li>
           </ul>
         </li>
@@ -171,8 +166,8 @@ $count_course = $data->countprofessorcourse($id);
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header">Sections</h5>
-                    <span class="description-text"><?php echo $count_section?></a></span>
+                    <h5 class="description-header"></h5>
+                    <span class="description-text"></a></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -187,8 +182,8 @@ $count_course = $data->countprofessorcourse($id);
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <h5 class="description-header">Courses</h5>
-                    <span class="description-text"><?php echo $count_course?></span>
+                    <h5 class="description-header"></h5>
+                    <span class="description-text"></span>
                   </div>
                   <!-- /.description-block -->
                 </div>

@@ -118,22 +118,7 @@ $count_course = $data->countprofessorcourse($id);
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview">
-        <a href="#"><i class="fa fa-user fa-fw"></i><span> Students</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-          <ul class="treeview-menu">
-          <li><a href="view_students.php">View Students</a></li>
-          <li><a href="view_course_and_section.php">View Course & Section</a></li>
-          <li><a href="view_subjects.php">View Subjects</a></li>
-          <li><a href="view_grades.php">View Grades</a></li>
-          </ul>
-        </li>
-        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
-        <li><a href="professor_upload_grades.php"><i class="fa fa-upload fa-fw"></i><span> Upload Grades</span></a></li>
+        <li><a href="view_grades.php"><i class="fa fa-graduation-cap fa-fw"></i><span>  Grades</span></a></li>
 
       </ul>
       <!-- /.sidebar-menu -->

@@ -1,4 +1,4 @@
-<table id="courses" class="table table-bordered table-striped">
+<table id="table_courses" class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>#</th>
@@ -17,7 +17,7 @@
 </tbody>
 </table>
 <script>
-$('#courses').DataTable({
+$('#table_courses').DataTable({
   "paging": true, "lengthChange": true, "searching": true,
   "ordering": false, "info": false, "autoWidth": true
 });
@@ -27,8 +27,8 @@ function modify_courses($id,$courses,$options) {
   var courses = $courses;
   var options = $options;
   $('#modal_courses_update').modal('show');
-  $('#modal_courses_update').find('#course_id').val(id);
-  $('#modal_courses_update').find('#update_course').val(courses);
-  $('#modal_courses_update').find('#update_option').val(options);
+  $('#modal_courses_update').find('#courses_id').val(id);
+  $('#modal_courses_update').find('#courses_update').val(courses);
+  $('#modal_courses_update').find('#options_update').val(options);
 }
 </script>

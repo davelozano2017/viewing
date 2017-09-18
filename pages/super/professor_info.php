@@ -134,7 +134,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="control_panel.php">Control Panel</a></li>
           </ul>
         </li>
         

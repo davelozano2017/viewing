@@ -84,7 +84,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>School ID / Username</label>
+                            <label>Student ID / Username</label>
                             <input type="text" id="username" name="username" ng-model="username" class="form-control" required>
                             <span ng-messages="addstudent.username.$error" ng-if="addstudent.username.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
@@ -106,8 +106,8 @@
                         <div class="form-group">
                             <label>Section</label>
                             <select id="section" class="form-control">
-                            <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
-                            <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                            <?php foreach($data->show_sections() as $row):?>
+                            <option value="<?php echo $row['sections']?>"><?php echo $row['sections']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>
@@ -119,7 +119,7 @@
                         <div class="form-group">
                             <label>Course</label>
                             <select id="course" class="form-control">
-                            <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
+                            <?php foreach($data->show_courses() as $row):?>
                             <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
                             <?php endforeach; ?>
                             </select>
@@ -130,7 +130,7 @@
                         <div class="form-group">
                             <label>Subject</label>
                             <select id="subject" class="form-control">
-                            <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
+                            <?php foreach($data->show_subjects() as $row):?>
                             <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
                             <?php endforeach; ?>
                             </select>
@@ -251,7 +251,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>School ID / Username</label>
+                            <label>Student ID / Username</label>
                             <input type="text" id="eusername" name="eusername" ng-model="eusername" class="form-control" required>
                             <span ng-messages="editstudents.eusername.$error" ng-if="editstudents.eusername.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
@@ -273,8 +273,8 @@
                         <div class="form-group">
                             <label>Section</label>
                             <select id="esection" class="form-control">
-                            <?php foreach($data->showprofessorsection($_SESSION['id']) as $row):?>
-                            <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
+                            <?php foreach($data->show_sections() as $row):?>
+                            <option value="<?php echo $row['sections']?>"><?php echo $row['sections']?></option>
                             <?php endforeach; ?>
                             </select>
                         </div>
@@ -286,7 +286,7 @@
                         <div class="form-group">
                             <label>Course</label>
                             <select id="ecourse" class="form-control">
-                            <?php foreach($data->showprofessorcourse($_SESSION['id']) as $row):?>
+                            <?php foreach($data->show_courses() as $row):?>
                             <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
                             <?php endforeach; ?>
                             </select>
@@ -297,7 +297,7 @@
                         <div class="form-group">
                             <label>Subject</label>
                             <select id="esubject" class="form-control">
-                            <?php foreach($data->showprofessorsubject($_SESSION['id']) as $row):?>
+                            <?php foreach($data->show_subjects() as $row):?>
                             <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
                             <?php endforeach; ?>
                             </select>

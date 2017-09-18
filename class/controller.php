@@ -1,6 +1,10 @@
 <?php 
 class Controller {
 
+    // public $host    = 'localhost';
+    // public $user    = 'accessog';
+    // public $pass    = '37NdeY5nb9';
+    // public $dbname  = 'accessog_viewing';
     public $host    = 'localhost';
     public $user    = 'root';
     public $pass    = '';
