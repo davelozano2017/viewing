@@ -2,8 +2,8 @@
 $data->redirecttologin();
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
-$roles     = $_SESSION['role'] == 1 ? 'Administrator' : null;
-foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
+$roles     = $_SESSION['role'] == 1 ? 'Admin' : null;
+foreach($data->getuserinfobyid($_GET['id']) as $row) : ?>
 <?php 
     $id       = $row['id'];
     $photo    = $row['photo'];
@@ -133,7 +133,7 @@ foreach($data->getadmininfobyid($_GET['id']) as $row) : ?>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="control_panel.php">Control Panel</a></li>
           </ul>
         </li>
         

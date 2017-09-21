@@ -4,7 +4,7 @@ $id        = $_SESSION['id'];
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
 $roles     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
-foreach($data->getadmininfobyid($id) as $row) : ?>
+foreach($data->getuserinfobyid($id) as $row) : ?>
 <?php 
     $id       = $row['id'];
     $photo    = $row['photo'];
@@ -33,8 +33,6 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
   <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
 
 </head>
@@ -114,6 +112,8 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
       <li class="header">MAIN NAVIGATION</li>
       <!-- Optionally, you can add icons to the links -->
       <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+      <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
+
       <li class="treeview">
       <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
           <span class="pull-right-container">
@@ -123,7 +123,6 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
         <ul class="treeview-menu">
         <li><a href="add_administrators.php">Administrators</a></li>
         <li><a href="add_professors.php">Professors</a></li>
-        <li><a href="view_students.php">Students</a></li>
         </ul>
       </li>
 

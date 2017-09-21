@@ -4,7 +4,7 @@ $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
-$role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
+$role     = $_SESSION['role'] == 1 ? 'Admin' : null;
 $administrators = $data->countadministrators();
 $professors     = $data->countprofessors();
 $students       = $data->countstudents();
@@ -28,8 +28,6 @@ $all       = $data->countall();
   <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
   <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -131,7 +129,7 @@ $all       = $data->countall();
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="control_panel.php">Control Panel</a></li>
           </ul>
         </li>
         
@@ -169,7 +167,6 @@ $all       = $data->countall();
             <div class="icon">
               <i class="ion ion-ios-people"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -184,7 +181,6 @@ $all       = $data->countall();
             <div class="icon">
               <i class="ion ion-ios-people"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -199,7 +195,6 @@ $all       = $data->countall();
             <div class="icon">
               <i class="ion ion-ios-people"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -214,7 +209,6 @@ $all       = $data->countall();
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -230,11 +224,10 @@ $all       = $data->countall();
               <h3 class="box-title">Uploaded Grades <small>Waiting for approval</small></h3>
             </div>
             <div class="box-body">
-              <div id="show_grades"></div>
+              <div id="show_grades_by_branch"></div>
             </div>
           </div>
         </div>
-
       </div>
       <!-- Uploaded Grades End  -->
 
@@ -327,7 +320,7 @@ var app = angular.module('app', ['ngMessages']);
   show_request_administrators();
   show_request_professors();
   show_request_students();
-  showgrades();
+  show_grades_by_branch();
   showschoolyear();
   addschoolyearmodal();
   addschoolyear();

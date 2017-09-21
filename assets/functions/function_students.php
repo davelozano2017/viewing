@@ -1,5 +1,5 @@
 <?php
-foreach($data->students() as $row){
+foreach($data->students($_SESSION['id']) as $row){
     $show[] = $row['student_id'];
 }
     echo implode(',',$show);

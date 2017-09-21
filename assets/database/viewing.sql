@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2017 at 06:28 AM
+-- Generation Time: Sep 21, 2017 at 11:03 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -21,6 +21,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `viewing`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts_extension_tbl`
+--
+
+CREATE TABLE `accounts_extension_tbl` (
+  `eid` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `branch` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `accounts_extension_tbl`
+--
+
+INSERT INTO `accounts_extension_tbl` (`eid`, `username`, `branch`) VALUES
+(1, 'ACC0001C', 'Cubao 2'),
+(2, 'ACC0002C', 'Cubao 2'),
+(3, 'ACC0003C', 'Cubao 2');
 
 -- --------------------------------------------------------
 
@@ -51,16 +72,16 @@ CREATE TABLE `accounts_tbl` (
 
 INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`, `email`, `contact`, `gender`, `username`, `password`, `security_code`, `status`, `role`, `created`) VALUES
 (18, '../../assets/images/admin.png', '', 'Administrator', '', 'admin@gmail.com', '9562211554', 'Female', 'Administrator', '$2y$10$.TO3f0wO3xGy/fNh6SINz.TIwFcX6k0D3Q7XSj.gYxDCJEmlqUSOC', 699014, 0, 0, '2017-09-09 05:05:38'),
-(73, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9123344556', 'Female', 'adoralozano', '$2y$10$5e1y16v6l9BvSm7Eh0plcOd8muZwPcUWu5tflEqXAoEGsEFKG13YG', 500006, 0, 2, '2017-09-09 21:36:20'),
-(74, '../../assets/images/student_female.png', 'Romano', 'Mary Claire', 'Qui&ntilde;ones', 'romanomaryclaire@gmail.com', '9336101918', 'Female', 'A114C0270', '$2y$10$BsqLnv4Cn.QzDmIPZhEDxONv4RorGDlPwfwoPfbLDu.wpODJSAkG2', 845925, 0, 3, '2017-09-09 21:46:54'),
-(75, '../../assets/images/student_female.png', 'Lucena', 'Diana Jane', 'Davis', 'dianalucenau121598@gmail.com', '9553318477', 'Female', 'A114C0440', '$2y$10$83wBF7pkAD1IzO9B00ptmu09FzEYhLrf/zf5k8za9eC.RrVQuzPte', 429635, 0, 3, '2017-09-09 07:17:46'),
-(76, '../../assets/images/student_male.png', 'Saracanlao', 'Sam', 'japitana', 'zhamsaracanlao@yahoo.com', '9297470474', 'Male', 'A114C0447', '$2y$10$eMwhFPOcdlQZK9RY6y0A7.lqzfQaUrLJCwYxEA7wm4PgRpNS0Du3.', 538499, 0, 3, '2017-09-09 07:17:52'),
-(77, '../../assets/images/student_male.png', 'Serquina', 'Dennis Dondon', 'Frando', 'ddserquina@gmail.com', '9970846704', 'Male', 'A114C0426', '$2y$10$TOZ8YCh7i64yF07M54SJ3OBvNxs.n9bvs0R3CpMTic4qM0r4f2nv.', 398920, 0, 3, '2017-09-09 07:17:50'),
-(78, '../../assets/images/student_male.png', 'Francisco', 'Judy', 'Dela Fuente', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0268', '$2y$10$0ebZc6c2m3DK4tcGE7Yk8OO1DDlA3azuQqcpuSbhGiZPIs4OC9ujm', 902139, 0, 3, '2017-09-09 07:17:49'),
-(79, '../../assets/images/student_male.png', 'Romano', 'Carmela', 'Qui&ntilde;ones', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0269', '$2y$10$CF9LQ4i0.VzFtS82JKSsz.rU2cneDrJPEocZ7aR6GwqieiodAt5Ie', 914527, 0, 3, '2017-09-09 07:17:55'),
-(80, '../../assets/images/student_female.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9265691158', 'Camarin', 'Capstone ', '$2y$10$3etoU.nvyRaVgaUCga6s2OojxA9KHeXSDkkD/X1RrBKgVUNF/D3/.', 268117, 0, 0, '2017-09-09 19:53:57'),
-(81, '../../assets/images/student_female.png', 'Cabuga', 'Jeddahlyn', 'Linzag', 'cabugajeddahlyn@gmail.com', '9265691158', 'Female', 'A111G0001', '$2y$10$fl2V1GFMAw/7GIPPTzMQRO8RqLvSkKwoeS55NMXnLn1o4YQONdkZi', 883277, 0, 3, '2017-09-09 19:56:18'),
-(82, '../../assets/images/admin.png', 'Admin', 'Admin', 'Admin', 'Admin@yahoo.com', '9228828288', 'Male', 'adminmoto', '$2y$10$7q6smPeiE/BF1PR36sV8tupQ6B7XbB7Vvs08lvKNVWw1kQ5f0G1fm', 488991, 0, 1, '2017-09-09 21:22:52');
+(74, '../../assets/images/student_female.png', 'Romano', 'Mary Claire', 'Q', 'romanomaryclaire@gmail.com', '9336101918', 'Female', 'A114C0270', '$2y$10$BsqLnv4Cn.QzDmIPZhEDxONv4RorGDlPwfwoPfbLDu.wpODJSAkG2', 845925, 0, 3, '2017-09-21 03:04:23'),
+(75, '../../assets/images/student_female.png', 'Lucena', 'Diana Jane', 'D', 'dianalucenau121598@gmail.com', '9553318477', 'Female', 'A114C0440', '$2y$10$83wBF7pkAD1IzO9B00ptmu09FzEYhLrf/zf5k8za9eC.RrVQuzPte', 429635, 0, 3, '2017-09-21 03:04:35'),
+(76, '../../assets/images/student_male.png', 'Saracanlao', 'Sam', 'J', 'zhamsaracanlao@yahoo.com', '9297470474', 'Male', 'A114C0447', '$2y$10$eMwhFPOcdlQZK9RY6y0A7.lqzfQaUrLJCwYxEA7wm4PgRpNS0Du3.', 538499, 0, 3, '2017-09-21 03:04:41'),
+(77, '../../assets/images/student_male.png', 'Serquina', 'Dennis Dondon', 'F', 'ddserquina@gmail.com', '9970846704', 'Male', 'A114C0426', '$2y$10$TOZ8YCh7i64yF07M54SJ3OBvNxs.n9bvs0R3CpMTic4qM0r4f2nv.', 398920, 0, 3, '2017-09-21 03:04:45'),
+(78, '../../assets/images/student_male.png', 'Francisco', 'Judy', 'D F', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0268', '$2y$10$0ebZc6c2m3DK4tcGE7Yk8OO1DDlA3azuQqcpuSbhGiZPIs4OC9ujm', 902139, 0, 3, '2017-09-21 03:04:53'),
+(79, '../../assets/images/student_male.png', 'Romano', 'Carmela', 'Q', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0269', '$2y$10$CF9LQ4i0.VzFtS82JKSsz.rU2cneDrJPEocZ7aR6GwqieiodAt5Ie', 914527, 0, 3, '2017-09-21 03:05:10'),
+(81, '../../assets/images/student_female.png', 'Cabuga', 'Jeddahlyn', 'L.', 'cabugajeddahlyn@gmail.com', '9265691158', 'Female', 'A111G0001', '$2y$10$fl2V1GFMAw/7GIPPTzMQRO8RqLvSkKwoeS55NMXnLn1o4YQONdkZi', 883277, 0, 3, '2017-09-21 03:05:02'),
+(88, '../../assets/images/admin.png', 'Cruz', 'Juan', 'Dela', 'juandelacruz@gmail.com', '9121199292', 'Male', 'ACC0001C', '$2y$10$lHgKr13.WG7D5C9roiJYbeuWeRe25Tp0rUFnrlAn3quyEC12GQ656', 501122, 0, 1, '2017-09-20 20:06:47'),
+(90, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9555338288', 'Female', 'ACC0002C', '$2y$10$adIIebjs/lptnG6kMNrcred6jyf8.Wn0cu2EVWIYSl7Zsab9D5Ma.', 785264, 0, 2, '2017-09-21 07:55:42'),
+(91, '../../assets/images/admin.png', 'Demo', 'Demo', 'Demo', 'Demo@gmail.com', '1234512312', 'Male', 'ACC0003C', '$2y$10$L7a3SI7OpWZS4RIq39apeO66deyBaXG4Cx3gA2b9NqmzPmVEzdEF2', 707636, 0, 2, '2017-09-20 21:50:10');
 
 -- --------------------------------------------------------
 
@@ -87,8 +108,7 @@ INSERT INTO `branches_tbl` (`id`, `branches`) VALUES
 (8, 'Marilao'),
 (9, 'Pasig'),
 (10, 'Meycauayan'),
-(11, 'Balagtas'),
-(13, 'ccxc');
+(11, 'Balagtas');
 
 -- --------------------------------------------------------
 
@@ -126,6 +146,8 @@ INSERT INTO `courses_tbl` (`id`, `courses`, `options`) VALUES
 
 CREATE TABLE `professor_grades_tbl` (
   `id` int(11) NOT NULL,
+  `excel_path` varchar(255) NOT NULL,
+  `excel_name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `q_pl` varchar(255) NOT NULL,
@@ -153,21 +175,10 @@ CREATE TABLE `professor_grades_tbl` (
   `subject` varchar(255) NOT NULL,
   `section` varchar(255) NOT NULL,
   `sy` varchar(255) NOT NULL,
+  `approve_by` varchar(255) NOT NULL,
   `code` int(11) NOT NULL,
   `date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `professor_grades_tbl`
---
-
-INSERT INTO `professor_grades_tbl` (`id`, `username`, `name`, `q_pl`, `q_mt`, `q_pf`, `q_fn`, `q_ave`, `q_result`, `e_pl`, `e_mt`, `e_pf`, `e_fn`, `e_ave`, `e_result`, `s_sio`, `s_result`, `grades`, `g_add`, `final`, `remarks`, `professor_id`, `status`, `branch`, `course`, `subject`, `section`, `sy`, `code`, `date`) VALUES
-(64, 'A114C0270', 'Mary Claire Q. Romano', '100', '100', '100', '100', '100', '40', '100', '100', '100', '100', '100', '40', '20', '20', '100', '0', '100', '4.0', 73, 1, 'Cubao 2', 'B.S. in Information Technology', 'CAPSPRO', 'M72', '2017 - 2018', 446142, '2017-09-18'),
-(65, 'A114C0440', 'Diana Jane D. Lucena', '98', '98', '98', '98', '98', '39.2', '98', '98', '98', '98', '98', '39.2', '20', '20', '98.4', '1', '99.4', '4.0', 73, 1, 'Cubao 2', 'B.S. in Information Technology', 'CAPSPRO', 'M72', '2017 - 2018', 446142, '2017-09-18'),
-(66, 'A114C0447', 'Sam J. Saracanlao', '94', '94', '94', '94', '94', '37.6', '94', '94', '94', '94', '94', '37.6', '20', '20', '95.2', '2', '97.2', '3.5', 73, 1, 'Cubao 2', 'B.S. in Information Technology', 'CAPSPRO', 'M72', '2017 - 2018', 446142, '2017-09-18'),
-(67, 'A114C0426', 'Dennis Dondon F. Serquina', '90', '90', '90', '90', '90', '36', '90', '90', '90', '90', '90', '36', '20', '20', '92', '3', '95', '3.5', 73, 1, 'Cubao 2', 'B.S. in Information Technology', 'CAPSPRO', 'M72', '2017 - 2018', 446142, '2017-09-18'),
-(68, 'A114C0268', 'Judy Dela F. Francisco', '88', '88', '88', '88', '88', '35.2', '88', '88', '88', '88', '88', '35.2', '20', '20', '90.4', '4', '94.4', '3.5', 73, 1, 'Cubao 2', 'B.S. in Information Technology', 'CAPSPRO', 'M72', '2017 - 2018', 446142, '2017-09-18'),
-(69, 'A114C0269', 'Carmela Q. Romano', '82', '82', '82', '82', '82', '32.8', '82', '82', '82', '82', '82', '32.8', '20', '20', '85.6', '5', '90.6', '2.5', 73, 1, 'Cubao 2', 'B.S. in Information Technology', 'CAPSPRO', 'M72', '2017 - 2018', 446142, '2017-09-18');
 
 -- --------------------------------------------------------
 
@@ -186,13 +197,17 @@ CREATE TABLE `professor_students_tbl` (
 --
 
 INSERT INTO `professor_students_tbl` (`id`, `student_id`, `professor_id`) VALUES
-(101, 51, 73),
-(103, 52, 73),
-(104, 53, 73),
-(105, 54, 73),
-(106, 55, 73),
-(107, 56, 73),
-(110, 60, 73);
+(138, 53, 91),
+(139, 56, 91),
+(140, 60, 91),
+(148, 59, 91),
+(155, 51, 90),
+(157, 52, 90),
+(158, 53, 90),
+(159, 54, 90),
+(160, 55, 90),
+(161, 56, 90),
+(162, 59, 90);
 
 -- --------------------------------------------------------
 
@@ -348,6 +363,12 @@ INSERT INTO `subjects_tbl` (`id`, `course`, `subject`, `section`) VALUES
 --
 
 --
+-- Indexes for table `accounts_extension_tbl`
+--
+ALTER TABLE `accounts_extension_tbl`
+  ADD PRIMARY KEY (`eid`);
+
+--
 -- Indexes for table `accounts_tbl`
 --
 ALTER TABLE `accounts_tbl`
@@ -412,10 +433,15 @@ ALTER TABLE `subjects_tbl`
 --
 
 --
+-- AUTO_INCREMENT for table `accounts_extension_tbl`
+--
+ALTER TABLE `accounts_extension_tbl`
+  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `accounts_tbl`
 --
 ALTER TABLE `accounts_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `branches_tbl`
 --
@@ -430,12 +456,12 @@ ALTER TABLE `courses_tbl`
 -- AUTO_INCREMENT for table `professor_grades_tbl`
 --
 ALTER TABLE `professor_grades_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `professor_students_tbl`
 --
 ALTER TABLE `professor_students_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 --
 -- AUTO_INCREMENT for table `requests_tbl`
 --
@@ -455,7 +481,7 @@ ALTER TABLE `sections_tbl`
 -- AUTO_INCREMENT for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 --
 -- AUTO_INCREMENT for table `subjects_tbl`
 --

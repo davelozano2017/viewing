@@ -34,10 +34,63 @@ if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['section'
 <?php endforeach; ?>
 </tbody>
 </table>
-
+<<style>
+    .whitemoto { color: #fff; };
+</style>
 <script>
- $('#report_table').DataTable({
-  "paging": true, "lengthChange": true, "searching": true,
-  "ordering": false, "info": false, "autoWidth": true
-});
+$(document).ready(function() {
+    var handleDataTableButtons = function() {
+        if ($("#report_table").length) {
+          $("#report_table").DataTable({
+            dom: "Bfrtip",
+            buttons: [
+              {
+                extend: "print",
+                className: "btn-sm flat whitemoto btn-primary"
+              },
+            ],
+            responsive: true
+          });
+        }
+      };
+
+        TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              handleDataTableButtons();
+            }
+          };
+        }();
+
+
+        $('#datatable-keytable').DataTable({
+          keys: true
+        });
+
+        $('#datatable-responsive').DataTable();
+
+
+        $('#datatable-fixed-header').DataTable({
+          fixedHeader: true
+        });
+
+        var $datatable = $('#datatable-checkbox');
+
+        $datatable.dataTable({
+          'order': [[ 1, 'asc' ]],
+          'columnDefs': [
+            { orderable: false, targets: [0] }
+          ]
+        });
+        $datatable.on('draw.dt', function() {
+          $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-green'
+          });
+        });
+
+        TableManageButtons.init();
+      });
+
 </script>
+

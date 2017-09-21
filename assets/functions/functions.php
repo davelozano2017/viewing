@@ -26,9 +26,9 @@ switch($_POST['action']) {
         $contact    = $data->post($_POST['contact']);
         $gender     = $data->post($_POST['gender']);
         $username   = $data->post($_POST['username']);
-        $password   = $data->post($_POST['password']);
         $type       = $data->post($_POST['type']);
-        $query      = $data->insertusers($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$password,$type);
+        $branch     = $data->post($_POST['branch']);
+        $query      = $data->insertusers($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$type,$branch);
     break;
 #############################################################################
 
@@ -124,6 +124,10 @@ switch($_POST['action']) {
         include 'function_show_grades.php';
     break;
 
+    case 'Show Grades By Branch':
+        include 'function_show_grades_by_branch.php';
+    break;
+
     case 'Show School Year':
         include 'function_show_school_year.php';
     break;
@@ -147,6 +151,10 @@ switch($_POST['action']) {
     
     case 'Show Student Grades':
         include 'function_show_students_grades.php';
+    break;
+
+    case 'Show Autofill':
+         include 'function_show_auto_fill.php';
     break;
 
     case 'Students':

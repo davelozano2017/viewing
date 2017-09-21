@@ -1,5 +1,5 @@
 <?php date_default_timezone_set('Asia/Manila');?>
-<style>.custom{background:transparent;border:none;outline:none};</style>
+<style>.custom{background:transparent;border:none;outline:none;padding:2px;cursor:pointer;color:black};</style>
 <table id="tables" class="table table-striped dt-responsive responsive nowrap" style="width:100%">
   <thead>
     <tr>
@@ -10,12 +10,12 @@
       <th>Subject</th>
       <th>Section</th>
       <th>Date</th>
-      <th>Approve by</th>
-      <th></th>
+      <th>Approved by</th>
+      <th style="width:1px"></th>
     </tr>
   </thead>
 <tbody>
-<?php $i = 0; foreach($data->show_grades() as $row): ?>
+<?php $i = 0; foreach($data->show_grades_by_branch($_SESSION['username']) as $row): ?>
   <?php 
     $query = $data->filter_professor($row['professor_id']);
     $r = $query->fetch_object();
@@ -32,7 +32,9 @@
       $date = date('M d, Y');
     }
     $modify = '';
-    $modify .= '<a title="Remove" onclick="removeuploadedgrades('.$row['code'].')" class="custom"> <i class="fa fa-times"></i></a>';
+    $modify .= '<a href="download.php?file='.urlencode($row['excel_name']).'&path='.$row['excel_path'].'" title="Download" class="custom"> <i class="fa fa-download"></i></a>';
+    $modify .= '<a title="Approve" onclick="approve_uploaded_grades('.$row['code'].')" class="custom"> <i class="fa fa-check"></i></a>';
+    $modify .= '<a title="Remove" onclick="remove_uploaded_grades('.$row['code'].')" class="custom"> <i class="fa fa-times"></i></a>';
     
   ?>
   <tr>

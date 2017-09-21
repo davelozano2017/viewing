@@ -4,11 +4,7 @@ $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
-$role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
-$administrators = $data->countadministrators();
-$professors     = $data->countprofessors();
-$students       = $data->countstudents();
-$all       = $data->countall();
+$role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,12 +21,17 @@ $all       = $data->countall();
   <link rel="stylesheet" href="../../assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
+  <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
+    
 </head>
-<body ng-app="app" class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -92,7 +93,7 @@ $all       = $data->countall();
       <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
         <div class="pull-left image">
-            <img src="<?php echo $photo?>" class="img-circle" alt="User Image">
+            <img src="../../assets/images/admin.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
             <p><?php echo $name?></p>
@@ -106,6 +107,8 @@ $all       = $data->countall();
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+        <li class="active"><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
+
         <li class="treeview">
         <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
@@ -113,24 +116,22 @@ $all       = $data->countall();
             </span>
         </a>
           <ul class="treeview-menu">
+          <li><a href="add_administrators.php">Administrators</a></li>
           <li><a href="add_professors.php">Professors</a></li>
-          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
 
-        <li class="treeview active">
+        <li class="treeview">
         <a href="#"><i class="fa fa-gear fa-fw"></i><span> Settings</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li class="active"><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="control_panel.php">Control Panel</a></li>
           </ul>
         </li>
         
-
-
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -142,54 +143,84 @@ $all       = $data->countall();
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     Courses and Branches
+     Reports
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li>Settings</li>
-        <li class="active">Courses and branches</li>
+    <li>Dashboard</li>
+    <li class="active">Reports</li>
     </ol>
   </section>
 
     <!-- Main content -->
+
+
     <section class="content container-fluid">
-      <!-- End  -->
-      <div class="row">
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <button data-toggle="modal" data-target="#modal_branches" class="btn btn-primary flat"> Add Branches </button>
-                        <?php include 'branches_container.php';?>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Trigger the modal with a button -->
+    <div class="row">
+      <div class="form-group">
+        <div class="col-md-3 col-sm-12">
+          <label for="">Branch</label>
+          <select class="form-control" id="search_branch">
+              <option value="">Select Branch</option>
+              <?php foreach($data->show_branches() as $row):?>
+              <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
+              <?php endforeach; ?>
+          </select>
+        </div>
 
-          <div class="box box-solid">
-            <div class="box-body">
-            <div id="show_branches"></div>
-            </div>
+        <div class="col-md-3 col-sm-12">
+          <div class="form-group">
+              <label>Course</label>
+              <select id="search_course" class="form-control">
+              <option value="">Select Course</option>
+              <?php foreach($data->show_courses() as $row):?>
+              <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
+              <?php endforeach; ?>
+              </select>
           </div>
         </div>
 
-        <div class="col-md-7">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <button data-toggle="modal" data-target="#modal_courses" class="btn btn-primary flat"> Add Courses </button>
-                        <?php include 'courses_container.php';?>
-                    </div>
-                </div>
-            </div>
-          <div class="box box-solid">
-            <div class="box-body">
-              <div id="show_courses"></div>
-            </div>
+        <div class="col-md-3 col-sm-12">
+          <div class="form-group">
+              <label>Subject</label>
+              <select id="search_subject" class="form-control">
+              <option value="">Select Section</option>
+              <?php foreach($data->show_subjects() as $row):?>
+              <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
+              <?php endforeach; ?>
+              </select>
           </div>
         </div>
 
+        <div class="col-md-3 col-sm-12">
+          <div class="form-group">
+              <label>Section</label>
+              <select id="search_section" class="form-control">
+              <option value="">Select Section</option>
+              <?php foreach($data->show_sections() as $row):?>
+              <option value="<?php echo $row['sections']?>"><?php echo $row['sections']?></option>
+              <?php endforeach; ?>
+              </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <!-- Start -->
+
+          
+            <div id="show_reports"></div>
+
+          <!-- End -->
+        </div>
+      </div>
+    </div>
+
+  </div>
 
     </section>
     <!-- /.content -->
@@ -204,19 +235,27 @@ $all       = $data->countall();
 
 </div>
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
-<script src="../../assets/angular/angular.min.js"></script>
-<script src="../../assets/angular/1.4.2.angular.min.js"></script>
-<!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script>
-showbranches();
-showcourses();
-var app = angular.module('app', ['ngMessages']);
+<script src="../../assets/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 
+
+<script type="text/javascript">
+show_student_report();
+search();
 </script>
 </body>
 </html>

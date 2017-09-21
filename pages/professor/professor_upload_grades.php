@@ -113,7 +113,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
         </a>
           <ul class="treeview-menu">
             <li><a href="view_students.php">View Students</a></li>
-            <li><a href="view_grades.php">View Grades</a></li>
+            <li><a href="view_list.php">View List</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
@@ -146,7 +146,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
       <div class="box box-primary">
         <div class="box-body box-profile">
           <!-- Start -->
-          <form method="POST" name="FormUpload" id="FormUpload" enctype="multipart/form-data" ng-app="app" novalidate>
+          <form method="POST" name="FormUpload" id="FormUpload" enctype="multipart/form-data">
             <div class="row">
             <div class="col-md-12">
                 <div class="form-group">

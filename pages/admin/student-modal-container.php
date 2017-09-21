@@ -7,13 +7,20 @@
         </div>
         <div class="modal-body">  
             <form method="POST" name="addstudent" ng-app="app" novalidate>
-                
                 <input type="hidden" id="type" value="3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Search Student ID</label>
+                        <div class="form-group">
+                            <input type="text" id="search_student" class="form-control">
+                        </div>
+                        <div id="error"></div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="hidden" id="professor_id" value="<?php echo $_SESSION['id']?>">
+                        <label>Last Name</label>
                             <input type="text" id="lastname" ng-pattern="/^[a-zA-Z ñ]*$/" name="lastname" ng-model="lastname" class="form-control" required>
                             <span ng-messages="addstudent.lastname.$error" ng-if="addstudent.lastname.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
@@ -35,7 +42,7 @@
 
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>Middle Name</label>
+                            <label>Middle Initial</label>
                             <input type="text" id="middlename" name="middlename" ng-model="middlename" ng-pattern="/^[a-zA-Z ñ]*$/"  class="form-control" required>
                             <span ng-messages="addstudent.middlename.$error" ng-if="addstudent.middlename.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>
@@ -203,7 +210,7 @@
 
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>Middle Name</label>
+                            <label>Middle Initial</label>
                             <input type="text" id="emiddlename" name="emiddlename" ng-model="emiddlename" ng-pattern="/^[a-zA-Z ñ]*$/"  class="form-control" required>
                             <span ng-messages="editstudents.emiddlename.$error" ng-if="editstudents.emiddlename.$dirty">
                             <strong ng-message="required" class="text-danger">This field is required.</strong>

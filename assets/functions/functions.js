@@ -10,11 +10,11 @@ function btnsigninenabled(bgcolor,color,message) {
     notify(bgcolor,color,message)
 }
 
-function btnadmindisabled() {
+function btn_admin_disabled() {
     $('#create_administrator').html('Please Wait').attr('disabled',true);
 }
 
-function btnadminenabled(bgcolor,color,message) {
+function btn_admin_enabled(bgcolor,color,message) {
     $('#create_administrator').html('Create').attr('disabled',false);
     notify(bgcolor,color,message);
 }
@@ -156,11 +156,11 @@ function btn_update_subjects_disabled() {
     $('#update_subject').html('Please Wait').attr('disabled',true);
 }
 
-function btnuploadfiledisabled() {
+function btn_upload_file_disabled() {
     $('#uploadfile').html('Please Wait').attr('disabled',true);
 }
 
-function btnuploadfileenabled(bgcolor,color,message) {
+function btn_upload_file_enabled(bgcolor,color,message) {
     notify(bgcolor,color,message);
     $('#uploadfile').html('Upload').attr('disabled',false);
 }
@@ -211,7 +211,7 @@ function login() {
 function insertuser() {
     $('#create_administrator').click(function(e){
         e.preventDefault();
-        btnadmindisabled();
+        btn_admin_disabled();
         var lastname    = $('#lastname').val();
         var firstname   = $('#firstname').val();
         var middlename  = $('#middlename').val();
@@ -219,7 +219,7 @@ function insertuser() {
         var contact     = $('#contact').val();
         var gender      = $('#gender').val();
         var username    = $('#username').val();
-        var password    = $('#password').val();
+        var branch      = $('#branch').val();
         var type        = $('#type').val();
         
         $.ajax({
@@ -228,16 +228,16 @@ function insertuser() {
             data : {
                 action : 'Insert Users', lastname : lastname, firstname : firstname,
                 middlename : middlename, email : email, contact : contact, 
-                gender : gender, username : username, password : password, type : type
+                gender : gender, username : username, type : type, branch : branch
             },
             dataType : 'json',
             success:function(response) {
                 if(type == 1) {
                     showadmin();
-                    response.success == true ? btnadminenabled(response.bgcolor,response.color,response.message) : btnadminenabled(response.bgcolor,response.color,response.message);
+                    response.success == true ? btn_admin_enabled(response.bgcolor,response.color,response.message) : btn_admin_enabled(response.bgcolor,response.color,response.message);
                 } else {
                     showprofessor();
-                    response.success == true ? btnadminenabled(response.bgcolor,response.color,response.message) : btnadminenabled(response.bgcolor,response.color,response.message);
+                    response.success == true ? btn_admin_enabled(response.bgcolor,response.color,response.message) : btn_admin_enabled(response.bgcolor,response.color,response.message);
                 }
             }
         })
@@ -318,11 +318,12 @@ function search() {
         e.preventDefault();
         var branch = $('#search_branch').val();
         var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
         var section = $('#search_section').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
             success:function(response) {
                 $('#show_reports').html(response);
             }
@@ -332,11 +333,27 @@ function search() {
     $('#search_course').change(function(e){
         var branch = $('#search_branch').val();
         var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
         var section = $('#search_section').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
+            success:function(response) {
+                $('#show_reports').html(response);
+            }
+        });
+    });
+
+    $('#search_subject').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
             success:function(response) {
                 $('#show_reports').html(response);
             }
@@ -346,11 +363,12 @@ function search() {
     $('#search_section').change(function(e){
         var branch = $('#search_branch').val();
         var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
         var section = $('#search_section').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
             success:function(response) {
                 $('#show_reports').html(response);
             }
@@ -366,6 +384,40 @@ function showprofessor() {
         success:function(response){
             $('#showprofessor').html(response);
         }
+    })
+}
+
+function autofill() {
+    $('#search_student').keyup(function(e){
+        e.preventDefault();
+        var username = $('#search_student').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data : { action : 'Show Autofill', username : username },
+            dataType: 'json',
+            success:function(response){
+                $('#addstudents').find('#lastname').val(response.lastname);
+                $('#addstudents').find('#firstname').val(response.firstname);
+                $('#addstudents').find('#middlename').val(response.middlename);
+                $('#addstudents').find('#email').val(response.email);
+                $('#addstudents').find('#contact').val(response.contact);
+                $('#addstudents').find('#gender').val(response.gender);
+                $('#addstudents').find('#username').val(response.username);
+                $('#addstudents').find('#course').val(response.course);
+                $('#create_students').attr('disabled',false);
+            },error(){
+                $('#addstudents').find('#lastname').val('');
+                $('#addstudents').find('#firstname').val('');
+                $('#addstudents').find('#middlename').val('');
+                $('#addstudents').find('#email').val('');
+                $('#addstudents').find('#contact').val('');
+                $('#addstudents').find('#gender').val('Male');
+                $('#addstudents').find('#username').val('');
+                $('#addstudents').find('#course').val('Computer Science');
+                $('#create_students').attr('disabled',true);
+            }
+        })
     })
 }
 
@@ -447,6 +499,17 @@ function showgrades(){
         data : { action : 'Show Grades' },
         success:function(response){
             $('#show_grades').html(response);
+        }
+    })
+}
+
+function show_grades_by_branch() {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show Grades By Branch' },
+        success:function(response){
+            $('#show_grades_by_branch').html(response);
         }
     })
 }
@@ -862,7 +925,7 @@ function deletestudent() {
 function uploadgrades(){
     $('#uploadfile').click(function(e){
         e.preventDefault();
-        btnuploadfiledisabled();
+        btn_upload_file_disabled()
         var formData = new FormData($("#FormUpload")[0]);
         var branch  = $('#branch').val();
         var course  = $('#course').val();
@@ -887,7 +950,7 @@ function uploadgrades(){
             dataType: 'json',
             mimeType: "multipart/form-data",
             success:function(response) {
-                response.success == true ? btnuploadfileenabled(response.bgcolor,response.color,response.message) : btnuploadfileenabled(response.bgcolor,response.color,response.message)
+                response.success == true ? btn_upload_file_enabled(response.bgcolor,response.color,response.message) : btn_upload_file_enabled(response.bgcolor,response.color,response.message)
             }
         });
     });
@@ -1124,6 +1187,32 @@ function approveuploadedgrades(code) {
     })
 }
 
+function remove_uploaded_grades(code) {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data: { action : 'Delete Uploaded Grades', code : code },
+        dataType: 'json',
+        success:function(response) {
+            response.success == true ? show_grades_by_branch() : null;
+            notify(response.bgcolor,response.color,response.message);
+        }
+    })
+}
+
+function approve_uploaded_grades(code) {
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data: { action : 'Approve Uploaded Grades', code : code },
+        dataType: 'json',
+        success:function(response) {
+            response.success == true ? show_grades_by_branch() : null;
+            notify(response.bgcolor,response.color,response.message);
+        }
+    })
+}
+
 function addschoolyear() {
     $('#btnaddschoolyear').click(function(e){
         e.preventDefault();
@@ -1151,6 +1240,6 @@ update_branches();
 delete_branches();
 
 login();
-insertuser();
+
 
 professor_profile();

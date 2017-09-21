@@ -3,8 +3,8 @@ $data->redirecttologin();
 $id        = $_SESSION['id'];
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
-$role      = $_SESSION['role'] == 1 ? 'Administrator' : null;
-foreach($data->getadmininfobyid($id) as $row) : ?>
+$roles     = $_SESSION['role'] == 1 ? 'Admin' : null;
+foreach($data->getuserinfobyid($id) as $row) : ?>
 <?php 
     $id       = $row['id'];
     $photo    = $row['photo'];
@@ -12,6 +12,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
     $email    = $row['email'];
     $contact  = $row['contact'];
     $username = $row['username'];
+    $role     = $row['role'] == 1 ? 'Admin' : null;
 ?>     
 <?php endforeach; ?>
 <!DOCTYPE html>
@@ -71,7 +72,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
                 <img src="<?php echo $photos?>" class="img-circle" alt="User Image">
 
                 <p><?php echo $names?>
-                  <small><?php echo $role?></small>
+                  <small><?php echo $roles?></small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -104,7 +105,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
         <div class="pull-left info">
             <p><?php echo $names?></p>
             <!-- Status -->
-            <a href="#"><?php echo $role?></a>
+            <a href="#"><?php echo $roles?></a>
         </div>
     </div>
 
@@ -132,7 +133,7 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
           </span>
       </a>
         <ul class="treeview-menu">
-        <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+        <li><a href="control_panel.php">Control Panel</a></li>
         </ul>
       </li>
       

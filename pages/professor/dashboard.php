@@ -5,7 +5,13 @@ $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
 $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
+$count_branches = $data->count_professor_branches($id);
+$count_courses  = $data->count_professor_courses($id);
+$count_subjects = $data->count_professor_subjects($id);
+$count_students = $data->count_professor_students($id);
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,8 +114,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li class="treeview active">
+        <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+        <li class="treeview">
         <a href="#"><i class="fa fa-user fa-fw"></i><span> Students</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -117,7 +123,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
         </a>
           <ul class="treeview-menu">
             <li><a href="view_students.php">View Students</a></li>
-            <li class="active"><a href="view_grades.php">View Grades</a></li>
+            <li><a href="view_list.php">View List</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
@@ -134,12 +140,10 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Content Header (Page header) -->
     <section class="content-header">
     <h1>
-     View Grades
+     Dashboard
     </h1>
     <ol class="breadcrumb">
-    <li>Dashboard</li>
-    <li>Students</li>
-    <li class="active">View Grades</li>
+    <li class="active">Dashboard</li>
     </ol>
   </section>
 
@@ -147,6 +151,66 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
     <!-- Main content -->
     <section class="content container-fluid">
       <div class="col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3><?php echo $count_branches?></h3>
+
+              <p>Branches</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-globe"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3><?php echo $count_courses?></h3>
+
+              <p>Courses</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ribbon-a"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3><?php echo $count_subjects?></h3>
+
+              <p>Subjects</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-book"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3><?php echo $count_students?></h3>
+
+              <p>Students</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-contacts"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+
         <div class="box box-primary">
           <div class="box-body box-profile">
             <!-- Start -->

@@ -4,7 +4,7 @@ $id        = $_SESSION['id'];
 $photos    = $_SESSION['photo'];
 $names     = $_SESSION['name'];
 $role     = $_SESSION['role'] == 3 ? 'Student' : null;
-foreach($data->getadmininfobyid($id) as $row) : ?>
+foreach($data->getuserinfobyid($id) as $row) : ?>
 <?php 
     $id       = $row['id'];
     $photo    = $row['photo'];
@@ -15,9 +15,9 @@ foreach($data->getadmininfobyid($id) as $row) : ?>
 ?>     
 <?php endforeach; ?>
 <?php 
-$count_section = $data->countprofessorsection($id);
-$count_student = $data->countprofessorstudent($id);
-$count_course = $data->countprofessorcourse($id);
+// $count_section = $data->countprofessorsection($id);
+// $count_student = $data->countprofessorstudent($id);
+// $count_course = $data->countprofessorcourse($id);
 
 ?>
 <!DOCTYPE html>

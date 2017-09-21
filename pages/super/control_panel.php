@@ -28,8 +28,6 @@ $all       = $data->countall();
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
   <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -112,6 +110,8 @@ $all       = $data->countall();
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
+
         <li class="treeview">
         <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
@@ -121,7 +121,6 @@ $all       = $data->countall();
           <ul class="treeview-menu">
           <li><a href="add_administrators.php">Administrators</a></li>
           <li><a href="add_professors.php">Professors</a></li>
-          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
 

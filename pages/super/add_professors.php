@@ -22,9 +22,11 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-<link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
 <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
 <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
 
@@ -105,6 +107,8 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
+        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
+
         <li class="treeview active">
         <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
@@ -114,7 +118,6 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
           <ul class="treeview-menu">
           <li><a href="add_administrators.php">Administrators</a></li>
           <li class="active"><a href="add_professors.php">Professors</a></li>
-          <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -224,21 +227,12 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
             </div>
 
             <div class="form-group">
-              <label>Password</label>
-              <input type="password" id="password" password-verify="{{confirm_password}}"name="password" ng-model="password" class="form-control" required>
-              <span ng-messages="add.password.$error" ng-if="add.password.$dirty">
-                <strong ng-message="required" class="text-danger">This field is required.</strong>
-                <strong ng-message="minlength" class="text-danger">Password is too short.</strong>
-              </span>
-            </div>
-
-            <div class="form-group">
-              <label>Confirm Password</label>
-              <input type="password" id="confirm_password" password-verify="{{confirm_password}}"name="confirm_password" ng-model="confirm_password" class="form-control" required>
-              <b ng-messages="add.confirm_password.$error" ng-if="add.confirm_password.$dirty">
-                <strong ng-message="required" class="text-danger" style="display:block">This field is required.</strong>
-                <strong ng-show="confirm_password != password" class="text-danger">Password not matched.</strong>
-              </b>
+              <label>Branch</label>
+              <select class="form-control" id="branch">
+              <?php foreach($data->show_branches() as $row): ?>
+                <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
+              <?php endforeach;?>
+              </select>
             </div>
            
           </div>
@@ -283,12 +277,24 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 <script src="../../assets/angular/angular.min.js"></script>
 <script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/angular/passwordmatch.js"></script>
+<!-- DataTables -->
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 <script src="../../assets/dist/js/jquery.amaran.min.js"></script>
 <script type="text/javascript">
 //School information
 showprofessor()
+insertuser();
 
 </script>
 </body>

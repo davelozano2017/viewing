@@ -1,4 +1,7 @@
-
+<?php 
+include '../class/config.php';
+$data->redirecttopageafterlogin();
+?>
 <!DOCTYPE html>
 <html>
 <head>

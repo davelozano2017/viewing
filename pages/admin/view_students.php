@@ -4,7 +4,7 @@ $data->redirecttologin();
 $id       = $_SESSION['id'];
 $photo    = $_SESSION['photo'];
 $name     = $_SESSION['name'];
-$role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
+$role     = $_SESSION['role'] == 1? 'Admin' : null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,8 +24,7 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
   <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+ 
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
   <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -33,7 +32,7 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
   <link href="../../assets/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.min.css">
     
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body ng-app="apps" ng-controller='myCtrl' class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <header class="main-header">
@@ -128,7 +127,7 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
             </span>
         </a>
           <ul class="treeview-menu">
-          <li><a href="view_courses_and_branches.php">View courses and branches</a></li>
+          <li><a href="control_panel.php">Control Panel</a></li>
           </ul>
         </li>
     </ul>
@@ -157,41 +156,14 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
     <section class="content container-fluid">
 
     <div class="row">
-      <div class="form-group">
-        <div class="col-md-4 col-sm-12">
-          <label for="">Branch</label>
-          <select class="form-control" id="branch">
-              <option value="">Select Branch</option>
-              <?php foreach($data->showbranches() as $row):?>
-              <option value="<?php echo $row['branches']?>"><?php echo $row['branches']?></option>
-              <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="col-md-4 col-sm-12">
+      
+      <div class="col-md-12">
           <div class="form-group">
-              <label>Course</label>
-              <select id="course" class="form-control">
-              <option value="">Select Course</option>
-              <?php foreach($data->showcourse() as $row):?>
-              <option value="<?php echo $row['courses']?>"><?php echo $row['courses']?></option>
-              <?php endforeach; ?>
-              </select>
+              <button data-toggle="modal" data-target="#addstudents" class="btn btn-primary flat"> Add Student </button>
           </div>
-        </div>
-
-        <div class="col-md-4 col-sm-12">
-          <div class="form-group">
-              <label>Section</label>
-              <select id="section" class="form-control">
-              <option value="">Select Section</option>
-              <?php foreach($data->showsections() as $row):?>
-              <option value="<?php echo $row['professor_section']?>"><?php echo $row['professor_section']?></option>
-              <?php endforeach; ?>
-              </select>
-          </div>
-        </div>
       </div>
+      <?php include 'student-modal-container.php';?>
+      
     </div>
     <br>
     <div class="row">
@@ -201,7 +173,7 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
           <!-- Start -->
 
           
-            <div id="showstudentsreports"></div>
+            <div id="show_students"></div>
 
           <!-- End -->
         </div>
@@ -227,6 +199,8 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../assets/dist/js/adminlte.min.js"></script>
 <script src="../../assets/functions/functions.js"></script>
+<script src="../../assets/angular/angular.min.js"></script>
+<script src="../../assets/angular/1.4.2.angular.min.js"></script>
 <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="../../assets/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -240,10 +214,47 @@ $role     = $_SESSION['role'] == 1 ? 'Administrator' : null;
 <script src="../../assets/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="../../assets/bower_components/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 
-
 <script type="text/javascript">
-showstudentsreports();
-search();
+showstudents();
+insertstudents();
+deletestudent();
+updatestudent();
+autofill();
+var app = angular.module('app', ['ngMessages']);
+var apps = angular.module('apps', ['ngMessages']);
+apps.controller('myCtrl',function($scope){});
+function edit_student($studentid,$id,$firstname,$middlename,$lastname,$branch,$course,$subject,$section,$username,$email,$contact,$gender,$sy) {
+  var accountid = $id, firstname = $firstname, middlename = $middlename, lastname = $lastname, branch = $branch, course = $course, subject = $subject,  section = $section, username = $username, email = $email, contact = $contact, gender = $gender, studentid = $studentid, sy = $sy;
+  $('#editstudent').modal('show');
+  $('#editstudent').find('#accountid').val(accountid);
+  $('#editstudent').find('#studentid').val(studentid);
+  $('#editstudent').find('#elastname').val(lastname);
+  $('#editstudent').find('#efirstname').val(firstname);
+  $('#editstudent').find('#emiddlename').val(middlename);
+  $('#editstudent').find('#eemail').val(email);
+  $('#editstudent').find('#econtact').val(contact);
+  $('#editstudent').find('#egender').val(gender);
+  $('#editstudent').find('#eusername').val(username);
+  $('#editstudent').find('#ebranch').val(branch);
+  $('#editstudent').find('#esection').val(section);
+  $('#editstudent').find('#ecourse').val(course);
+  $('#editstudent').find('#esubject').val(subject);
+  $('#editstudent').find('#esy').val(sy);
+  apps.controller('myCtrl',function($scope){
+    $scope.elastname   = elastname;
+    $scope.efirstname  = efirstname;
+    $scope.emiddlename = emiddlename;
+    $scope.eemail      = eemail;
+    $scope.econtact    = econtact;
+    $scope.egender     = egender;
+    $scope.eusername   = eusername;
+    $scope.ebranch     = ebranch;
+    $scope.esection    = esection;
+    $scope.ecourse     = ecourse;
+    $scope.esubject    = esubject;
+  });
+}
+
 </script>
 </body>
 </html>
