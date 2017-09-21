@@ -302,7 +302,18 @@ function showadmin() {
 //     })
 // }
 
-function show_student_report(){
+function show_student_report_by_professor(){
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show Students Report By Professor' },
+        success:function(response){
+            $('#show_reports_by_professor').html(response);
+        }
+    })
+}
+
+function show_student_report_by_admin(){
     $.ajax({
         type : 'POST',
         url : '../' + url,
@@ -313,7 +324,93 @@ function show_student_report(){
     })
 }
 
-function search() {
+function show_professor_report_by_admin(){
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show Professors Report' },
+        success:function(response){
+            $('#show_professor_report_by_admin').html(response);
+        }
+    })
+}
+
+function show_admin_report_by_super_admin(){
+    $.ajax({
+        type : 'POST',
+        url : '../' + url,
+        data : { action : 'Show Professors Report By Super Admin' },
+        success:function(response){
+            $('#show_admin_report_by_super_admin').html(response);
+        }
+    })
+}
+
+
+function search_by_professor() {
+    $('#search_branch').change(function(e){
+        e.preventDefault();
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            success:function(response) {
+                $('#show_reports_by_professor').html(response);
+            }
+        });
+    });
+
+    $('#search_course').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            success:function(response) {
+                $('#show_reports_by_professor').html(response);
+            }
+        });
+    });
+
+    $('#search_subject').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            success:function(response) {
+                $('#show_reports_by_professor').html(response);
+            }
+        });
+    });
+
+    $('#search_section').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            success:function(response) {
+                $('#show_reports_by_professor').html(response);
+            }
+        });
+    });
+}
+
+function search_by_admin() {
     $('#search_branch').change(function(e){
         e.preventDefault();
         var branch = $('#search_branch').val();

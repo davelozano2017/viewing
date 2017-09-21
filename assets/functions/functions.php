@@ -225,10 +225,22 @@ switch($_POST['action']) {
         $query = $data->approveuploadedgrades($code);
     break;
 
+    case 'Show Students Report By Professor':
+        include 'function_show_students_reports_by_professor.php';
+    break;
+
     case 'Show Students Report':
         include 'function_show_students_reports.php';
     break;
+    
+    case 'Show Professors Report':
+        include 'function_show_professor_reports_by_admin.php';
+    break;
 
+    case 'Show Professors Report By Super Admin':
+        include 'function_show_admin_reports_by_super_admin.php';
+    break;
+    
     case 'Show Upload Grades': 
         include 'function_show_upload_grades.php';
     break;

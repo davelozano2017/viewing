@@ -23,6 +23,8 @@ foreach($data->getuserinfobyid($_GET['id']) as $row) : ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Access Computer College</title>
+  <link rel="icon" href="../../assets/images/mini-icon.png">
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="../../assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -33,8 +35,6 @@ foreach($data->getuserinfobyid($_GET['id']) as $row) : ?>
   <!-- Theme style -->
   <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
 
 </head>
@@ -115,13 +115,25 @@ foreach($data->getuserinfobyid($_GET['id']) as $row) : ?>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
         <li class="treeview active">
+        <li class="treeview">
+        <a href="#"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+          <ul class="treeview-menu">
+          <li><a href="professor_report.php">Professors</a></li>
+          <li><a href="student_report.php">Students</a></li>
+          </ul>
+      </li>
+        <li class="treeview">
         <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
           <ul class="treeview-menu">
-          <li class="active"><a href="add_professors.php">Professors</a></li>
+          <li><a href="add_professors.php">Professors</a></li>
           <li><a href="view_students.php">Students</a></li>
           </ul>
         </li>

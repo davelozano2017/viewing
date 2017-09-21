@@ -110,6 +110,11 @@ class db extends Controller {
         return $query;
     }
 
+    public function show_branches_by_student($id){
+        $query = $this->db->query("SELECT * FROM students_tbl as st INNER JOIN accounts_tbl as at ON st.username = at.username WHERE at.id = $id GROUP BY st.branch");
+        return $query;
+    }
+
     public function updatebranches($id,$branch) {
         $query = $this->db->query("UPDATE branches_tbl SET branches = '$branch' WHERE id = '$id'");
         $message = 'Branch has been updated.';
@@ -449,6 +454,38 @@ class db extends Controller {
         return $query;
     }
 
+    public function show_students_by_professor($id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st
+        ON pst.student_id = st.student_id INNER JOIN accounts_tbl as at ON st.username = at.username WHERE pst.professor_id = $id");
+        return $query;
+    }
+
+    public function search_student($branch,$course,$subject,$section) {
+        $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
+        ON accounts_tbl.username = students_tbl.username
+        WHERE accounts_tbl.role = 3 AND branch = '$branch' AND course = '$course' AND subject = '$subject' AND section = '$section'");
+        return $query;
+    }
+
+    public function search_student_by_professor($branch,$course,$subject,$section,$id) {
+        $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st
+        ON pst.student_id = st.student_id INNER JOIN accounts_tbl as at ON st.username = at.username WHERE pst.professor_id = $id AND st.branch = '$branch' AND st.course = '$course' AND st.section = '$section' AND st.subject = '$subject'");
+        return $query;
+    }
+
+    public function show_professor_by_admin() {
+        $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN accounts_extension_tbl as aet
+        ON at.username = aet.username WHERE at.role = 2");
+        return $query;
+    }
+
+    public function show_admin_by_super_admin() {
+        $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN accounts_extension_tbl as aet
+        ON at.username = aet.username WHERE at.role = 1");
+        return $query;
+    }
+
+
     public function students($id) {
         $query = $this->db->query("SELECT * FROM  professor_students_tbl WHERE professor_id = $id");
         return $query;
@@ -507,12 +544,7 @@ class db extends Controller {
         return $query;
     }
 
-    public function search_student($branch,$course,$section) {
-        $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
-        ON accounts_tbl.username = students_tbl.username
-        WHERE accounts_tbl.role = 3 AND students_tbl.branch = '$branch' AND students_tbl.course = '$course' AND students_tbl.section = '$section'");
-        return $query;
-    }
+
 
     public function show_section() {
         $query = $this->db->query("SELECT * FROM students_tbl GROUP BY section");
@@ -529,12 +561,12 @@ class db extends Controller {
         return $query;
     }
 
-    public function show_professor_subject($id) {
+    public function show_professor_subjects($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY subject");
         return $query;
     }
 
-    public function show_professor_section($id) {
+    public function show_professor_sections($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY section");
         return $query;
     }
@@ -573,6 +605,7 @@ class db extends Controller {
         $objPHPExcel = PHPExcel_IOFactory::load($file); 
         foreach($objPHPExcel->getWorksheetIterator() as $worksheet) {
           $highestRow = $worksheet->getHighestRow();
+             $semester   = $this->post($worksheet->getCellByColumnAndRow(22,3)->getValue());
           for($row = 7; $row <= $highestRow; $row++) {
               $username   = $this->post($worksheet->getCellByColumnAndRow(1,$row)->getValue());
               $name       = $this->post($worksheet->getCellByColumnAndRow(2,$row)->getValue());
@@ -606,9 +639,9 @@ class db extends Controller {
               continue;
            
               $query  = $this->db->query("INSERT INTO professor_grades_tbl 
-              (excel_path,excel_name,username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,g_add,final,remarks,professor_id,status,branch,course,subject,section,sy,code,date) 
+              (excel_path,excel_name,username,name,q_pl,q_mt,q_pf,q_fn,q_ave,q_result,e_pl,e_mt,e_pf,e_fn,e_ave,e_result,s_sio,s_result,grades,g_add,final,remarks,semester,professor_id,status,branch,course,subject,section,sy,code,date) 
               VALUES 
-              ('$excel_path','$excel_name','$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$g_add','$final','$remarks','$professor_id',1,'$branch','$course','$subject','$section','$sy','$code','$date')");        
+              ('$excel_path','$excel_name','$username','$name','$q_pl','$q_mt','$q_pf','$q_fn','$q_ave','$q_result','$e_pl','$e_mt','$e_pf','$e_fn','$e_ave','$e_result','$s_sio','$s_result','$grades','$g_add','$final','$remarks','$semester','$professor_id',1,'$branch','$course','$subject','$section','$sy','$code','$date')");        
           }
          
         }   
@@ -722,11 +755,15 @@ class db extends Controller {
     }
 
     public function showstudentgrades($username,$branch,$subject,$section,$sy){
-        $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE username = '$username' AND branch = '$branch' AND subject = '$subject' AND section = '$section' AND sy = '$sy' AND status = 0");
-        $check = $query->num_rows;
-        if($check > 0) {
-            return $query;
-        } 
+        if(empty($subject)){
+            $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE username = '$username' AND branch = '$branch' AND section = '$section' AND sy = '$sy' AND status = 0");
+        } else {
+            $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE username = '$username' AND branch = '$branch' AND subject = '$subject' AND section = '$section' AND sy = '$sy' AND status = 0");
+        }
+            $check = $query->num_rows;
+            if($check > 0) {
+                return $query;
+            } 
     }
     //redirect to login if ever they're not logged in
     public function redirecttologin() {

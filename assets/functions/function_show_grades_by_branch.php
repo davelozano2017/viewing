@@ -32,9 +32,9 @@
       $date = date('M d, Y');
     }
     $modify = '';
-    $modify .= '<a href="download.php?file='.urlencode($row['excel_name']).'&path='.$row['excel_path'].'" title="Download" class="custom"> <i class="fa fa-download"></i></a>';
-    $modify .= '<a title="Approve" onclick="approve_uploaded_grades('.$row['code'].')" class="custom"> <i class="fa fa-check"></i></a>';
-    $modify .= '<a title="Remove" onclick="remove_uploaded_grades('.$row['code'].')" class="custom"> <i class="fa fa-times"></i></a>';
+    $modify .= '<a href="download.php?file='.urlencode($row['excel_name']).'&path='.$row['excel_path'].'" title="Download" class="custom" id="download"> <i class="fa fa-download" disabled></i></a>';
+    $modify .= '<a title="Approve" id="approve" onclick="approve_uploaded_grades('.$row['code'].')" class="custom" disabled> <i id="approvemoto" class="fa fa-check"></i></a>';
+    $modify .= '<a title="Remove" onclick="remove_uploaded_grades('.$row['code'].')" class="custom" disabled> <i class="fa fa-times"></i></a>';
     
   ?>
   <tr>
@@ -53,6 +53,12 @@
 </table>
 
 <script>
+  $('#approve').click(function(e){
+    setTimeout(function(){
+      $('#approve').removeAttr('href');
+      $('#approvemoto').removeClass('fa-check').addClass('fa-refresh');
+    },1);
+  });
 $('#tables').DataTable({
 "paging": true, "lengthChange": true, "searching": true,
 "ordering": false, "info": false, "autoWidth": false

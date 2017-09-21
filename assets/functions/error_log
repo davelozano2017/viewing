@@ -1,8 +1,0 @@
-[11-Sep-2017 00:46:51 UTC] PHP Warning:  Missing argument 1 for db::updated(), called in /home/accessog/public_html/class/class.php on line 223 and defined in /home/accessog/public_html/class/class.php on line 710
-[11-Sep-2017 00:52:35 UTC] PHP Warning:  Missing argument 1 for db::success(), called in /home/accessog/public_html/class/class.php on line 92 and defined in /home/accessog/public_html/class/class.php on line 714
-[11-Sep-2017 09:16:55 UTC] PHP Warning:  Missing argument 1 for db::updated(), called in /home/accessog/public_html/class/class.php on line 107 and defined in /home/accessog/public_html/class/class.php on line 710
-[11-Sep-2017 09:17:08 UTC] PHP Warning:  Missing argument 1 for db::updated(), called in /home/accessog/public_html/class/class.php on line 107 and defined in /home/accessog/public_html/class/class.php on line 710
-[11-Sep-2017 09:20:57 UTC] PHP Warning:  Missing argument 1 for db::updated(), called in /home/accessog/public_html/class/class.php on line 224 and defined in /home/accessog/public_html/class/class.php on line 711
-[11-Sep-2017 09:21:04 UTC] PHP Warning:  Missing argument 1 for db::updated(), called in /home/accessog/public_html/class/class.php on line 224 and defined in /home/accessog/public_html/class/class.php on line 711
-[11-Sep-2017 09:26:42 UTC] PHP Warning:  Missing argument 1 for db::success(), called in /home/accessog/public_html/class/class.php on line 92 and defined in /home/accessog/public_html/class/class.php on line 716
-[11-Sep-2017 09:27:27 UTC] PHP Warning:  Missing argument 1 for db::success(), called in /home/accessog/public_html/class/class.php on line 92 and defined in /home/accessog/public_html/class/class.php on line 716

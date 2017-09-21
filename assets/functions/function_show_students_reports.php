@@ -1,11 +1,12 @@
 <style>.custom{background:transparent;border:none;outline:none};</style>
 <?php 
 $i = 0;
-if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['section'])) {
+if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['subject']) && isset($_POST['section'])) {
     $branch = $data->post($_POST['branch']);
     $course = $data->post($_POST['course']);
+    $subject = $data->post($_POST['subject']);
     $section = $data->post($_POST['section']);
-    $result = $data->search_student($branch,$course,$section);
+    $result = $data->search_student($branch,$course,$subject,$section);
 } else {
   $result = $data->show_students();
 }
@@ -22,19 +23,23 @@ if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['section'
     </tr>
 </thead>
 <tbody>
-<?php foreach($result as $row): ?>
-<tr>
-<td><?php echo $row['firstname']. ' '.$row['middlename']. ' '.$row['lastname']?></td>
-<td><?php echo $row['username']?></td>
-<td><?php echo $row['branch']?></td>
-<td><?php echo $row['course']?></td>
-<td><?php echo $row['subject']?></td>
-<td><?php echo $row['section']?></td>
-</tr>
-<?php endforeach; ?>
+  <?php foreach($result as $row): ?>
+  <tr>
+  <td><?php echo $row['firstname']. ' '.$row['middlename']. ' '.$row['lastname']?></td>
+  <td><?php echo $row['username']?></td>
+  <td><?php echo $row['branch']?></td>
+  <td><?php echo $row['course']?></td>
+  <td><?php echo $row['subject']?></td>
+  <td><?php echo $row['section']?></td>
+  </tr>
+  <?php endforeach; ?>
 </tbody>
 </table>
-<<style>
+
+
+
+
+<style>
     .whitemoto { color: #fff; };
 </style>
 <script>

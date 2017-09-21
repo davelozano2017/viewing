@@ -12,6 +12,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Access Computer College</title>
+  <link rel="icon" href="../../assets/images/mini-icon.png">
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="../../assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -24,8 +26,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
   <link rel="stylesheet" href="../../assets/dist/css/amaran.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/animate.min.css">
   <link rel="stylesheet" href="../../assets/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
   <link rel="stylesheet" href="../../assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
   <link href="../../assets/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -174,7 +175,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
               <label>Subject</label>
               <select id="search_subject" class="form-control">
               <option value="">Select Section</option>
-              <?php foreach($data->show_subjects() as $row):?>
+              <?php foreach($data->show_professor_subjects($id) as $row):?>
               <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
               <?php endforeach; ?>
               </select>
@@ -186,7 +187,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
               <label>Section</label>
               <select id="search_section" class="form-control">
               <option value="">Select Section</option>
-              <?php foreach($data->show_professor_section($id) as $row):?>
+              <?php foreach($data->show_professor_sections($id) as $row):?>
               <option value="<?php echo $row['section']?>"><?php echo $row['section']?></option>
               <?php endforeach; ?>
               </select>
@@ -202,7 +203,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
           <!-- Start -->
 
           
-            <div id="show_reports"></div>
+            <div id="show_reports_by_professor"></div>
 
           <!-- End -->
         </div>
@@ -243,8 +244,8 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 
 
 <script type="text/javascript">
-show_student_report();
-search();
+show_student_report_by_professor();
+search_by_professor();
 </script>
 </body>
 </html>

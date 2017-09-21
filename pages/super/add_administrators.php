@@ -12,6 +12,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Access Computer College</title>
+  <link rel="icon" href="../../assets/images/mini-icon.png">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="../../assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -106,7 +107,18 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i><span> Dashboard</span></a></li>
-        <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
+        <li class="treeview">
+        <a href="#"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+          <ul class="treeview-menu">
+          <li><a href="administrator_report.php">Administrator</a></li>
+          <li><a href="professor_report.php">Professors</a></li>
+          <li><a href="student_report.php">Students</a></li>
+          </ul>
+        </li>
 
         <li class="treeview active">
         <a href="#"><i class="fa fa-users fa-fw"></i><span> Manage Users</span>
