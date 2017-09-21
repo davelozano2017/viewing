@@ -654,11 +654,11 @@ function update_courses() {
 function delete_courses() {
     $('#btn_delete_course').click(function(e){
         e.preventDefault();
-        var course_id = $('#course_id').val();
+        var courses_id = $('#courses_id').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data : { action : 'Delete Courses', course_id : course_id },
+            data : { action : 'Delete Courses', courses_id : courses_id },
             dataType: 'json',
             success:function(response){
                 response.success == false ? $('#modal_courses_update').modal('hide') : null;

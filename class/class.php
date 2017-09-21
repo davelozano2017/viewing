@@ -169,8 +169,8 @@ class db extends Controller {
             return $query ? $this->updated($message) : null;
     }
 
-    public function deletecourses($course_id) {
-        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = '$course_id'");
+    public function deletecourses($courses_id) {
+        $query = $this->db->query("DELETE FROM courses_tbl WHERE id = '$courses_id'");
         $query ? $this->deleted() : null;
     }
 // delete course execution end 
@@ -647,7 +647,7 @@ class db extends Controller {
         $query = $this->db->query("SELECT * FROM subjects_tbl WHERE subject = '$update_sub_subject' AND section = '$update_sub_section'");
         $check = $query->num_rows;
         if($check > 0) {
-            $message = 'This subject '.$subject.' is already exist';
+            $message = 'This subject '.$update_sub_subject.' is already exist';
             $this->duplicated($message);
         } else {
             $query = $this->db->query("UPDATE subjects_tbl SET course = '$update_sub_course', subject = '$update_sub_subject', section = '$update_sub_section' WHERE id = $update_sub_id");

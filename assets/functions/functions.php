@@ -84,8 +84,8 @@ switch($_POST['action']) {
     break;
 
     case 'Delete Courses':
-        $course_id  = $data->post($_POST['course_id']);
-        $query      = $data->deletecourses($course_id);
+        $courses_id  = $data->post($_POST['courses_id']);
+        $query      = $data->deletecourses($courses_id);
     break;
 #############################################################################
 
