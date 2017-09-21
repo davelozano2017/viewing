@@ -123,7 +123,6 @@ $count_students = $data->count_professor_students($id);
         </a>
           <ul class="treeview-menu">
             <li><a href="view_students.php">View Students</a></li>
-            <li><a href="view_list.php">View List</a></li>
           </ul>
         </li>
         <li><a href="reports.php"><i class="fa fa-bar-chart fa-fw"></i><span> Reports</span></a></li>
