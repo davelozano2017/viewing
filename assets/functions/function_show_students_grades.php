@@ -42,15 +42,18 @@ if($query) {
         </table>
         <table style="width:100%">
             <tr>
-            <th colspan=3>&nbsp;</th>
+            <th colspan=4>&nbsp;</th>
             <tr>
             <th style="text-align:center">Subject</th>
+            <th style="text-align:center">Professor</th>
             <th style="text-align:center">Grades</th>
             <th style="text-align:center">Remarks</th>
             <tr>
             <?php foreach($query as $row): ?>
+            <?php $gen = ($row['gender'] == 'Female') ? 'Ms. ' : 'Mr. '?> 
             <tr>
             <td style="text-align:center"><?php echo $row['subject']?></th>
+            <td style="text-align:center"><?php echo $gen.' '.$row['firstname'] . ' ' .$row['lastname']?></th>
             <td style="text-align:center"><?php echo $row['final']?></th>
             <td style="text-align:center"><?php echo $row['remarks']?></th>
             </tr>
@@ -77,24 +80,6 @@ if($query) {
 
 <?php } ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script type='text/javascript'>
 jQuery(function($) { 'use strict';
   $("#print_area").find('.print-link').on('click', function() {
@@ -115,55 +100,3 @@ jQuery(function($) { 'use strict';
   });
 });
 </script>
-<!-- 
-<div class="col-md-3">
-        <div class="box box-widget widget-user-2">
-            <div class="box-footer no-padding">
-                <ul class="nav nav-stacked">
-                <li><a href="#">QUIZ <span class="pull-right">40%</span></a></li>
-                <li><a href="#">Prelim <span class="pull-right badge bg-blue flat"><?php echo $row['q_pl']?></span></a></li>
-                <li><a href="#">Midterm <span class="pull-right badge bg-blue flat"><?php echo $row['q_mt']?></span></a></li>
-                <li><a href="#">Pre Finals <span class="pull-right badge bg-blue flat"><?php echo $row['q_pf']?></span></a></li>
-                <li><a href="#">Finals <span class="pull-right badge bg-blue flat"><?php echo $row['q_fn']?></span></a></li>
-                <li><a href="#">Average <span class="pull-right badge bg-blue flat"><?php echo $row['q_ave']?></span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="box box-widget widget-user-2">
-            <div class="box-footer no-padding">
-                <ul class="nav nav-stacked">
-                <li><a href="#">EXAM <span class="pull-right">40%</span></a></li>
-                <li><a href="#">Prelim <span class="pull-right badge bg-blue flat"><?php echo $row['e_pl']?></span></a></li>
-                <li><a href="#">Midterm <span class="pull-right badge bg-blue flat"><?php echo $row['e_mt']?></span></a></li>
-                <li><a href="#">Pre Finals <span class="pull-right badge bg-blue flat"><?php echo $row['e_pf']?></span></a></li>
-                <li><a href="#">Finals <span class="pull-right badge bg-blue flat"><?php echo $row['e_fn']?></span></a></li>
-                <li><a href="#">Average <span class="pull-right badge bg-blue flat"><?php echo $row['e_ave']?></span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="box box-widget widget-user-2">
-            <div class="box-footer no-padding">
-                <ul class="nav nav-stacked">
-                <li><a href="#">SIO <span class="pull-right">20%</span></a></li>
-                <li><a href="#">SIO <span class="pull-right badge bg-blue flat"><?php echo $row['s_sio']?></span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="box box-widget widget-user-2">
-            <div class="box-footer no-padding">
-                <ul class="nav nav-stacked">
-                <li><a href="#">GRADES </a></li>
-                <li><a href="#">Grade <span class="pull-right badge bg-red flat"><?php echo $row['grades']?></span></a></li>
-                <li><a href="#">Add <span class="pull-right badge bg-blue flat"><?php echo $row['g_add']?></span></a></li>
-                <li><a href="#">Final <span class="pull-right badge bg-red flat"><?php echo $row['final']?></span></a></li>
-                <li><a href="#">Remark <span class="pull-right badge bg-red flat"><?php echo $row['remarks']?></span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div> -->

@@ -3,7 +3,6 @@ include 'controller.php';
 include 'SmsGateway.php';
 include 'PHPExcel/IOFactory.php';
 class db extends Controller {
-
     // Insert Administrator & Professor
     public function insertusers($lastname,$firstname,$middlename,$email,$contact,$gender,$username,$type,$branch) {
         $password = password_hash(12345,PASSWORD_DEFAULT);
@@ -25,7 +24,6 @@ class db extends Controller {
             return $query ? $this->accounts_extension_tbl($username,$branch,$type) : false;
         }
     }
-
     public function accounts_extension_tbl($username,$branch,$type) {
         $query = $this->db->query("INSERT INTO accounts_extension_tbl (username,branch) VALUES ('$username','$branch')");
         if($type == 1) {
@@ -59,11 +57,9 @@ class db extends Controller {
             $message = $email.' '. ' is not in our database.';
             $this->error($message);
         }
-
     }
-
-    function executerequest($id) {
-        $hash     = 12345;
+    public function executerequest($id) {
+        $hash     = rand(111111,999999);
         $password = password_hash($hash,PASSWORD_DEFAULT);
         $check    = $this->db->query("SELECT * FROM requests_tbl WHERE id = '$id'");
         $row      = $check->fetch_object();
@@ -74,10 +70,10 @@ class db extends Controller {
         if($query) {
             $result = $this->db->query("DELETE FROM requests_tbl WHERE id = '$id'");
             if($result) {
-                $smsGateway = new SmsGateway('lozanojohndavid@gmail.com', '12345123');
+                $smsGateway = new SmsGateway('romanomaryclaire@gmail.com', 'sept282k12');
                 $number     = '+63'.$contact;
                 $message    = $message;
-                $deviceID   = 54501;
+                $deviceID   = 61894;
                 $smsGateway->sendMessageToNumber($number, $message, $deviceID);
                 if($smsGateway) {
                     $message = 'Temporary password has been sent to '.$number;
@@ -85,9 +81,7 @@ class db extends Controller {
                 }
             }
         }
-
     }
-
     public function addbranches($branch) {
         $check = $this->db->query("SELECT * FROM branches_tbl WHERE branches = '$branch'");
         $checkrow = $check->num_rows;
@@ -100,7 +94,6 @@ class db extends Controller {
             return $query ? $this->success($message) : null;
         }
     }
-
     public function showsections() {
         $query = $this->db->query("SELECT * FROM professor_sections_tbl");
         return $query;
@@ -109,49 +102,40 @@ class db extends Controller {
         $query = $this->db->query("SELECT * FROM branches_tbl");
         return $query;
     }
-
     public function show_branches_by_student($id){
         $query = $this->db->query("SELECT * FROM students_tbl as st INNER JOIN accounts_tbl as at ON st.username = at.username WHERE at.id = $id GROUP BY st.branch");
         return $query;
     }
-
     public function updatebranches($id,$branch) {
         $query = $this->db->query("UPDATE branches_tbl SET branches = '$branch' WHERE id = '$id'");
         $message = 'Branch has been updated.';
         $query ? $this->updated($message) : null;
     }
-
     public function deletebranches($id) {
         $query = $this->db->query("DELETE FROM branches_tbl WHERE id = '$id'");
         $query ? $this->deleted() : null;
     }
-
     function show_sections() {
         $query = $this->db->query("SELECT * FROM sections_tbl");
         return $query;
     }
-
     public function showcourse() {
         $query = $this->db->query("SELECT * FROM courses_tbl");
         return $query;
     }
-
     public function showprofessorcourse($id) {
         $query = $this->db->query("SELECT * FROM professor_courses_tbl WHERE professor_id = '$id'");
         return $query;
     }
-
     public function showprofessorsubject($id) {
         $query = $this->db->query("SELECT * FROM professor_subjects_tbl WHERE professor_id = '$id'");
         return $query;
     }
     
-
     public function showprofessorsection($id) {
         $query = $this->db->query("SELECT * FROM professor_sections_tbl WHERE professor_id = '$id'");
         return $query;
     }
-
 // admin course execution begin
     public function addcourses($course,$option) {
         $check = $this->db->query("SELECT * FROM courses_tbl WHERE courses = '$course'");
@@ -165,7 +149,6 @@ class db extends Controller {
             return $query ? $this->success($message) : null;
         }
     }
-
     public function updatecourses($courses_update,$options_update,$courses_id) {
         
             $query = $this->db->query("UPDATE courses_tbl SET 
@@ -173,18 +156,15 @@ class db extends Controller {
             $message = 'Course has been updated.';
             return $query ? $this->updated($message) : null;
     }
-
     public function deletecourses($courses_id) {
         $query = $this->db->query("DELETE FROM courses_tbl WHERE id = '$courses_id'");
         $query ? $this->deleted() : null;
     }
 // delete course execution end 
-
     public function deleteprofessorcourses($update_id) {
         $query = $this->db->query("DELETE FROM professor_courses_tbl WHERE id = '$update_id'");
         return $query ? $this->deleted() : null;
     }
-
     // admin section execution begin 
     public function add_sections($sections) {
         $check = $this->db->query("SELECT * FROM sections_tbl WHERE sections = '$sections'");
@@ -198,7 +178,6 @@ class db extends Controller {
             $query ? $this->success($message) : null;
         }
     }
-
     public function update_sections($section_id,$section_update) {
         $check = $this->db->query("SELECT * FROM sections_tbl WHERE sections = '$section_update'");
         $checkrow = $check->num_rows;
@@ -211,15 +190,12 @@ class db extends Controller {
             return $query ? $this->updated($message) : null;
         }
     } 
-
     public function delete_sections($section_id) {
         $query = $this->db->query("DELETE FROM sections_tbl WHERE id = '$section_id'");
         $message = 'Section has been deleted.';
         return $query ? $this->deleted($message) : null;
     }
-
     // admin section execution end
-
     // Insert Student
     public function insertstudents($lastname,$firstname,$middlename,$email,$contact,$gender,$branch,$type,$username,$subject,$course,$section,$sy) {
         if(empty($lastname) || empty($firstname) || empty($middlename) || empty($email) || empty($contact) || empty($gender) || empty($username)) {
@@ -251,7 +227,6 @@ class db extends Controller {
             }
         }
     }
-
 // add professor student execution begin 
     public function add_professor_students($student_id,$professor_id){
         $query = $this->db->query("SELECT * FROM professor_students_tbl WHERE student_id = $student_id AND professor_id = $professor_id");
@@ -268,14 +243,12 @@ class db extends Controller {
         }
     }
 // add professor student execution end 
-
     public function insertstudentinfo($subject,$section,$course,$username,$branch,$sy) {
         $query = $this->db->query("INSERT INTO students_tbl 
         (subject,section,course,branch,username,sy) VALUES ('$subject','$section','$course','$branch','$username','$sy')");
         $message = 'New student has been added.';
         return $query ? $this->success($message) : false;
     }
-
     public function updatestudents($accountid,$studentid,$lastname,$firstname,$middlename,$email,$contact,$gender,$username,$subject,$branch,$section,$course,$esy) {
         if(empty($lastname) || empty($firstname) || empty($middlename) || empty($email) || empty($contact) || empty($gender) || empty($username) || empty($branch) || empty($section) || empty($course) || empty($subject)) {
             echo json_encode(array(
@@ -290,16 +263,13 @@ class db extends Controller {
                 username = '$username', username = '$username' WHERE id = '$accountid'");
             return $query ? $this->updatestudentinfo($studentid,$subject,$section,$course,$username,$branch,$esy) : null;
         }
-
     }
-
     public function updatestudentinfo($studentid,$subject,$section,$course,$username,$branch,$esy) {
         $query = $this->db->query("UPDATE students_tbl SET subject = '$subject', section = '$section', 
         course = '$course', username = '$username', branch = '$branch', sy = '$esy' WHERE student_id = '$studentid'");
         $message = 'Student information has been updated';
         return $query ? $this->updated($message) : false;
     }
-
     public function deletestudents($accountid,$studentid) {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE id = '$accountid'");
         $row = $query->fetch_object();
@@ -318,7 +288,6 @@ class db extends Controller {
         }
             
     }
-
     //Show Admin Record
     public function showadmin() {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN accounts_extension_tbl ON accounts_tbl.username = accounts_extension_tbl.username WHERE role = 1");
@@ -329,13 +298,11 @@ class db extends Controller {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN accounts_extension_tbl ON accounts_tbl.username = accounts_extension_tbl.username WHERE role = 2");
         return $query;
     }
-
     public function count_professor_students($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl WHERE professor_id = $id");
         $check = $query->num_rows;
         return $check;
     }
-
     public function count_professor_branches($id) {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE id = $id");
         $row   = $query->fetch_object();
@@ -344,7 +311,6 @@ class db extends Controller {
         $check = $query->num_rows;
         return $check;
     }
-
     public function count_professor_courses($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY st.course");
         foreach($query as $row) {
@@ -352,7 +318,6 @@ class db extends Controller {
         }
         return @count($count);
     }
-
     public function count_professor_subjects($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY st.subject");
         foreach($query as $row) {
@@ -360,53 +325,45 @@ class db extends Controller {
         }
         return @count($count);
     }
-
     public function countprofessorstudent($id) {
         $query = $this->db->query("SELECT * FROM students_tbl WHERE professor_id = $id");
         return $check = $query->num_rows;
     }
-
   
     //Get Admin Data by id
     public function getuserinfobyid($id) {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE id = $id");
         return $query;
     }
-
     // count all administrators
     public function countadministrators() {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE role = 1");
         $check = $query->num_rows;
         return $check;
     }
-
     // search student
     public function search_student_by_username() {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE role =3");
         return $query;
     }
-
     // count all professors
     public function countprofessors() {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE role = 2");
         $check = $query->num_rows;
         return $check;
     }
-
     // count all students
     public function countstudents() {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE role = 3");
         $check = $query->num_rows;
         return $check;
     }
-
     // count all users
     public function countall() {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE role != 0");
         $check = $query->num_rows;
         return $check;
     }
-
     public function modifystatusbyid($id) {
         $check  = $this->db->query("SELECT status FROM accounts_tbl WHERE id = $id");
         $row    = $check->fetch_object();
@@ -421,17 +378,14 @@ class db extends Controller {
             }
         }
     }
-
     public function show_request_administrators() {
         $query = $this->db->query("SELECT * FROM requests_tbl WHERE role = 1");
         return $query;
     }
-
     public function show_request_professors() {
         $query = $this->db->query("SELECT * FROM requests_tbl WHERE role = 2");
         return $query;
     }
-
     public function show_request_students() {
         $query = $this->db->query("SELECT * FROM requests_tbl WHERE role = 3");
         return $query;
@@ -441,61 +395,50 @@ class db extends Controller {
         $query = $this->db->query("SELECT * FROM branches_tbl");
         return $query;
     }
-
     public function show_courses() {
         $query = $this->db->query("SELECT * FROM courses_tbl");
         return $query;
     }
-
     public function show_students() {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
         ON accounts_tbl.username = students_tbl.username
         WHERE accounts_tbl.role = 3");
         return $query;
     }
-
     public function show_students_by_professor($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st
         ON pst.student_id = st.student_id INNER JOIN accounts_tbl as at ON st.username = at.username WHERE pst.professor_id = $id");
         return $query;
     }
-
     public function search_student($branch,$course,$subject,$section) {
         $query = $this->db->query("SELECT * FROM accounts_tbl INNER JOIN students_tbl
         ON accounts_tbl.username = students_tbl.username
         WHERE accounts_tbl.role = 3 AND branch = '$branch' AND course = '$course' AND subject = '$subject' AND section = '$section'");
         return $query;
     }
-
     public function search_student_by_professor($branch,$course,$subject,$section,$id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st
         ON pst.student_id = st.student_id INNER JOIN accounts_tbl as at ON st.username = at.username WHERE pst.professor_id = $id AND st.branch = '$branch' AND st.course = '$course' AND st.section = '$section' AND st.subject = '$subject'");
         return $query;
     }
-
     public function show_professor_by_admin() {
         $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN accounts_extension_tbl as aet
         ON at.username = aet.username WHERE at.role = 2");
         return $query;
     }
-
     public function show_admin_by_super_admin() {
         $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN accounts_extension_tbl as aet
         ON at.username = aet.username WHERE at.role = 1");
         return $query;
     }
-
-
     public function students($id) {
         $query = $this->db->query("SELECT * FROM  professor_students_tbl WHERE professor_id = $id");
         return $query;
     }
-
     public function show_grades() {
         $query = $this->db->query("SELECT * FROM professor_grades_tbl GROUP BY code");
         return $query;
     }
-
     public function show_grades_by_branch($username) {
         $query = $this->db->query("SELECT * FROM accounts_extension_tbl WHERE username = '$username'");
         $row = $query->fetch_object();
@@ -503,7 +446,6 @@ class db extends Controller {
         $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE branch = '$branch' GROUP BY code");
         return $query;
     }
-
     public function force_download($file,$path) {
         $file = urldecode($file);
         $filepath = $path.$file;
@@ -520,12 +462,10 @@ class db extends Controller {
             exit;
         }
     }
-
     public function filter_professor($id) {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE id = $id");
         return $query;
     }
-
     public function addschoolyear($sy) {
         $query = $this->db->query("SELECT * FROM school_year_tbl WHERE schoolyear = '$sy'");
         $check = $query->num_rows;
@@ -538,49 +478,38 @@ class db extends Controller {
             $query ? $this->success($message) : null;
         }
     }
-
     public function show_school_year() {
         $query = $this->db->query("SELECT * FROM school_year_tbl");
         return $query;
     }
-
-
-
     public function show_section() {
         $query = $this->db->query("SELECT * FROM students_tbl GROUP BY section");
         return $query;
     }
-
     public function show_subjects() {
         $query = $this->db->query("SELECT * FROM subjects_tbl");
         return $query;
     }
-
     public function show_professor_courses($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY course");
         return $query;
     }
-
     public function show_professor_subjects($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY subject");
         return $query;
     }
-
     public function show_professor_sections($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY section");
         return $query;
     }
-
     public function show_professor_branch($id) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st ON pst.student_id = st.student_id WHERE pst.professor_id = $id GROUP BY branch");
         return $query;
     }
-
     public function student_search($username) {
         $query = $this->db->query("SELECT * FROM accounts_tbl  INNER JOIN students_tbl ON accounts_tbl.username = students_tbl.username WHERE accounts_tbl.username = '$username' GROUP BY accounts_tbl.username");
         return $query;
     }
-
     public function show_validate_student($branch,$section,$course,$subject,$sy) {
         $query = $this->db->query("SELECT * FROM students_tbl WHERE 
         branch = '$branch' AND section = '$section' AND course = '$course' AND subject = '$subject' AND sy = '$sy'");
@@ -589,18 +518,16 @@ class db extends Controller {
             return $query;
         } 
     }
-
     
-
     public function uploadgrades($file,$professor_id,$branch,$course,$subject,$section,$sy) {
-        $file		 = $_FILES['files']['tmp_name'];
+        $file        = $_FILES['files']['tmp_name'];
         if(empty($file)) {
             $errormsg = 'Please upload .xlxs | .xls | .csv files.';
             $this->error($errormsg);
         } else {
         $date        = date('Y-m-d');
         $code        = rand(111111,999999);
-        $excel_name	 = $_FILES['files']['name'];
+        $excel_name  = $_FILES['files']['name'];
         $excel_path  = '../../assets/uploads/'.$code.'/';
         $objPHPExcel = PHPExcel_IOFactory::load($file); 
         foreach($objPHPExcel->getWorksheetIterator() as $worksheet) {
@@ -629,7 +556,6 @@ class db extends Controller {
               $g_add      = $this->post($worksheet->getCellByColumnAndRow(22,$row)->getValue());
               $final      = $this->post($worksheet->getCellByColumnAndRow(23,$row)->getCalculatedValue());
               $remarks    = $this->post($worksheet->getCellByColumnAndRow(24,$row)->getCalculatedValue());
-
               
               if(ltrim($username) == '' || ltrim($username) == 'Prepared By:' 
                  || ltrim($username) == 'Instructor:' && ltrim($name) == '' 
@@ -648,14 +574,12 @@ class db extends Controller {
             $query ? $this->movefile($file,$code) : null;
         }
     }
-
     public function movefile($file,$code) {
         $message = 'Excel file has been uploaded successfully.';
         mkdir('../../assets/uploads/'.$code, 0777, true);
         move_uploaded_file($_FILES['files']['tmp_name'],'../../assets/uploads/'.$code.'/'.$_FILES['files']['name']);
         $this->success($message);
     }
-
 // admin subject begin
     public function addsubjects($sub_course,$sub_subject,$sub_section) {
         $query = $this->db->query("SELECT * FROM subjects_tbl WHERE subject = '$sub_subject' AND section = '$sub_section'");
@@ -668,14 +592,11 @@ class db extends Controller {
             $message = 'New subject has been added.';
             $query ? $this->success($message) : null;
         }
-
     }
-
     public function deletesubjects($update_sub_id) {
         $query = $this->db->query("DELETE FROM subjects_tbl WHERE id = $update_sub_id");
         return $query ? $this->deleted() : null;
     }
-
     public function updatesubjects($update_sub_id,$update_sub_course,$update_sub_subject,$update_sub_section) {
         $query = $this->db->query("SELECT * FROM subjects_tbl WHERE subject = '$update_sub_subject' AND section = '$update_sub_section'");
         $check = $query->num_rows;
@@ -689,7 +610,6 @@ class db extends Controller {
         }
     }
 // admin subject end
-
     // Login Codes
     public function login($username,$password) {
         $query  = $this->db->query("SELECT * FROM accounts_tbl WHERE username = '$username' AND status = 0");
@@ -739,7 +659,6 @@ class db extends Controller {
             'message' => 'Invalid username or password.'));
         }
     }
-
     public function professorprofile($update_id,$password) {
         $hash = password_hash($password,PASSWORD_DEFAULT);
         $query = $this->db->query("UPDATE accounts_tbl SET password = '$hash' WHERE id = '$update_id'");
@@ -748,17 +667,15 @@ class db extends Controller {
             $this->updated($message);
         }
     }
-
     public function showstudentinfo($username) {
         $query = $this->db->query("SELECT * FROM students_tbl WHERE username = '$username' GROUP BY subject");
         return $query;
     }
-
     public function showstudentgrades($username,$branch,$subject,$section,$sy){
         if(empty($subject)){
-            $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE username = '$username' AND branch = '$branch' AND section = '$section' AND sy = '$sy' AND status = 0");
+            $query = $this->db->query("SELECT * FROM professor_grades_tbl as pgt INNER JOIN accounts_tbl as at ON pgt.professor_id = at.id WHERE pgt.username = '$username' AND pgt.branch = '$branch' AND pgt.section = '$section' AND pgt.sy = '$sy' AND pgt.status = 0");
         } else {
-            $query = $this->db->query("SELECT * FROM professor_grades_tbl WHERE username = '$username' AND branch = '$branch' AND subject = '$subject' AND section = '$section' AND sy = '$sy' AND status = 0");
+            $query = $this->db->query("SELECT * FROM professor_grades_tbl as pgt INNER JOIN accounts_tbl as at ON pgt.professor_id = at.id WHERE pgt.username = '$username' AND pgt.branch = '$branch' AND pgt.subject = '$subject' AND pgt.section = '$section' AND pgt.sy = '$sy' AND pgt.status = 0");
         }
             $check = $query->num_rows;
             if($check > 0) {
@@ -771,7 +688,6 @@ class db extends Controller {
             header('location: ../login.php');
         }
     }
-
     public function redirecttopageafterlogin() {
         if(isset($_SESSION['role'])) {
             switch($_SESSION['role']) {
@@ -794,13 +710,11 @@ class db extends Controller {
             };
         } 
     }
-
     public function removeuploadedgrades($code) {
         $query = $this->db->query("DELETE FROM professor_grades_tbl WHERE code = '$code'");
         $message = 'Uploaded grades has been deleted.';
         return $query ? $this->success($message) : null;
     }
-
     public function approveuploadedgrades($code) {
         $query = $this->db->query("SELECT * FROM accounts_tbl WHERE id = ".$_SESSION['id']);
         $row = $query->fetch_object();
@@ -808,75 +722,61 @@ class db extends Controller {
         $query = $this->db->query("UPDATE professor_grades_tbl SET status = 0, approve_by = '$name' WHERE code = '$code'");
         return $query ? $this->notifystudents() : null;
     }
-
     public function notifystudents() {
         $query = $this->db->query("SELECT professor_grades_tbl.username,accounts_tbl.username,accounts_tbl.contact FROM accounts_tbl INNER JOIN professor_grades_tbl ON professor_grades_tbl.username = accounts_tbl.username");
         foreach($query as $row) {
             $contact[] = $row['contact'];
         }
         $message = 'Your grades are now available. (this is test mode, please do not reply.)';
-        $smsGateway = new SmsGateway('lozanojohndavid@gmail.com', '12345123');
+        $smsGateway = new SmsGateway('romanomaryclaire@gmail.com', 'sept282k12');
         $message    = $message;
-        $deviceID   = 54501;
+        $deviceID   = 61894;
         $smsGateway->sendMessageToNumber($contact, $message, $deviceID);
         $message = 'Uploaded grades has been approved';
         return $smsGateway ? $this->success($message) : null;
     }
-
     public function logout() {
         session_destroy();
         header('location: login.php');
     }
-
-
     // costum method for $_POST[] with validation
     public function post($data) {
         return $this->validate($data);
     }
-
     // costum method for $_GET[] with validation
     public function get($data) {
         return $this->validate($data);
     }
-
     //  convert all characters / symbols to string
     public function validate($data) {
         return $this->db->real_escape_string(htmlentities($data));
     }
-
     public function duplicated($message) {
       echo json_encode(array('success' => false,'bgcolor' => '#ff0000','color'   => '#fff', 'message' => $message));
     }
-
     public function updated($message) {
       echo json_encode(array('success' => true, 'bgcolor' => '#336699','color'   => '#fff','message' => $message));
     }
-
     public function success($message) {
-      echo json_encode(array('success' => true, 'bgcolor' => '#336699','color'   => '#fff','message' => $message));
+      echo json_encode(array('success' => true, 'bgcolor' => '#336699','color'   => '#fff','message' => $message)); 
     }
-
     public function error($message) {
         echo json_encode(array('success' => false, 'bgcolor' => '#ff0000','color'   => '#fff',
         'message' => $message));
     }
-
     public function deleted() {
         echo json_encode(array('success' => false));
     }
-
     public function activate() {
         echo json_encode(array(
             'success'=> true, 
             'message' => '<label class="label label-success">Activated</label>'
         ));
     }
-
       public function deactivate() {
         echo json_encode(array(
             'success'=> true, 
             'message' => '<label class="label label-danger">Deactivated</label>'
         ));
     }
-
 }
