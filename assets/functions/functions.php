@@ -148,6 +148,23 @@ switch($_POST['action']) {
         $sy = $data->post($_POST['sy']);
         $query = $data->addschoolyear($sy);
     break;
+
+    case 'Update School Year':
+        $update_schoolyear = $data->post($_POST['update_schoolyear']);
+        $update_id = $data->post($_POST['update_id']);
+        $query = $data->updateschoolyear($update_schoolyear,$update_id);
+    break;
+
+    case 'Delete School Year':
+        $update_id = $data->post($_POST['update_id']);
+        $query = $data->deleteschoolyear($update_id);
+    break;
+
+    case 'Use School Year':
+         $sy = $data->post($_POST['sy']);
+         $id = $data->post($_POST['id']);
+         $query = $data->use_school_year($id,$sy);
+    break;
     
     case 'Show Student Grades':
         include 'function_show_students_grades.php';

@@ -148,7 +148,7 @@ $username = $_SESSION['username'];
                 <label>Section</label>
                 <select id="section" class="form-control">
                 <option value="">Select Section</option>
-                <?php foreach($data->showstudentinfo($username) as $row):?>
+                <?php foreach($data->showstudentinfobysection($username) as $row):?>
                 <option value="<?php echo $row['section']?>"><?php echo $row['section']?></option>
                 <?php endforeach; ?>
                 </select>
@@ -172,7 +172,7 @@ $username = $_SESSION['username'];
                 <label>Subject</label>
                 <select id="subject" class="form-control">
                 <option value="">Show All</option>
-                <?php foreach($data->showstudentinfo($username) as $row):?>
+                <?php foreach($data->showstudentinfobysubject($username) as $row):?>
                 <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
                 <?php endforeach; ?>
                 </select>

@@ -1,12 +1,13 @@
 <style>.custom{background:transparent;border:none;outline:none};</style>
 <?php 
 $i = 0;
-if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['subject']) && isset($_POST['section'])) {
+if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['subject']) && isset($_POST['section']) && isset($_POST['sy'])) {
     $branch = $data->post($_POST['branch']);
     $course = $data->post($_POST['course']);
     $subject = $data->post($_POST['subject']);
     $section = $data->post($_POST['section']);
-    $result = $data->search_student_by_professor($branch,$course,$subject,$section,$_SESSION['id']);
+    $sy = $data->post($_POST['sy']);
+    $result = $data->search_student_by_professor($branch,$course,$subject,$section,$_SESSION['id'],$sy);
 } else {
   $result = $data->show_students_by_professor($_SESSION['id']);
 }
@@ -20,6 +21,7 @@ if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['subject'
     <th>Course</th>
     <th>Subject</th>
     <th>Section</th>
+    <th>School Year</th>
     </tr>
 </thead>
 <tbody>
@@ -31,6 +33,7 @@ if (isset($_POST['branch']) && isset($_POST['course']) && isset($_POST['subject'
   <td><?php echo $row['course']?></td>
   <td><?php echo $row['subject']?></td>
   <td><?php echo $row['section']?></td>
+  <td><?php echo $row['sy']?></td>
   </tr>
   <?php endforeach; ?>
 </tbody>

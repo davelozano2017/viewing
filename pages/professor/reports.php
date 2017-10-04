@@ -148,7 +148,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
 
     <div class="row">
       <div class="form-group">
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-2 col-sm-12">
           <label for="">Branch</label>
           <select class="form-control" id="search_branch">
               <option value="">Select Branch</option>
@@ -182,13 +182,25 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
           </div>
         </div>
 
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-2 col-sm-12">
           <div class="form-group">
               <label>Section</label>
               <select id="search_section" class="form-control">
               <option value="">Select Section</option>
               <?php foreach($data->show_professor_sections($id) as $row):?>
               <option value="<?php echo $row['section']?>"><?php echo $row['section']?></option>
+              <?php endforeach; ?>
+              </select>
+          </div>
+        </div>
+
+        <div class="col-md-2 col-sm-12">
+          <div class="form-group">
+              <label>School Year</label>
+              <select id="search_sy" class="form-control">
+              <option value="">Select Section</option>
+              <?php foreach($data->show_school_year() as $row):?>
+              <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
               <?php endforeach; ?>
               </select>
           </div>

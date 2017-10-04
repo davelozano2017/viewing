@@ -467,9 +467,9 @@ class db extends Controller {
         return $query;
     }
 
-    public function search_student_by_professor($branch,$course,$subject,$section,$id) {
+    public function search_student_by_professor($branch,$course,$subject,$section,$id,$sy) {
         $query = $this->db->query("SELECT * FROM professor_students_tbl as pst INNER JOIN students_tbl as st
-        ON pst.student_id = st.student_id INNER JOIN accounts_tbl as at ON st.username = at.username WHERE pst.professor_id = $id AND st.branch = '$branch' AND st.course = '$course' AND st.section = '$section' AND st.subject = '$subject'");
+        ON pst.student_id = st.student_id INNER JOIN accounts_tbl as at ON st.username = at.username WHERE pst.professor_id = $id AND st.branch = '$branch' AND st.course = '$course' AND st.section = '$section' AND st.subject = '$subject' AND st.sy = '$sy'");
         return $query;
     }
 
@@ -539,8 +539,41 @@ class db extends Controller {
         }
     }
 
-    public function show_school_year() {
+    public function updateschoolyear($update_schoolyear,$update_id) {
+        $query = $this->db->query("SELECT * FROM school_year_tbl WHERE schoolyear = '$update_schoolyear'");
+        $check = $query->num_rows;
+        if($check > 0) {
+            $message = 'School year '.$update_schoolyear.' is already exist';
+            $this->duplicated($message);
+        } else {
+            $query = $this->db->query("UPDATE school_year_tbl SET schoolyear = '$update_schoolyear' WHERE id = '$update_id'");
+            $message = 'School year '.$update_schoolyear.' has been updated.';
+            $query ? $this->updated($message) : null;
+        }
+    }
+
+    public function deleteschoolyear($update_id){
+        $query = $this->db->query("DELETE FROM school_year_tbl WHERE id = '$update_id'");
+        return $query ? $this->deleted() : null;
+    }
+
+    public function use_school_year($id,$sy) {
+        $query = $this->db->query("UPDATE school_year_tbl SET status = 0");
+        if($query) {
+            $q = $this->db->query("UPDATE school_year_tbl SET status = 1 WHERE id = '$id'");
+            $message = 'School year '.$sy.' '. 'has been used';
+            return $q ? $this->success($message) : null;
+        }
+
+    }    
+
+    public function show_all_school_year() {
         $query = $this->db->query("SELECT * FROM school_year_tbl");
+        return $query;
+    }
+
+    public function show_school_year() {
+        $query = $this->db->query("SELECT * FROM school_year_tbl WHERE status = 1");
         return $query;
     }
 
@@ -749,7 +782,12 @@ class db extends Controller {
         }
     }
 
-    public function showstudentinfo($username) {
+    public function showstudentinfobysection($username) {
+        $query = $this->db->query("SELECT * FROM students_tbl WHERE username = '$username' GROUP BY section");
+        return $query;
+    }
+
+    public function showstudentinfobysubject($username) {
         $query = $this->db->query("SELECT * FROM students_tbl WHERE username = '$username' GROUP BY subject");
         return $query;
     }

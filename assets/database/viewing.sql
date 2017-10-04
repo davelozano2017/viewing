@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2017 at 12:30 AM
+-- Generation Time: Oct 04, 2017 at 11:34 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -243,15 +243,18 @@ CREATE TABLE `requests_tbl` (
 
 CREATE TABLE `school_year_tbl` (
   `id` int(11) NOT NULL,
-  `schoolyear` varchar(255) NOT NULL
+  `schoolyear` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `school_year_tbl`
 --
 
-INSERT INTO `school_year_tbl` (`id`, `schoolyear`) VALUES
-(1, '2017 - 2018');
+INSERT INTO `school_year_tbl` (`id`, `schoolyear`, `status`) VALUES
+(1, '2017 - 2018', 1),
+(5, '2018 - 2019', 0),
+(7, '2020 - 2021', 0);
 
 -- --------------------------------------------------------
 
@@ -448,22 +451,22 @@ ALTER TABLE `subjects_tbl`
 -- AUTO_INCREMENT for table `accounts_extension_tbl`
 --
 ALTER TABLE `accounts_extension_tbl`
-  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `accounts_tbl`
 --
 ALTER TABLE `accounts_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `branches_tbl`
 --
 ALTER TABLE `branches_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `courses_tbl`
 --
 ALTER TABLE `courses_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `professor_grades_tbl`
 --
@@ -483,22 +486,22 @@ ALTER TABLE `requests_tbl`
 -- AUTO_INCREMENT for table `school_year_tbl`
 --
 ALTER TABLE `school_year_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `sections_tbl`
 --
 ALTER TABLE `sections_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT for table `subjects_tbl`
 --
 ALTER TABLE `subjects_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

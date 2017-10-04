@@ -8,6 +8,7 @@
       <th>Course</th>
       <th>Subject</th>
       <th>Section</th>
+      <th>School Year</th>
       <th style="width:1px"></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
   <td><?php echo $row['course']?></td>
   <td><?php echo $row['subject']?></td>
   <td><?php echo $row['section']?></td>
+  <td><?php echo $row['sy']?></td>
   <td><button class="btn btn-primary flat" id="add<?php echo $row['student_id']?>" onclick="add_student('<?php echo $row['student_id']?>','<?php echo $_SESSION['id']?>')">Add Student</button></td>
   </tr>
 <?php endforeach; ?>

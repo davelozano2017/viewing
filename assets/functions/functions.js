@@ -165,14 +165,24 @@ function btn_upload_file_enabled(bgcolor,color,message) {
     $('#uploadfile').html('Upload').attr('disabled',false);
 }
 
-function btnaddschoolyearenabled(bgcolor,color,message) {
+function btn_add_school_year_enabled(bgcolor,color,message) {
     $('#btnaddschoolyear').html('Add').attr('disabled',false);
     showschoolyear();
     notify(bgcolor,color,message);
 }
 
-function btnaddschoolyeardisabled() {
+function btn_add_school_year_disabled() {
     $('#btnaddschoolyear').html('Please Wait').attr('disabled',true);
+}
+
+function btn_update_school_year_enabled(bgcolor,color,message) {
+    $('#btn_update_school_year').html('Save Changes').attr('disabled',false);
+    showschoolyear();
+    notify(bgcolor,color,message);
+}
+
+function btn_update_school_year_disabled() {
+    $('#btn_update_school_year').html('Please Wait').attr('disabled',true);
 }
 
 function btn_add_student_disabled(id) {
@@ -290,18 +300,6 @@ function showadmin() {
     })
 }
 
-// function showstudentsreports() {
-//     $.ajax({
-//         type : 'POST',
-//         url : '../' + url,
-//         data : { action : 'Show Students Search' },
-//         dataType: 'json',
-//         success:function(response){
-//             $('#show_students').html(response);
-//         }
-//     })
-// }
-
 function show_student_report_by_professor(){
     $.ajax({
         type : 'POST',
@@ -354,10 +352,11 @@ function search_by_professor() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports_by_professor').html(response);
             }
@@ -369,10 +368,11 @@ function search_by_professor() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports_by_professor').html(response);
             }
@@ -384,10 +384,11 @@ function search_by_professor() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports_by_professor').html(response);
             }
@@ -399,10 +400,27 @@ function search_by_professor() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section, sy : sy},
+            success:function(response) {
+                $('#show_reports_by_professor').html(response);
+            }
+        });
+    });
+
+    $('#search_sy').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report By Professor', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports_by_professor').html(response);
             }
@@ -1314,23 +1332,75 @@ function addschoolyear() {
     $('#btnaddschoolyear').click(function(e){
         e.preventDefault();
         var sy = $('#sy').val();
-        btnaddschoolyeardisabled();
+        btn_add_school_year_disabled();
         $.ajax({
             type: 'POST',
             url : '../' + url,
             data: { action : 'Add School Year', sy : sy},
             dataType: 'json',
             success:function(response) {
-                response.success == true ? btnaddschoolyearenabled(response.bgcolor,response.color,response.message) : btnaddschoolyearenabled(response.bgcolor,response.color,response.message);
+                response.success == true ? btn_add_school_year_enabled(response.bgcolor,response.color,response.message) : btn_add_school_year_enabled(response.bgcolor,response.color,response.message);
             }
         })
     })
 }
+
+function editschoolyear() {
+    $('#btn_update_school_year').click(function(e){
+        e.preventDefault();
+        var update_schoolyear = $('#update_schoolyear').val();
+        var update_id = $('#update_id').val();
+        btn_update_school_year_disabled();
+        $.ajax({
+            type: 'POST',
+            url : '../' + url,
+            data: { action : 'Update School Year', update_schoolyear : update_schoolyear, update_id : update_id},
+            dataType: 'json',
+            success:function(response) {
+                response.success == true ? btn_update_school_year_enabled(response.bgcolor,response.color,response.message) : btn_update_school_year_enabled(response.bgcolor,response.color,response.message);
+            }
+        })
+    })
+}
+
+function deleteschoolyear() {
+    $('#btn_udelete_school_year').click(function(e){
+        e.preventDefault();
+        var update_id = $('#update_id').val();
+        $.ajax({
+            type: 'POST',
+            url : '../' + url,
+            data: { action : 'Delete School Year', update_id : update_id},
+            dataType: 'json',
+            success:function(response) {
+                response.success == true ? null : $('#modal_school_year_update').modal('hide')
+                showschoolyear();
+            }
+        })
+    })
+}
+
+
 function addschoolyearmodal() {
     $('#addschoolyear').click(function(e){
         $('#modalschoolyear').modal('show');
     })
 }
+
+
+function activate(id,sy) {
+    $.ajax({
+        type: 'POST',
+        url : '../' + url,
+        data: { action : 'Use School Year', id : id, sy : sy},
+        dataType: 'json',
+        success:function(response) {
+            response.success == true ? notify(response.bgcolor,response.color,response.message) : null;
+            showschoolyear();
+        }
+    })
+}
+
 
 add_branches();
 update_branches();

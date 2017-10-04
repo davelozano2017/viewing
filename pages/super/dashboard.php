@@ -351,8 +351,8 @@ var app = angular.module('app', ['ngMessages']);
   showschoolyear();
   addschoolyearmodal();
   addschoolyear();
- 
-
+  editschoolyear();
+  deleteschoolyear()
 </script>
 </body>
 </html>

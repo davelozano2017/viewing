@@ -8,6 +8,7 @@
       <th>Course</th>
       <th>Subject</th>
       <th>Section</th>
+      <th>School Year</th>
       <th></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
   <td><?php echo $row['course']?></td>
   <td><?php echo $row['subject']?></td>
   <td><?php echo $row['section']?></td>
+  <td><?php echo $row['sy']?></td>
   <td><button class="custom" onclick="edit_student('<?php echo $row['student_id']?>','<?php echo $row['id']?>','<?php echo $row['firstname']?>','<?php echo $row['middlename']?>','<?php echo $row['lastname']?>','<?php echo $row['branch']?>','<?php echo $row['course']?>','<?php echo $row['subject']?>','<?php echo $row['section']?>','<?php echo $row['username']?>','<?php echo $row['email']?>','<?php echo $row['contact']?>','<?php echo $row['gender']?>','<?php echo $row['sy']?>')"><i class="fa fa-pencil"></i></button></td>
   </tr>
 <?php endforeach; ?>
