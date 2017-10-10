@@ -172,7 +172,7 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
 
     <div class="row">
       <div class="form-group">
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-2 col-sm-12">
           <label for="">Branch</label>
           <select class="form-control" id="search_branch">
               <option value="">Select Branch</option>
@@ -194,11 +194,11 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
           </div>
         </div>
 
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-2 col-sm-12">
           <div class="form-group">
               <label>Subject</label>
               <select id="search_subject" class="form-control">
-              <option value="">Select Section</option>
+              <option value="">Select Subject</option>
               <?php foreach($data->show_subjects() as $row):?>
               <option value="<?php echo $row['subject']?>"><?php echo $row['subject']?></option>
               <?php endforeach; ?>
@@ -217,6 +217,19 @@ $role     = $_SESSION['role'] == 0 ? 'Super Admin' : null;
               </select>
           </div>
         </div>
+
+        <div class="col-md-2 col-sm-12">
+          <div class="form-group">
+              <label>School Year</label>
+              <select id="search_sy" class="form-control">
+              <option value="">Select School Year</option>
+              <?php foreach($data->show_school_year() as $row):?>
+              <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
+              <?php endforeach; ?>
+              </select>
+          </div>
+        </div>
+
       </div>
     </div>
     <br>

@@ -159,7 +159,7 @@ $username = $_SESSION['username'];
             <div class="form-group">
                 <label>School Year</label>
                 <select id="sy" class="form-control">
-                <option value="">Select Section</option>
+                <option value="">Select School Year</option>
                 <?php foreach($data->show_school_year() as $row):?>
                 <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
                 <?php endforeach; ?>

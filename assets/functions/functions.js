@@ -435,10 +435,11 @@ function search_by_admin() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports').html(response);
             }
@@ -450,10 +451,11 @@ function search_by_admin() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports').html(response);
             }
@@ -465,10 +467,11 @@ function search_by_admin() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports').html(response);
             }
@@ -480,15 +483,33 @@ function search_by_admin() {
         var course = $('#search_course').val();
         var subject = $('#search_subject').val();
         var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
         $.ajax({
             type : 'POST',
             url : '../' + url,
-            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section},
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section, sy : sy},
             success:function(response) {
                 $('#show_reports').html(response);
             }
         });
     });
+
+    $('#search_sy').change(function(e){
+        var branch = $('#search_branch').val();
+        var course = $('#search_course').val();
+        var subject = $('#search_subject').val();
+        var section = $('#search_section').val();
+        var sy = $('#search_sy').val();
+        $.ajax({
+            type : 'POST',
+            url : '../' + url,
+            data: { action : 'Show Students Report', branch : branch, course : course, subject: subject, section : section, sy : sy},
+            success:function(response) {
+                $('#show_reports').html(response);
+            }
+        });
+    });
+
 }
 
 function showprofessor() {

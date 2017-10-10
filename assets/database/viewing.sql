@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2017 at 11:34 AM
+-- Generation Time: Oct 10, 2017 at 09:19 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -81,7 +81,7 @@ INSERT INTO `accounts_tbl` (`id`, `photo`, `lastname`, `firstname`, `middlename`
 (79, '../../assets/images/student_male.png', 'Romano', 'Carmela', 'Q', 'tungsten022326@gmail.com', '9306669105', 'Male', 'A114C0269', '$2y$10$CF9LQ4i0.VzFtS82JKSsz.rU2cneDrJPEocZ7aR6GwqieiodAt5Ie', 914527, 0, 3, '2017-09-21 02:05:10'),
 (81, '../../assets/images/student_female.png', 'Cabuga', 'Jeddahlyn', 'L.', 'cabugajeddahlyn@gmail.com', '9265691158', 'Female', 'A111G0001', '$2y$10$fl2V1GFMAw/7GIPPTzMQRO8RqLvSkKwoeS55NMXnLn1o4YQONdkZi', 883277, 0, 3, '2017-09-21 02:05:02'),
 (88, '../../assets/images/admin.png', 'Cruz', 'Juan', 'Dela', 'juandelacruz@gmail.com', '9121199292', 'Male', 'ACC0001C', '$2y$10$lHgKr13.WG7D5C9roiJYbeuWeRe25Tp0rUFnrlAn3quyEC12GQ656', 501122, 0, 1, '2017-09-20 19:06:47'),
-(90, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9555338288', 'Female', 'ACC0002C', '$2y$10$adIIebjs/lptnG6kMNrcred6jyf8.Wn0cu2EVWIYSl7Zsab9D5Ma.', 785264, 0, 2, '2017-09-21 06:55:42'),
+(90, '../../assets/images/admin.png', 'Lozano', 'Adora', 'Sadia', 'adoralozano@gmail.com', '9555338288', 'Female', 'ACC0002C', '$2y$10$adIIebjs/lptnG6kMNrcred6jyf8.Wn0cu2EVWIYSl7Zsab9D5Ma.', 785264, 0, 2, '2017-10-10 07:18:38'),
 (91, '../../assets/images/admin.png', 'Demo', 'Demo', 'Demo', 'Demo@gmail.com', '1234512312', 'Male', 'ACC0003C', '$2y$10$L7a3SI7OpWZS4RIq39apeO66deyBaXG4Cx3gA2b9NqmzPmVEzdEF2', 707636, 0, 2, '2017-09-20 20:50:10');
 
 -- --------------------------------------------------------

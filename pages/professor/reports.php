@@ -198,7 +198,7 @@ $role     = $_SESSION['role'] == 2 ? 'Professor' : null;
           <div class="form-group">
               <label>School Year</label>
               <select id="search_sy" class="form-control">
-              <option value="">Select Section</option>
+              <option value="">Select School Year</option>
               <?php foreach($data->show_school_year() as $row):?>
               <option value="<?php echo $row['schoolyear']?>"><?php echo $row['schoolyear']?></option>
               <?php endforeach; ?>

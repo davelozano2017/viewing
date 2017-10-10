@@ -504,6 +504,24 @@ class db extends Controller {
         return $query;
     }
 
+    public function count_student_section($username) {
+        $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN students_tbl as st ON at.username = st.username WHERE st.username = '$username' GROUP BY st.section");
+        $count = $query->num_rows;
+        return $count;
+    }
+
+    public function count_student_subject($username) {
+        $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN students_tbl as st ON at.username = st.username WHERE st.username = '$username' GROUP BY st.subject");
+        $count = $query->num_rows;
+        return $count;
+    }
+
+    public function count_student_branch($username) {
+        $query = $this->db->query("SELECT * FROM accounts_tbl as at INNER JOIN students_tbl as st ON at.username = st.username WHERE st.username = '$username' GROUP BY st.branch");
+        $count = $query->num_rows;
+        return $count;
+    }
+
     public function force_download($file,$path) {
         $file = urldecode($file);
         $filepath = $path.$file;

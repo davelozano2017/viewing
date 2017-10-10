@@ -15,9 +15,10 @@ foreach($data->getuserinfobyid($id) as $row) : ?>
 ?>     
 <?php endforeach; ?>
 <?php 
-// $count_section = $data->countprofessorsection($id);
-// $count_student = $data->countprofessorstudent($id);
-// $count_course = $data->countprofessorcourse($id);
+$count_student_section = $data->count_student_section($username);
+$count_student_subject = $data->count_student_subject($username);
+$count_student_branch = $data->count_student_branch($username);
+
 
 ?>
 <!DOCTYPE html>
@@ -158,23 +159,23 @@ foreach($data->getuserinfobyid($id) as $row) : ?>
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
                     <h5 class="description-header">Sections</h5>
-                    <span class="description-text"><?php echo $count_section?></a></span>
+                    <span class="description-text"><?php echo $count_student_section?></a></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header">Students</h5>
-                    <span class="description-text"><?php echo $count_student?></span>
+                    <h5 class="description-header">Subjects</h5>
+                    <span class="description-text"><?php echo $count_student_subject?></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <h5 class="description-header">Courses</h5>
-                    <span class="description-text"><?php echo $count_course?></span>
+                    <h5 class="description-header">Branches</h5>
+                    <span class="description-text"><?php echo $count_student_branch?></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
