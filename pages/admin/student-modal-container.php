@@ -10,7 +10,7 @@
                 <input type="hidden" id="type" value="3">
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Student ID</label>
+                        <label>Search Student ID</label>
                         <div class="form-group">
                             <input type="text" id="search_student" class="form-control">
                         </div>
